@@ -26,13 +26,9 @@ public class MainController {
 	
 	@GetMapping(path="/death")
 	public @ResponseBody String getDeath(@RequestParam String name){
-		return deathRepository.findByName(name).toString();
+		return deathRepository.findByName(name).getMurder();
 	}
-	
-	@GetMapping(path="/deathClass")
-	public @ResponseBody Death getDeathClass(@RequestParam String name){
-		return deathRepository.findByName(name);
-	}
+
 	
 	
 }
