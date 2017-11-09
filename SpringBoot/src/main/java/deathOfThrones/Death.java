@@ -16,11 +16,8 @@ public class Death {
     @Column (name = "role")
     private String role;
     
-    @Column (name = "death_season")
-    private int death_season;
-    
-    @Column (name = "death_episode")
-    private int death_episode;
+    @Column (name = "episode")
+    private int episode;
     
     @Column (name = "execution")
     private String execution;
@@ -60,13 +57,8 @@ public class Death {
 	}
 
 
-	public int getDeath_episode() {
-		return death_episode;
-	}
-
-
-	public int getDeath_season() {
-		return death_season;
+	public int getEpisode() {
+		return episode;
 	}
     
 }
