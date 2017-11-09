@@ -8,6 +8,6 @@ import deathOfThrones.Episode;
 
 public interface EpisodeRepository extends CrudRepository<Episode, Long> {
 	
-	Episode findByNumberOverall(int numberOverall);
+	Episode findByEpisodeId(int episodeId);
 
 }

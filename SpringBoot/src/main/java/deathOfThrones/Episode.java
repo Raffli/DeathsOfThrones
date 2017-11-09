@@ -10,8 +10,8 @@ import javax.persistence.Table;
 
 public class Episode {
     @Id
-    @Column (name = "numberOverall")
-    private int numberOverall;
+    @Column (name = "episodeId")
+    private int episodeId;
     
     @Column (name = "season")
     private int season;
@@ -38,7 +38,7 @@ public class Episode {
     private int imdbRating;
     
     public int getNumberOverall() {
-		return numberOverall;
+		return episodeId;
 	}
 
 	public int getSeason() {

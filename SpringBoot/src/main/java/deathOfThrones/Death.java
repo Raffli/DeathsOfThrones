@@ -16,8 +16,8 @@ public class Death {
     @Column (name = "role")
     private String role;
     
-    @Column (name = "episode")
-    private int episode;
+    @Column (name = "episodeId")
+    private int episodeId;
     
     @Column (name = "execution")
     private String execution;
@@ -58,7 +58,7 @@ public class Death {
 
 
 	public int getEpisode() {
-		return episode;
+		return episodeId;
 	}
     
 }
