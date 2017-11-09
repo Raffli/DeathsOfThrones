@@ -22,21 +22,24 @@ import deathOfThrones.DeathRepository;
 @Controller
 @RequestMapping(path="/dot")
 public class MainController {
-	@Autowired 
 	
+	@Autowired
 	private DeathRepository deathRepository;
-	@Autowired 
-
+	
+	@Autowired
 	private ImageRepository imageRepository;
-	@Autowired 
-
+	
+	@Autowired
 	private EpisodeRepository episodeRepository;
-	@Autowired 
-
+	
+	@Autowired
 	private MurderRepository murderRepository;
-	@Autowired 
-
+	
+	@Autowired
 	private PlaceRepository placeRepository;
+	
+	@Autowired
+	private RegionRepository regionRepository;
 	
 	@GetMapping(path="/allDeaths")
 	public @ResponseBody Iterable<Death> getAllDeaths() {
@@ -46,6 +49,11 @@ public class MainController {
 	@GetMapping(path="/allEpisodes")
 	public @ResponseBody Iterable<Episode> getAllEpisodes() {
 		return episodeRepository.findAll();
+	}
+	
+	@GetMapping(path="/allRegions")
+	public @ResponseBody Iterable<Region> getAllRegions() {
+		return regionRepository.findAll();
 	}
 	
 	@GetMapping(path="/allImages")
