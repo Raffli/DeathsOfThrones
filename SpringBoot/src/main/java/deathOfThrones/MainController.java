@@ -53,12 +53,10 @@ public class MainController {
 		return imageRepository.findAll();
 	}
 	
-	@GetMapping(path="/imageByName")
+	@GetMapping(path="/imageByName", produces = MediaType.IMAGE_PNG_VALUE)
 	public @ResponseBody byte[] getImageByName(@RequestParam String name) {
         return imageRepository.findByName(name).getImage();
 	}
-
-
 
 	
 	@GetMapping(path="/allPlaces")
@@ -75,7 +73,5 @@ public class MainController {
 	public @ResponseBody String getDeath(@RequestParam String name){
 		return deathRepository.findByName(name).getMurder();
 	}
-
-	
 	
 }
