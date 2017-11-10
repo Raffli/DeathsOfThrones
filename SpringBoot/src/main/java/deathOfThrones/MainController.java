@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import deathOfThrones.Death;
 import deathOfThrones.DeathRepository;
 
 @Controller
 @RequestMapping(path="/dot")
+@RestController
 public class MainController {
 	
 	@Autowired
@@ -42,43 +44,43 @@ public class MainController {
 	private RegionRepository regionRepository;
 	
 	@GetMapping(path="/allDeaths")
-	public @ResponseBody Iterable<Death> getAllDeaths() {
+	public Iterable<Death> getAllDeaths() {
 		return deathRepository.findAll();
 	}
 	
 	@GetMapping(path="/allEpisodes")
-	public @ResponseBody Iterable<Episode> getAllEpisodes() {
+	public Iterable<Episode> getAllEpisodes() {
 		return episodeRepository.findAll();
 	}
 	
 	@GetMapping(path="/allRegions")
-	public @ResponseBody Iterable<Region> getAllRegions() {
+	public Iterable<Region> getAllRegions() {
 		return regionRepository.findAll();
 	}
 	
 	@GetMapping(path="/allImages")
-	public @ResponseBody Iterable<Image> getAllImages() {
+	public Iterable<Image> getAllImages() {
 		return imageRepository.findAll();
 	}
 	
 	@GetMapping(path="/imageByName", produces = MediaType.IMAGE_PNG_VALUE)
-	public @ResponseBody byte[] getImageByName(@RequestParam String name) {
+	public byte[] getImageByName(@RequestParam String name) {
         return imageRepository.findByName(name).getImage();
 	}
 
 	
 	@GetMapping(path="/allPlaces")
-	public @ResponseBody Iterable<Place> getAllPlaces() {
+	public Iterable<Place> getAllPlaces() {
 		return placeRepository.findAll();
 	}
 	
 	@GetMapping(path="/allMurders")
-	public @ResponseBody Iterable<Murder> getAllMurders() {
+	public Iterable<Murder> getAllMurders() {
 		return murderRepository.findAll();
 	}
 	
 	@GetMapping(path="/death")
-	public @ResponseBody String getDeath(@RequestParam String name){
+	public String getDeath(@RequestParam String name){
 		return deathRepository.findByName(name).getMurder();
 	}
 	
