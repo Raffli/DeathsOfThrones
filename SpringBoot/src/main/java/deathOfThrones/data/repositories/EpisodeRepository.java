@@ -3,11 +3,11 @@ package deathOfThrones.data.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import deathOfThrones.data.entities.Episode;
+import deathOfThrones.data.entities.EpisodeEntity;
 
 
-public interface EpisodeRepository extends CrudRepository<Episode, Long> {
+public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	
-	Episode findByEpisodeId(int episodeId);
+	EpisodeEntity findByEpisodeId(int episodeId);
 
 }

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name ="deaths")
 
-public class Death {
+public class DeathEntitie {
     @Id
     @Column (name = "name")
     private String name;

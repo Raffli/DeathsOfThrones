@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name = "places")
-public class Place {
+public class PlaceEntitie {
     @Id
     @Column (name = "name")
     private String name;
