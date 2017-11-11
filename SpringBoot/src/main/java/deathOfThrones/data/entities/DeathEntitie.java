@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name ="deaths")
-
+@Getter
 public class DeathEntitie {
     @Id
     @Column (name = "name")
@@ -31,35 +33,6 @@ public class DeathEntitie {
     @Column (name = "place")
     private String place;
     
-	public String getName() {
-		return name;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public String getPlace() {
-		return place;
-	}
-
-
-	public String getLikelihoodofreturn() {
-		return likelihoodofreturn;
-	}
-
-	public String getMurder() {
-		return murder;
-	}
-
-	public String getExecution() {
-		return execution;
-	}
-
-
-	public int getEpisode() {
-		return episodeId;
-	}
-    
+	
 }
 

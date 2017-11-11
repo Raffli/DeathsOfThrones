@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name ="murder")
-
+@Getter
 public class MurderEntitie {
     @Id
     @Column (name = "name")
@@ -21,23 +23,5 @@ public class MurderEntitie {
     
     @Column (name = "religion")
     private String religion;
-    
-    
-	public String getName() {
-		return name;
-	}
-
-	public String getOrigin() {
-		return origin;
-	}
-
-	public String getFollowing() {
-		return following;
-	}
-
-
-	public String getReligion() {
-		return religion;
-	}
 }
 

@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table (name = "regions")
+@Getter
 public class RegionEntitie {
     @Id
     @Column (name = "region")
@@ -14,15 +17,5 @@ public class RegionEntitie {
     
     @Column (name = "continent")
     private String continent;
-
-
-	public String getRegion() {
-		return region;
-	}
-
-	public String getContinent() {
-		return continent;
-	}
-
 }
 

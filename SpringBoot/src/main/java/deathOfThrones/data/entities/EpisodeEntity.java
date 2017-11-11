@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name ="episodes")
-
+@Getter
 public class EpisodeEntity {
     @Id
     @Column (name = "episodeId")
@@ -37,43 +39,6 @@ public class EpisodeEntity {
     @Column (name = "imdbRating")
     private int imdbRating;
     
-    public int getNumberOverall() {
-		return episodeId;
-	}
-
-	public int getSeason() {
-		return season;
-	}
-
-	public int getNumberInSeason() {
-		return numberInSeason;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getDirectedBy() {
-		return directedBy;
-	}
-
-	public String getWrittenBy() {
-		return writtenBy;
-	}
-
-	public String getOriginalAirDate() {
-		return originalAirDate;
-	}
-
-	public String getViewers() {
-		return viewers;
-	}
-
-	public int getImdbRating() {
-		return imdbRating;
-	}
-
-
 }
 
 

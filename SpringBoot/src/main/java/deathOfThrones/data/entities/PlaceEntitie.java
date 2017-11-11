@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table (name = "places")
+@Getter
 public class PlaceEntitie {
     @Id
     @Column (name = "name")
@@ -27,29 +30,5 @@ public class PlaceEntitie {
     @Column (name = "religion")
     private String religion;
     
-    
-	public String getName() {
-		return name;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public String getContinent() {
-		return continent;
-	}
-
-	public String getInhabitant() {
-		return inhabitant;
-	}
-
-	public String getPopulation() {
-		return population;
-	}
-	
-	public String getReligion() {
-		return religion;
-	}
 }
 
