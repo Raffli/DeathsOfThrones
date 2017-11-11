@@ -1,9 +1,9 @@
-package deathOfThrones;
+package deathOfThrones.data.repositories;
 
 
 import org.springframework.data.repository.CrudRepository;
 
-import deathOfThrones.Region;
+import deathOfThrones.data.entities.Region;
 
 
 public interface RegionRepository extends CrudRepository<Region, String> {

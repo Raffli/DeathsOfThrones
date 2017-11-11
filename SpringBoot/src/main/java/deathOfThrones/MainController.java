@@ -17,16 +17,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import deathOfThrones.Death;
-import deathOfThrones.DeathRepository;
+import deathOfThrones.data.entities.Death;
+import deathOfThrones.data.entities.Episode;
+import deathOfThrones.data.entities.Image;
+import deathOfThrones.data.entities.Murder;
+import deathOfThrones.data.entities.Place;
+import deathOfThrones.data.entities.Region;
+import deathOfThrones.data.repositories.DeathRepository;
+import deathOfThrones.data.repositories.EpisodeRepository;
+import deathOfThrones.data.repositories.ImageRepository;
+import deathOfThrones.data.repositories.MurderRepository;
+import deathOfThrones.data.repositories.PlaceRepository;
+import deathOfThrones.data.repositories.RegionRepository;
 
-@Controller
 @RequestMapping(path="/dot")
 @RestController
 public class MainController {
-	
-	@Autowired
-	private DeathRepository deathRepository;
 	
 	@Autowired
 	private ImageRepository imageRepository;
@@ -43,10 +49,7 @@ public class MainController {
 	@Autowired
 	private RegionRepository regionRepository;
 	
-	@GetMapping(path="/allDeaths")
-	public Iterable<Death> getAllDeaths() {
-		return deathRepository.findAll();
-	}
+
 	
 	@GetMapping(path="/allEpisodes")
 	public Iterable<Episode> getAllEpisodes() {
@@ -77,11 +80,6 @@ public class MainController {
 	@GetMapping(path="/allMurders")
 	public Iterable<Murder> getAllMurders() {
 		return murderRepository.findAll();
-	}
-	
-	@GetMapping(path="/death")
-	public String getDeath(@RequestParam String name){
-		return deathRepository.findByName(name).getMurder();
 	}
 	
 }

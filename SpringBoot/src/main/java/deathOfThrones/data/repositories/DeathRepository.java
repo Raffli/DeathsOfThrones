@@ -1,9 +1,9 @@
-package deathOfThrones;
+package deathOfThrones.data.repositories;
 
 
 import org.springframework.data.repository.CrudRepository;
 
-import deathOfThrones.Death;
+import deathOfThrones.data.entities.Death;
 
 
 public interface DeathRepository extends CrudRepository<Death, String> {
