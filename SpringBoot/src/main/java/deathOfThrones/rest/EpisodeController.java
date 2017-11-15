@@ -16,7 +16,7 @@ public class EpisodeController {
 	private EpisodeRepository episodeRepository;
 	
 	
-	@GetMapping(path="/allEpisodes")
+	@GetMapping(path="/all")
 	public Iterable<EpisodeEntity> getAllEpisodes() {
 		return episodeRepository.findAll();
 	}

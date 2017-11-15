@@ -10,7 +10,7 @@ import lombok.Getter;
 @Entity
 @Table (name = "regions")
 @Getter
-public class RegionEntitie {
+public class RegionEntity {
     @Id
     @Column (name = "region")
     private String region;

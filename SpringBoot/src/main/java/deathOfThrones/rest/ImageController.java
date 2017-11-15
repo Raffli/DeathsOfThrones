@@ -16,7 +16,7 @@ public class ImageController {
 	@Autowired
 	private ImageRepository imageRepository;
 	
-	@GetMapping(path="/allImages")
+	@GetMapping(path="/all")
 	public Iterable<ImageEntity> getAllImages() {
 		return imageRepository.findAll();
 	}

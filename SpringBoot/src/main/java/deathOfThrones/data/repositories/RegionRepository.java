@@ -3,11 +3,11 @@ package deathOfThrones.data.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import deathOfThrones.data.entities.RegionEntitie;
+import deathOfThrones.data.entities.RegionEntity;
 
 
-public interface RegionRepository extends CrudRepository<RegionEntitie, String> {
+public interface RegionRepository extends CrudRepository<RegionEntity, String> {
 	
-	RegionEntitie findByRegion(String region);
+	RegionEntity findByRegion(String region);
 
 }

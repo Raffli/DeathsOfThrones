@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import deathOfThrones.data.entities.DeathEntitie;
+import deathOfThrones.data.entities.DeathEntity;
 import deathOfThrones.data.repositories.DeathRepository;
 
 @RequestMapping(path="/dot/death")
@@ -17,7 +17,7 @@ public class DeathController {
 	private DeathRepository deathRepository;
 	
 	@GetMapping(path="/all")
-	public Iterable<DeathEntitie> getAllDeaths() {
+	public Iterable<DeathEntity> getAllDeaths() {
 		return deathRepository.findAll();
 	}
 	

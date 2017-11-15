@@ -10,7 +10,7 @@ import lombok.Getter;
 @Entity
 @Table(name ="deaths")
 @Getter
-public class DeathEntitie {
+public class DeathEntity {
     @Id
     @Column (name = "name")
     private String name;

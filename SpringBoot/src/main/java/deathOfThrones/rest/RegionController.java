@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import deathOfThrones.data.entities.RegionEntitie;
+import deathOfThrones.data.entities.RegionEntity;
 import deathOfThrones.data.repositories.RegionRepository;
 
 @RequestMapping(path="/dot/region")
@@ -16,8 +16,8 @@ public class RegionController {
 	private RegionRepository regionRepository;
 	
 	
-	@GetMapping(path="/allRegions")
-	public Iterable<RegionEntitie> getAllRegions() {
+	@GetMapping(path="/all")
+	public Iterable<RegionEntity> getAllRegions() {
 		return regionRepository.findAll();
 	}
 	

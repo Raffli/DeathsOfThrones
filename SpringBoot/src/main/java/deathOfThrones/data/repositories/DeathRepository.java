@@ -3,11 +3,11 @@ package deathOfThrones.data.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import deathOfThrones.data.entities.DeathEntitie;
+import deathOfThrones.data.entities.DeathEntity;
 
 
-public interface DeathRepository extends CrudRepository<DeathEntitie, String> {
+public interface DeathRepository extends CrudRepository<DeathEntity, String> {
 	
-	DeathEntitie findByName(String name);
+	DeathEntity findByName(String name);
 
 }

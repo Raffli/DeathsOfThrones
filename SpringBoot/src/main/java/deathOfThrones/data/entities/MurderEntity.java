@@ -8,27 +8,20 @@ import javax.persistence.Table;
 import lombok.Getter;
 
 @Entity
-@Table (name = "places")
+@Table(name ="murder")
 @Getter
-public class PlaceEntitie {
+public class MurderEntity {
     @Id
     @Column (name = "name")
     private String name;
-
-    @Column (name = "region")
-    private String region;
     
-    @Column (name = "continent")
-    private String continent;
+    @Column (name = "origin")
+    private String origin;
     
-    @Column (name = "inhabitant")
-    private String inhabitant;
-    
-    @Column (name = "population")
-    private String population;
+    @Column (name = "following")
+    private String following;
     
     @Column (name = "religion")
     private String religion;
-    
 }
 

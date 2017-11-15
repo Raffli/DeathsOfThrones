@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import deathOfThrones.data.entities.PlaceEntitie;
+import deathOfThrones.data.entities.PlaceEntity;
 import deathOfThrones.data.repositories.PlaceRepository;
 
 @RequestMapping(path="/dot/place")
@@ -16,8 +16,8 @@ public class PlaceController {
 	private PlaceRepository placeRepository;
 
 	
-	@GetMapping(path="/allPlaces")
-	public Iterable<PlaceEntitie> getAllPlaces() {
+	@GetMapping(path="/all")
+	public Iterable<PlaceEntity> getAllPlaces() {
 		return placeRepository.findAll();
 	}
 }
