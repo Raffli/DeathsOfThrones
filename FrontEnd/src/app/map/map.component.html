@@ -1,1 +1,5 @@
+<div id="mapContainer" tabindex="1" (keydown)="myKeyEvent($event)" (mousemove)="onMouseMove($event)">
+  <img id="map" src="/assets/map/gotMap.jpeg" [ngStyle]="{'top': positionY, 'left': positionX}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
+</div>
+
 

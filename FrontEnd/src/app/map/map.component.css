@@ -1,0 +1,14 @@
+#mapContainer{
+  box-sizing: border-box;
+  width:99.9%;
+  height: 100vh;
+  overflow:hidden;
+  position: relative;
+  border: 1px solid black;
+}
+
+#map {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
