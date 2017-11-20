@@ -1,0 +1,42 @@
+.ui-tabmenu {
+  opacity: 0.6;
+}
+
+.ui-tabmenu .ui-tabmenu-nav {
+  background-color: #969070;
+  margin: 0;
+  padding: 0;
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem {
+  width: 19.42%;
+  border: none;
+  margin: 3px 3px 6px 3px;
+  font-size: large;
+}
+
+.ui-tabmenu .ui-tabmenu-nav > li.ui-state-default {
+  background: #15191a;
+}
+
+.ui-tabmenu .ui-tabmenu-nav > li.ui-state-active {
+  background: #969070;
+}
+
+.ui-tabmenu .ui-tabmenu-nav > li.ui-state-default a {
+  color: #969070;
+}
+
+.ui-tabmenu .ui-tabmenu-nav > li.ui-state-active a {
+  color: #15191a;
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ui-widget-header {
+  border: none;
+}
