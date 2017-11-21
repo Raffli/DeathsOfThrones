@@ -1,6 +1,7 @@
 package deathOfThrones.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,8 @@ public class DeathController {
 		return deathRepository.findAll();
 	}
 	
+	
+	@CrossOrigin()
 	@GetMapping(path="/episode")
 	public Iterable<DeathEntity> getDeathByEpsidoes(@RequestParam int id) {
 		return deathRepository.findByEpisodeId(id);
