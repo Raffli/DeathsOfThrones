@@ -9,6 +9,8 @@ import { MapComponent } from './map/map.component';
 import { WikiComponent } from './wiki/wiki.component';
 import { StatsComponent } from './stats/stats.component';
 import { ContactComponent } from './contact/contact.component';
+import {DataServiceService} from './services/data-service.service';
+import {HttpModule} from '@angular/http';
 
 const appRoutes :Routes = [
   {
@@ -49,9 +51,9 @@ const appRoutes :Routes = [
     ContactComponent
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule
+    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule
   ],
-  providers: [],
+  providers: [DataServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
