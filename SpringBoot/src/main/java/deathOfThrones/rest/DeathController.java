@@ -21,4 +21,9 @@ public class DeathController {
 		return deathRepository.findAll();
 	}
 	
+	@GetMapping(path="/episode")
+	public Iterable<DeathEntity> getDeathByEpsidoes(@RequestParam int id) {
+		return deathRepository.findByEpisodeId(id);
+	}
+	
 }
