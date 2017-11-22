@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DataServiceService} from '../services/data-service.service';
+import {DataService} from '../services/data-service.service';
 
 @Component({
   selector: 'app-map',
@@ -23,7 +23,7 @@ export class MapComponent implements OnInit {
 
   public deaths = [];
 
-  constructor(private dataService: DataServiceService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.mouseIsDown = false;
