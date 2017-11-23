@@ -1,5 +1,8 @@
 <div id="mapContainer" tabindex="1" (keydown)="myKeyEvent($event)" (mousemove)="onMouseMove($event)">
-  <img id="map" src="/assets/map/gotMap.jpeg" [ngStyle]="{'top': positionY, 'left': positionX}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
+  <img id="map" [src]="imageSource" [ngStyle]="{'top': positionY, 'left': positionX}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
+  <ul id="deathlist">
+    <li *ngFor="let death of deaths">{{death.name}}</li>
+  </ul>
 </div>
 
 

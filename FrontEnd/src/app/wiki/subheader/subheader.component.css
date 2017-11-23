@@ -1,0 +1,26 @@
+.subnavbar {
+  width: 100%;
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  list-style-type: none;
+  background-color: #15191a;
+  margin: 0;
+  padding: 0;
+  opacity: 0.6;
+}
+
+.subnavbaritem {
+  float: left;
+  height: 35px;
+  border-left: 3px solid #969070;
+  border-bottom: 3px solid #969070;
+  margin-left: 0;
+  text-align: center;
+}
+
+.subnavbaritem:last-child {
+  border-right: 3px solid #969070;
+}
+
+
