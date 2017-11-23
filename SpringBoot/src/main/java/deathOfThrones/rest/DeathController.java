@@ -17,6 +17,7 @@ public class DeathController {
 	@Autowired
 	private DeathRepository deathRepository;
 	
+	@CrossOrigin()
 	@GetMapping(path="/all")
 	public Iterable<DeathEntity> getAllDeaths() {
 		return deathRepository.findAll();
