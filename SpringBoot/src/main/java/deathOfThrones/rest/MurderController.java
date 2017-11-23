@@ -31,8 +31,8 @@ public class MurderController {
 	}
 	
 	@GetMapping(path="/origin")
-	public MurderEntity getMurderByOrigin(@RequestParam String origin) {
-		return murderRepository.findByName(origin);
+	public Iterable<MurderEntity> getMurderByOrigin(@RequestParam String origin) {
+		return murderRepository.findByOrigin(origin);
 	}
 	
 }

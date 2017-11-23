@@ -26,6 +26,16 @@ public class EpisodeController {
 		return episodeRepository.getAllTitles();
 	}
 	
+	@GetMapping(path="/byImdb")
+	public Iterable<EpisodeEntity> getAllEbisodesByImdbRating() {
+		return episodeRepository.findAllByOrderByImdbRating();
+	}
+	
+	@GetMapping(path="/byImdbDesc")
+	public Iterable<EpisodeEntity> getAllEbisodesByImdbRatingDesc() {
+		return episodeRepository.findAllByOrderByImdbRatingDesc();
+	}
+	
 	@GetMapping(path="/id")
 	public EpisodeEntity getEpisodeById(@RequestParam int id) {
 		return episodeRepository.findByEpisodeId(id);

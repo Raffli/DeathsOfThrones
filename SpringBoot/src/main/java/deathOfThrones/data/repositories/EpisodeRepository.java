@@ -15,5 +15,8 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	
 	@Query("select title from EpisodeEntity")
 	Iterable<String> getAllTitles();
-
+	
+	Iterable<EpisodeEntity> findAllByOrderByImdbRating();
+	
+	Iterable<EpisodeEntity> findAllByOrderByImdbRatingDesc();
 }
