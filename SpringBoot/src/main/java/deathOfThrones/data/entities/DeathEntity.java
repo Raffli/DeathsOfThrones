@@ -33,6 +33,11 @@ public class DeathEntity {
     @Column (name = "place")
     private String place;
     
+    @Column (name = "videoStart")
+    private int videoStart;
+    
+    @Column (name = "videoEnd")
+    private int videoEnd;
 	
 }
 
