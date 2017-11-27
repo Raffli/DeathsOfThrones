@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import deathOfThrones.data.entities.PlaceEntity;
 import deathOfThrones.data.entities.RegionEntity;
 import deathOfThrones.data.repositories.RegionRepository;
 

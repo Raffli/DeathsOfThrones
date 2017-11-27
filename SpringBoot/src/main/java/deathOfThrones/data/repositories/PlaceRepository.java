@@ -14,4 +14,5 @@ public interface PlaceRepository extends CrudRepository<PlaceEntity, String> {
 	@Query("select name from PlaceEntity")
 	Iterable<String> getAllNames();
 	
+	
 }

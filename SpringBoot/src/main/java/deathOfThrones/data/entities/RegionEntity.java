@@ -17,5 +17,6 @@ public class RegionEntity {
     
     @Column (name = "continent")
     private String continent;
+
 }
 
