@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class EpisodeEntity {
     @Id
-    @Column (name = "episodeId")
+    @Column (name = "episodeId", insertable=false, updatable=false)
     private int episodeId;
     
     @Column (name = "season")
