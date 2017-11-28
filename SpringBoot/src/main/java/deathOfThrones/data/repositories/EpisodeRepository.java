@@ -19,4 +19,11 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	Iterable<EpisodeEntity> findAllByOrderByImdbRating();
 	
 	Iterable<EpisodeEntity> findAllByOrderByImdbRatingDesc();
+	
+	@Query("select distinct season from EpisodeEntity")
+	public int[] getAllSeasons();
+	
+	@Query("select viewers from EpisodeEntity e where e.season = ?1")
+	public int[] getAllViewersOfSeason(int season);
+
 }

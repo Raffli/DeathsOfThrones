@@ -47,4 +47,21 @@ public class EpisodeController {
 		return episodeRepository.findByTitle(title);
 	}
 	
+	@GetMapping(path="/avgViewerSeason")
+	public int[] averageViewersSeason() {
+		int[] seasons = episodeRepository.getAllSeasons();
+		int[] avgViewers = new int[seasons.length];
+
+		for(int i = 0; i < seasons.length; i++) {
+			int[] viewers = episodeRepository.getAllViewersOfSeason(seasons[i]);
+			int totalViewers = 0;
+			for (int j = 0; j < viewers.length;j++) {
+				totalViewers += viewers[j];
+			}
+			avgViewers[i] = totalViewers/viewers.length;			
+		}
+		return avgViewers;
+	}
+	
+	
 }
