@@ -24,14 +24,7 @@ public class PlaceController {
 	@GetMapping(path="/name")
 	public PlaceEntity getPlaceByName(@RequestParam String name) {
 		return placeRepository.findByName(name);
-	}
-	
-	//@GetMapping(path="/placeWithRegion")
-	//public PlaceEntity getPlaceWithRegionAndContinent(@RequestParam String name) {
-	//	return placeRepository.getPlaceWithRegion(name);
-	//}
-	
-	
+	}	
 	
 	@GetMapping(path="/allNames")
 	public Iterable<String> getAllPlacesNames() {
