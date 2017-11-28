@@ -51,9 +51,8 @@ public class DeathController {
 		return deathRepository.findByEpisodeId(id);
 	}
 	
-	@GetMapping(path="/deathCountSeason")
-	public Iterable<DeathEntity> getDeathCountBySeason() {
-		
-		return deathRepository.findAllByOrderByEpisodeId();
+	@GetMapping(path="/deathCountBySeason")
+	public int[] getDeathCountBySeason() {
+		return deathRepository.getSeasonCount();
 	}
 }
