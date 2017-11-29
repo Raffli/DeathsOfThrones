@@ -34,10 +34,10 @@ public class EpisodeEntity {
     private String originalAirDate;
 
     @Column (name = "viewers")
-    private String viewers;
+    private int viewers;
     
     @Column (name = "imdbRating")
-    private int imdbRating;
+    private double imdbRating;
     
 }
 
