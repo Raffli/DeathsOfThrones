@@ -11,6 +11,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
+  -webkit-user-drag: none;
 }
 
 #deathlist {
