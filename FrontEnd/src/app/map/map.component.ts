@@ -120,4 +120,30 @@ export class MapComponent implements OnInit {
     }
   };
 
+  mouseWheelFunc = function (event) {
+    if (event.deltaY < 0) {
+      if (this.zoom < 1.50) {
+        this.zoom += 0.05;
+        this.calculateZoomOffset();
+      }
+    } else if (event.deltaY > 0) {
+      if (this.zoom > 0.35) {
+        this.zoom -= 0.05;
+        this.calculateZoomOffset();
+      }
+    }
+  };
+
+  @HostListener('mousewheel', ['$event']) onMouseWheelChrome(event: any) {
+    this.mouseWheelFunc(event);
+  }
+
+  @HostListener('DOMMouseScroll', ['$event']) onMouseWheelFirefox(event: any) {
+    this.mouseWheelFunc(event);
+  }
+
+  @HostListener('onmousewheel', ['$event']) onMouseWheelIE(event: any) {
+    this.mouseWheelFunc(event);
+  }
+
 }
