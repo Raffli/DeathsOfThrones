@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataService} from '../../services/data-service.service';
 
 @Component({
@@ -10,6 +10,9 @@ export class TimelineComponent implements OnInit {
 
   public episodes = [];
   public currentid : number;
+
+  @Output()
+  public episodeSelected = new EventEmitter<number>();
 
   constructor(private dataService: DataService) { }
 
@@ -25,11 +28,7 @@ export class TimelineComponent implements OnInit {
   selectEpisode (episode) {
     this.currentid = episode;
     console.log(this.currentid);
-    this.dataService.getEpisodeById(this.currentid).subscribe(
-      (data: any) => {
-        console.log(data);
-      }
-    );
+    this.episodeSelected.emit(this.currentid);
   }
 
 }

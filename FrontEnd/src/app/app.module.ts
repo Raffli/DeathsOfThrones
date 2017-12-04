@@ -12,6 +12,7 @@ import { ContactComponent } from './contact/contact.component';
 import {DataService} from './services/data-service.service';
 import {HttpModule} from '@angular/http';
 import { TimelineComponent } from './map/timeline/timeline.component';
+import {DeathsService} from './services/deaths.service';
 
 const appRoutes :Routes = [
   {
@@ -55,7 +56,7 @@ const appRoutes :Routes = [
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule
   ],
-  providers: [DataService],
+  providers: [DataService, DeathsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

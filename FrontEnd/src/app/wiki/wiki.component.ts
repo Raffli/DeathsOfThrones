@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService} from '../services/data-service.service';
+import {DeathsService} from '../services/deaths.service';
 
 @Component({
   selector: 'app-wiki',
@@ -11,10 +11,10 @@ export class WikiComponent implements OnInit {
   private hasName: boolean;
   private data: any;
 
-  constructor(private dataService: DataService) { }
+  constructor(private deathsService: DeathsService) { }
 
   ngOnInit() {
-    this.dataService.getAllDeaths()
+    this.deathsService.getAllDeaths()
       .subscribe(
         (data: any) => {
           this.hasName = true;

@@ -5,7 +5,7 @@
     <li *ngFor="let death of deaths">{{death.name}}</li>
   </ul>
   <div id="timeline">
-    <app-timeline></app-timeline>
+    <app-timeline (episodeSelected)="episodeSelected($event)"></app-timeline>
   </div>
 </div>
 
