@@ -1,0 +1,10 @@
+<div id="timelineBackground">
+  <div id="timeBar">
+    <span id="container" *ngFor="let episode of episodes" (click)="selectEpisode(episode.episodeId)">
+      <span class="circle" [class.selectedCircle]="episode.episodeId===currentid">
+        &#x25CF;
+      </span>
+      <span id="text">{{episode.episodeId}}</span>
+    </span>
+  </div>
+</div>

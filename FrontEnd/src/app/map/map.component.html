@@ -1,10 +1,12 @@
 <div id="mapContainer" tabindex="1" (keydown)="myKeyEvent($event)" (mousemove)="onMouseMove($event)" appMousewheel="">
   <img id="map" [src]="imageSource" [style.transform]="scaling" [style.transform.scaleY]="zoom" [style.left.px]="positionX" [style.top.px]="positionY"
-       (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
+        (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
   <ul id="deathlist">
     <li *ngFor="let death of deaths">{{death.name}}</li>
   </ul>
-
+  <div id="timeline">
+    <app-timeline></app-timeline>
+  </div>
 </div>
 
 

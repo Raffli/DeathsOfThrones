@@ -41,7 +41,7 @@ export class MapComponent implements OnInit {
     this.imageSource = '/assets/map/gotMap100.jpg';
     this.calculateZoomOffset();
     this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight - 25;
+    this.screenHeight = window.innerHeight  - 100;
 
 
     this.dataService.getDeathsByEpisode(60).subscribe(
@@ -100,7 +100,7 @@ export class MapComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   myKeyEvent = function (event) {
     this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight - 25;
+    this.screenHeight = window.innerHeight - 100;
     if (event.keyCode === 109) {
       if (this.zoom > 0.35) {
         this.zoom -= 0.05;

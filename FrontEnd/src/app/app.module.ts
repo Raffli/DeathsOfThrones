@@ -11,6 +11,7 @@ import { StatsComponent } from './stats/stats.component';
 import { ContactComponent } from './contact/contact.component';
 import {DataService} from './services/data-service.service';
 import {HttpModule} from '@angular/http';
+import { TimelineComponent } from './map/timeline/timeline.component';
 
 const appRoutes :Routes = [
   {
@@ -48,7 +49,8 @@ const appRoutes :Routes = [
     MapComponent,
     WikiComponent,
     StatsComponent,
-    ContactComponent
+    ContactComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule

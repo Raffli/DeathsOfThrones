@@ -1,0 +1,40 @@
+#timelineBackground {
+  height: 80px;
+  background-color: #15191a;
+  opacity: 0.9;
+  align-content: center;
+}
+
+#timeBar {
+  position: relative;
+  top: 27px;
+  height: 25px;
+  background-color: #969070;
+}
+
+#container {
+  position: relative;
+  top: -50%;
+  text-align: center;
+}
+
+.selectedCircle {
+  color: red!important;
+}
+
+.circle {
+  font-size: 36px;
+  cursor: pointer;
+  color: #15191a;
+}
+
+.circle:hover {
+  color: aquamarine;
+}
+
+#text {
+  z-index: 1;
+  position: absolute;
+  top: 20px;
+  left: 6px;
+}
