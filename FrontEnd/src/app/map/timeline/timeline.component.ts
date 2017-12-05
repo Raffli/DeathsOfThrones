@@ -20,7 +20,6 @@ export class TimelineComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.currentid = 6;
     this.dataService.getAllEpisodes().subscribe(
         (data: any) => {
           this.episodes = data;

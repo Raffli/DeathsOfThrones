@@ -44,3 +44,14 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
+#deadsImage {
+  width: 80px;
+  height: 100px;
+  border-radius: 25px;
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  overflow: hidden;
+  border: 5px solid #760302;
+}

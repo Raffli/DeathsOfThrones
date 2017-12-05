@@ -4,6 +4,9 @@
   <ul id="deathlist">
     <li *ngFor="let death of deaths">{{death.name}}</li>
   </ul>
+  <div *ngFor="let deadImage of imagesOfTheDead">
+    <img id="deadsImage" [src]="deadImage.image" [style.top.px]="deadImage.top" [style.left.px]="deadImage.left">
+  </div>
   <div id="timeline">
     <app-timeline (episodeSelected)="episodeSelected($event)"></app-timeline>
   </div>
