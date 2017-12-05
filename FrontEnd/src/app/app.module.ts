@@ -13,6 +13,8 @@ import {DataService} from './services/data-service.service';
 import {HttpModule} from '@angular/http';
 import { TimelineComponent } from './map/timeline/timeline.component';
 import {DeathsService} from './services/deaths.service';
+import {EpisodesService} from './services/episodes.service';
+import { EpisodePopupComponent } from './map/episode-popup/episode-popup.component';
 
 const appRoutes :Routes = [
   {
@@ -51,12 +53,13 @@ const appRoutes :Routes = [
     WikiComponent,
     StatsComponent,
     ContactComponent,
-    TimelineComponent
+    TimelineComponent,
+    EpisodePopupComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule
   ],
-  providers: [DataService, DeathsService],
+  providers: [DataService, DeathsService, EpisodesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

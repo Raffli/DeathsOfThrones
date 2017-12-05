@@ -1,5 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {DeathsService} from '../services/deaths.service';
+import {EpisodesService} from '../services/episodes.service';
+import {DataService} from '../services/data-service.service';
 
 @Component({
   selector: 'app-map',
@@ -25,9 +27,12 @@ export class MapComponent implements OnInit {
   private imageWidth: number;
   private imageHeight: number;
 
+  private showEpisode : boolean;
+  private episodeData : any[];
+
   public deaths = [];
 
-  constructor(private deathsService: DeathsService) {}
+  constructor(private deathsService: DeathsService, private dataService: DataService) {}
 
   ngOnInit() {
     this.mouseIsDown = false;
@@ -42,8 +47,7 @@ export class MapComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight  - 100;
 
-
-    this.deathsService.getDeathsByEpisode(60).subscribe(
+    this.dataService.getDeathsByEpisode(60).subscribe(
       (data: any) => {
         this.deaths = data;
       }
@@ -56,6 +60,11 @@ export class MapComponent implements OnInit {
         this.deaths = data;
       }
     );
+    this.dataService.getEpisodeById(event).subscribe( (data: any) => {
+      console.log(data);
+      this.episodeData = data;
+      this.showEpisode = true;
+    });
   };
 
   onMouseMove = function (event) {

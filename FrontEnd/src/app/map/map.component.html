@@ -7,6 +7,9 @@
   <div id="timeline">
     <app-timeline (episodeSelected)="episodeSelected($event)"></app-timeline>
   </div>
+  <div *ngIf="showEpisode" id="episodePopup">
+    <app-episode-popup [data]="episodeData"></app-episode-popup>
+  </div>
 </div>
 
 
