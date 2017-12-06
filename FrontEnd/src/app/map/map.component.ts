@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {DeathsService} from '../services/deaths.service';
 import {DataService} from '../services/data-service.service';
 
 @Component({
@@ -10,92 +10,236 @@ import {DataService} from '../services/data-service.service';
 export class MapComponent implements OnInit {
 
   private mouseIsDown : boolean;
+  private startX : number;
+  private startY : number;
   private currentX : number;
   private currentY : number;
-  private positionX : string;
-  private positionY : string;
+  private positionX : number;
+  private positionY : number;
+  private offsetX : number;
+  private offsetY : number;
   private imageSource: string;
   private zoom: number;
+  private scaling : string;
   private screenWidth: number;
   private screenHeight: number;
   private imageWidth: number;
   private imageHeight: number;
 
-  public deaths = [];
+  private showEpisode : boolean;
+  private episodeData : any[];
 
-  constructor(private dataService: DataService) {}
+  private locationCoordinates = [
+    { place: "Astapor", x: 3991, y: 2954},
+    { place: "Beyond the Wall", x: 1492, y: 202},
+    { place: "Blackwater Bay", x: 1675, y: 2041},
+    { place: "Braavos", x: 2200, y: 1400},
+    { place: "Castle Black", x: 1227, y: 1169},
+    { place: "Cave of the Three-Eyed Raven", x: 1434, y: 264},
+    { place: "Craster's Keep", x: 1365, y: 186},
+    { place: "Hardhome", x: 1616, y: 74},
+    { place: "Harrenhal", x: 1343, y: 1803},
+    { place: "Haunted Forest", x: 1321, y: 69},
+    { place: "King's Landing", x: 1557, y: 2057},
+    { place: "Lhazar", x: 4426, y: 2456},
+    { place: "Meereen", x: 4124, y: 2614},
+    { place: "Pyke", x: 750, y: 1631},
+    { place: "Qarth", x: 5298, y: 3206},
+    { place: "Riverrun", x: 1100, y: 1751},
+    { place: "The Dreadfort", x: 1534, y: 693},
+    { place: "The Eyrie", x: 1600, y: 1600},
+    { place: "The North", x: 1435, y: 748},
+    { place: "The Red Waste", x: 4707, y: 2852},
+    { place: "The Riverlands", x: 1137, y: 1660},
+    { place: "The Stormlands", x: 1515, y: 2313},
+    { place: "The Twins", x: 1152, y: 1462},
+    { place: "Tower of Joy", x: 1159, y: 2613},
+    { place: "Vaes Dothrak", x: 4750, y: 1796},
+    { place: "Water Gardens", x: 1809, y: 2853},
+    { place: "Winterfell", x: 1213, y: 770},
+  ];
+
+  public deaths = [];
+  public imagesOfTheDead = [];
+  private deadImagesOffsetX : number;
+  private deadImagesOffsetY : number;
+
+  constructor(private deathsService: DeathsService, private dataService: DataService) {}
 
   ngOnInit() {
     this.mouseIsDown = false;
-    this.currentX = 0;
-    this.currentY = 0;
-    this.zoom = 100;
-    this.imageSource = '/assets/map/gotMap' + this.zoom + '.jpg';
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight - 25;
     this.imageHeight = 3682;
     this.imageWidth = 5652;
+    this.currentX = this.startX = 0;
+    this.currentY = this.startY = 0;
+    this.zoom = 0.35;
+    this.scaling = 'scale(' + this.zoom + ')';
+    this.imageSource = '/assets/map/gotMap100.jpg';
+    this.calculateZoomOffset();
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight  - 100;
+    this.deadImagesOffsetY = this.deadImagesOffsetX = 0;
+  }
 
-    this.dataService.getDeathsByEpisode(60).subscribe(
+  episodeSelected = function (event) {
+    this.imagesOfTheDead = [];
+    this.deathsService.getDeathsByEpisode(event).subscribe(
       (data: any) => {
         this.deaths = data;
+        for (let i=0; i<this.deaths.length; i++) {
+          let splitName = this.deaths[i].name.split(" ");
+          let imageNameRequest = "";
+          for (let j=0; j<splitName.length; j++) {
+            imageNameRequest += splitName[j];
+            if (j < splitName.length -1) {
+              imageNameRequest += "%20";
+            }
+          }
+          let x, y : number;
+          for (let j = 0; j < this.locationCoordinates.length; j++) {
+            if (this.locationCoordinates[j].place == this.deaths[i].place) {
+              x = this.locationCoordinates[j].x * this.zoom - 40;
+              y = this.locationCoordinates[j].y * this.zoom - 50;
+            }
+          }
+          this.imagesOfTheDead[i] = [];
+          this.imagesOfTheDead[i].image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
+          this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
+          this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX;
+        }
       }
-    )
-  }
+    );
+
+    this.dataService.getEpisodeById(event).subscribe( (data: any) => {
+      this.episodeData = data;
+      this.showEpisode = true;
+    });
+  };
+
+  updateDeadImagesXPosition = function (offset){
+    console.log( this.deadImagesOffsetX, offset);
+    this.deadImagesOffsetX += offset;
+    for (let i=0; i<this.deaths.length; i++) {
+      this.imagesOfTheDead[i].left -= offset;
+    }
+  };
+
+  updateDeadImagesYPosition = function (offset){
+    this.deadImagesOffsetY += offset;
+    for (let i=0; i<this.deaths.length; i++) {
+      this.imagesOfTheDead[i].top -= offset;
+    }
+  };
+
+  updateDeadImagesZoom = function (){
+    for (let i=0; i<this.deaths.length; i++) {
+      let x, y : number;
+      for (let j = 0; j < this.locationCoordinates.length; j++) {
+        if (this.locationCoordinates[j].place == this.deaths[i].place) {
+          x = this.locationCoordinates[j].x * this.zoom - 40;
+          y = this.locationCoordinates[j].y * this.zoom - 50;
+        }
+      }
+      this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
+      this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX;
+    }
+  };
 
   onMouseMove = function (event) {
     if (this.mouseIsDown) {
-      //console.log(event.clientX);
+      this.currentX += event.clientX - this.startX;
+      if (this.currentX < 0 && this.currentX > -1 * (this.imageWidth * this.zoom - this.screenWidth)) {
+        this.positionX = this.offsetX + this.currentX;
+        this.updateDeadImagesXPosition(this.startX - event.clientX);
+      } else {
+        if (this.currentX >= 0) {
+          this.currentX = 0;
+        } else {
+          this.currentX = -1 * (this.imageWidth * this.zoom - this.screenWidth);
+        }
+      }
+      this.startX = event.clientX;
+      this.currentY += event.clientY - this.startY;
+      if (this.currentY < 0 && this.currentY > -1 * (this.imageHeight * this.zoom - this.screenHeight)) {
+        this.positionY = this.offsetY + this.currentY;
+        this.updateDeadImagesYPosition(this.startY - event.clientY);
+      } else {
+        if (this.currentY >= 0) {
+          this.currentY = 0;
+        } else {
+          this.currentY = -1 * (this.imageHeight * this.zoom - this.screenHeight);
+        }
+      }
+      this.startY = event.clientY;
     }
   };
 
   onMouseUp = function (event) {
     this.mouseIsDown = false;
-    //console.log(this.mouseIsDown);
   };
 
   onMouseDown = function (event) {
     this.mouseIsDown = true;
-    //console.log(this.mouseIsDown);
+    this.startX = event.clientX;
+    this.startY = event.clientY;
   };
 
+  calculateZoomOffset = function () {
+    this.scaling = 'scale(' + this.zoom + ')';
+    this.offsetX = -(this.imageWidth - this.imageWidth * this.zoom) * 0.5;
+    this.offsetY = -(this.imageHeight - this.imageHeight * this.zoom) * 0.5;
+    this.positionX = this.offsetX + this.currentX;
+    this.positionY = this.offsetY + this.currentY;
+    this.updateDeadImagesZoom();
+  };
+
+  @HostListener('window:keydown', ['$event'])
   myKeyEvent = function (event) {
     this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight - 25;
-    if (event.keyCode === 87 || event.keyCode === 38) { // w
-      if (this.currentY < 0)
-        this.currentY += 50;
-    } else if (event.keyCode === 65 || event.keyCode === 37) { // a
-      if (this.currentX < 0)
-        this.currentX += 50;
-    } else if (event.keyCode === 83 || event.keyCode === 40) { // s
-      let movableHeight = this.imageHeight * this.zoom / 100 - this.screenHeight;
-      if ( (movableHeight + this.currentY) > 0 )
-        this.currentY -= 50;
-    } else if (event.keyCode === 68 || event.keyCode === 39) { // d
-      let movableWidth = this.imageWidth * this.zoom / 100 - this.screenWidth;
-      console.log(movableWidth + " " + this.currentX);
-      if ( (movableWidth + this.currentX) > 50 )
-        this.currentX -= 50;
-    } else if (event.keyCode === 109) {
-      if (this.zoom > 35) {
-        this.zoom -= 5;
+    this.screenHeight = window.innerHeight - 100;
+    if (event.keyCode === 109) {
+      if (this.zoom > 0.35) {
+        this.zoom -= 0.05;
+        this.calculateZoomOffset();
       } else {
         return;
       }
-      this.imageSource = '/assets/map/gotMap' + this.zoom + '.jpg';
     } else if (event.keyCode === 107) {
-      if (this.zoom < 150) {
-        this.zoom += 5;
+      if (this.zoom < 1.50) {
+        this.zoom += 0.05;
+        this.calculateZoomOffset();
       } else {
         return;
       }
-      this.imageSource = '/assets/map/gotMap' + this.zoom + '.jpg';
     } else {
       return;
     }
-    this.positionX = this.currentX + 'px';
-    this.positionY = this.currentY + 'px';
   };
+
+  mouseWheelFunc = function (event) {
+    if (event.deltaY < 0) {
+      if (this.zoom < 1.50) {
+        this.zoom += 0.05;
+        this.calculateZoomOffset();
+      }
+    } else if (event.deltaY > 0) {
+      if (this.zoom > 0.35) {
+        this.zoom -= 0.05;
+        this.calculateZoomOffset();
+      }
+    }
+  };
+
+  @HostListener('mousewheel', ['$event']) onMouseWheelChrome(event: any) {
+    this.mouseWheelFunc(event);
+  }
+
+  @HostListener('DOMMouseScroll', ['$event']) onMouseWheelFirefox(event: any) {
+    this.mouseWheelFunc(event);
+  }
+
+  @HostListener('onmousewheel', ['$event']) onMouseWheelIE(event: any) {
+    this.mouseWheelFunc(event);
+  }
 
 }

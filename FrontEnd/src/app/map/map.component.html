@@ -1,8 +1,18 @@
-<div id="mapContainer" tabindex="1" (keydown)="myKeyEvent($event)" (mousemove)="onMouseMove($event)">
-  <img id="map" [src]="imageSource" [ngStyle]="{'top': positionY, 'left': positionX}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
+<div id="mapContainer" tabindex="1" (keydown)="myKeyEvent($event)" (mousemove)="onMouseMove($event)" appMousewheel="">
+  <img id="map" [src]="imageSource" [style.transform]="scaling" [style.transform.scaleY]="zoom" [style.left.px]="positionX" [style.top.px]="positionY"
+        (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
   <ul id="deathlist">
     <li *ngFor="let death of deaths">{{death.name}}</li>
   </ul>
+  <div *ngFor="let deadImage of imagesOfTheDead">
+    <img id="deadsImage" [src]="deadImage.image" [style.top.px]="deadImage.top" [style.left.px]="deadImage.left">
+  </div>
+  <div id="timeline">
+    <app-timeline (episodeSelected)="episodeSelected($event)"></app-timeline>
+  </div>
+  <div *ngIf="showEpisode" id="episodePopup">
+    <app-episode-popup [data]="episodeData"></app-episode-popup>
+  </div>
 </div>
 
 

@@ -11,7 +11,10 @@ import { StatsComponent } from './stats/stats.component';
 import { ContactComponent } from './contact/contact.component';
 import {DataService} from './services/data-service.service';
 import {HttpModule} from '@angular/http';
-import { SubheaderComponent } from './wiki/subheader/subheader.component';
+import { TimelineComponent } from './map/timeline/timeline.component';
+import {DeathsService} from './services/deaths.service';
+import {EpisodesService} from './services/episodes.service';
+import { EpisodePopupComponent } from './map/episode-popup/episode-popup.component';
 
 const appRoutes :Routes = [
   {
@@ -50,12 +53,13 @@ const appRoutes :Routes = [
     WikiComponent,
     StatsComponent,
     ContactComponent,
-    SubheaderComponent
+    TimelineComponent,
+    EpisodePopupComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule
   ],
-  providers: [DataService],
+  providers: [DataService, DeathsService, EpisodesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
