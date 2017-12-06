@@ -5,3 +5,8 @@ body {
   color: #969070;
   font-size: large;
 }
+
+
+.wiki-panel {
+  background-color: green !important;
+}

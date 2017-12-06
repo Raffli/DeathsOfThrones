@@ -1,5 +1,5 @@
 <p-tabView styleClass="wiki-header">
-  <p-tabPanel header="DEATHS" [selected]="true">
+  <p-tabPanel header="DEATHS" [selected]="true" headerStyleClass="wiki-panel">
     <div *ngIf="dataLoaded">
       <ul class="listOverview">
         <li *ngFor="let entry of deathsByAlphabet; let i = index" id="alphabet" >
@@ -11,11 +11,11 @@
       </ul>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="MURDERER">
+  <p-tabPanel header="MURDERER" headerStyleClass="wiki-panel">
   </p-tabPanel>
-  <p-tabPanel header="LOCATIONS">
+  <p-tabPanel header="LOCATIONS" headerStyleClass="wiki-panel">
   </p-tabPanel>
-  <p-tabPanel header="EPISODES">
+  <p-tabPanel header="EPISODES" headerStyleClass="wiki-panel">
   </p-tabPanel>
 </p-tabView>
 
