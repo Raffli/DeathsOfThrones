@@ -13,6 +13,9 @@ export class WikiComponent implements OnInit {
   private alphabet = ["A", "B", "C", "D", "E", "F", "G", "H",
   "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   private deathsByAlphabet = new Array(this.alphabet.length);
+  private murderersByAlphabet = new Array(this.alphabet.length);
+  private locationsByAlphabet = new Array(this.alphabet.length);
+  private episodesByAlphabet = new Array(this.alphabet.length);
   private dataLoaded : boolean;
 
   constructor(private deathsService: DeathsService) { }
@@ -35,6 +38,8 @@ export class WikiComponent implements OnInit {
               }
             }
           }
+
+
           this.dataLoaded = true;
         }
       )

@@ -1,23 +1,64 @@
-<p-tabView styleClass="wiki-header">
-  <p-tabPanel header="DEATHS" [selected]="true">
+<div *ngIf="dataLoaded">
+  <ul class="listOverview">
+    <li *ngFor="let entry of deathsByAlphabet; let i = index" class="alphabet" >
+      <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+      <ul>
+        <li *ngFor="let value of entry" class="listEntry">{{value}}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<!--
+<p-tabView headerStyleClass="wiki-header">
+  <p-tabPanel header="DEATHS" [selected]="true" headerStyleClass="wiki-panel">
     <div *ngIf="dataLoaded">
       <ul class="listOverview">
-        <li *ngFor="let entry of deathsByAlphabet; let i = index" id="alphabet" >
+        <li *ngFor="let entry of deathsByAlphabet; let i = index" class="alphabet" >
           <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
           <ul>
-            <li *ngFor="let value of entry" id="listEntry">{{value}}</li>
+            <li *ngFor="let value of entry" class="listEntry">{{value}}</li>
           </ul>
         </li>
       </ul>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="MURDERER">
+  <p-tabPanel header="MURDERERS" headerStyleClass="wiki-panel">
+    <div *ngIf="dataLoaded">
+      <ul class="listOverview">
+        <li *ngFor="let entry of deathsByAlphabet; let i = index" class="alphabet" >
+          <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+          <ul>
+            <li *ngFor="let value of entry" class="listEntry">{{value}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </p-tabPanel>
-  <p-tabPanel header="LOCATIONS">
+  <p-tabPanel header="LOCATIONS" headerStyleClass="wiki-panel">
+    <div *ngIf="dataLoaded">
+      <ul class="listOverview">
+        <li *ngFor="let entry of deathsByAlphabet; let i = index" class="alphabet" >
+          <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+          <ul>
+            <li *ngFor="let value of entry" class="listEntry">{{value}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </p-tabPanel>
-  <p-tabPanel header="EPISODES">
+  <p-tabPanel header="EPISODES" headerStyleClass="wiki-panel">
+    <div *ngIf="dataLoaded">
+      <ul class="listOverview">
+        <li *ngFor="let entry of deathsByAlphabet; let i = index" class="alphabet" >
+          <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+          <ul>
+            <li *ngFor="let value of entry" class="listEntry">{{value}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </p-tabPanel>
 </p-tabView>
 
-
+--->
 

@@ -16,10 +16,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {label: 'MAP', icon: 'fa-globe', routerLink: '/map'},
-      {label: 'WIKI', icon: 'fa-info-circle', routerLink: '/wiki'},
+      {label: 'WIKI', icon: 'fa-book', routerLink: '/wiki'},
       {label: 'STATS', icon: 'fa-bar-chart', routerLink: '/stats'},
       {label: 'SEARCH', icon: 'fa-search'},
-      {label: 'CONTACT', icon: 'fa-envelope', routerLink: '/contact'},
+      {label: 'ABOUT', icon: 'fa-info-circle', routerLink: '/about'},
     ];
   }
 

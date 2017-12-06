@@ -5,3 +5,24 @@ body {
   color: #969070;
   font-size: large;
 }
+
+.wiki-header {
+
+}
+
+.wiki-header .ui-tabview {
+  background-color: #969070!important;
+}
+
+.wiki-panel {
+  background-color: #15191a!important;
+  color: #969070!important;
+}
+
+.ui-state-default .ui-corner-top .wiki-panel .ui-tabview-selected .ui-state-active {
+  background-color: #969070!important;
+}
+
+
+
+

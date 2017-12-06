@@ -37,7 +37,7 @@ const appRoutes :Routes = [
     component: StatsComponent
   },
   {
-    path: 'contact',
+    path: 'about',
     component: ContactComponent
   },
   {
