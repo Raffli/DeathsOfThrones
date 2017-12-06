@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-episode-popup',
-  templateUrl: './episode-popup.component.html',
-  styleUrls: ['./episode-popup.component.css']
+  selector: 'app-dead-popup',
+  templateUrl: './dead-popup.component.html',
+  styleUrls: ['./dead-popup.component.css']
 })
-export class EpisodePopupComponent implements OnInit {
+export class DeadPopupComponent implements OnInit {
 
   @Input () public data: any[];
 

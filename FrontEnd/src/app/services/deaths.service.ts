@@ -18,4 +18,9 @@ export class DeathsService {
     return this.http.get('http://localhost:8080/dot/death/all').map((response: Response) => response.json());
   }
 
+  public getDeathByName (name: string): Observable<any[]> {
+    return this.http.get('http://localhost:8080/dot/death/name?name=' + name)
+      .map((response: Response) => response.json());
+  }
+
 }

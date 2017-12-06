@@ -27,14 +27,16 @@ export class MapComponent implements OnInit {
   private imageHeight: number;
 
   private showEpisode : boolean;
+  private showDeadPopup: boolean;
   private episodeData : any[];
+  private deadData: any[];
 
   private locationCoordinates = [
     { place: "Astapor", x: 3991, y: 2954},
     { place: "Beyond the Wall", x: 1492, y: 202},
     { place: "Blackwater Bay", x: 1675, y: 2041},
     { place: "Braavos", x: 2200, y: 1400},
-    { place: "Castle Black", x: 1227, y: 1169},
+    { place: "Castle Black", x: 1227, y: 169},
     { place: "Cave of the Three-Eyed Raven", x: 1434, y: 264},
     { place: "Craster's Keep", x: 1365, y: 186},
     { place: "Hardhome", x: 1616, y: 74},
@@ -82,11 +84,47 @@ export class MapComponent implements OnInit {
   }
 
   episodeSelected = function (event) {
+    this.showDeadPopup = false;
     this.imagesOfTheDead = [];
     this.deathsService.getDeathsByEpisode(event).subscribe(
       (data: any) => {
         this.deaths = data;
+        // check location duplicates
+        let places = [];
+        let differentPlaces = 0;
         for (let i=0; i<this.deaths.length; i++) {
+          if (differentPlaces > 0) {
+            let newPlace = false;
+            let placeFound = false;
+            for (let j=0; j<places.length; j++) {
+              if (this.deaths[i].place == places[j].place) {
+                places[j].count++;
+                placeFound = true;
+              }
+              if (j == places.length-1 && !placeFound) {
+                newPlace = true;
+              }
+            }
+            if (newPlace) {
+              places[differentPlaces] = [];
+              places[differentPlaces] = {
+                place: this.deaths[i].place, count: 1
+              };
+              differentPlaces++;
+              newPlace = false;
+            }
+          } else {
+            places[differentPlaces] = [];
+            places[differentPlaces] = {
+              place: this.deaths[i].place, count: 1
+            };
+            differentPlaces++;
+          }
+        }
+
+        // show image of the dead
+        for (let i=0; i<this.deaths.length; i++) {
+          // find image by name
           let splitName = this.deaths[i].name.split(" ");
           let imageNameRequest = "";
           for (let j=0; j<splitName.length; j++) {
@@ -95,17 +133,30 @@ export class MapComponent implements OnInit {
               imageNameRequest += "%20";
             }
           }
-          let x, y : number;
+          // set image coordinates
+          let x, y, offsetX, offsetY : number;
           for (let j = 0; j < this.locationCoordinates.length; j++) {
             if (this.locationCoordinates[j].place == this.deaths[i].place) {
-              x = this.locationCoordinates[j].x * this.zoom - 40;
-              y = this.locationCoordinates[j].y * this.zoom - 50;
+              for (let k = 0; k < places.length; k++) {
+                if (this.deaths[i].place == places[k].place) {
+                  if (places[k].count > 1) {
+                    places[k].count--;
+                    offsetX = places[k].count * 80;
+                  } else {
+                    offsetX = 0;
+                  }
+                }
+              }
+              x = this.locationCoordinates[j].x * this.zoom - 30;
+              y = this.locationCoordinates[j].y * this.zoom - 37.5;
             }
           }
           this.imagesOfTheDead[i] = [];
+          this.imagesOfTheDead[i].name = this.deaths[i].name;
           this.imagesOfTheDead[i].image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
+          this.imagesOfTheDead[i].offsetX = offsetX;
           this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
-          this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX;
+          this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
         }
       }
     );
@@ -114,6 +165,17 @@ export class MapComponent implements OnInit {
       this.episodeData = data;
       this.showEpisode = true;
     });
+  };
+
+  openDeadPopup = function (event) {
+    this.deathsService.getDeathByName(event.target.name).subscribe((data: any) => {
+      this.deadData = data;
+      this.showDeadPopup = true;
+    });
+  };
+
+  deadPopupClosed = function () {
+    this.showDeadPopup = false;
   };
 
   popupClosed = function () {
@@ -139,12 +201,12 @@ export class MapComponent implements OnInit {
       let x, y : number;
       for (let j = 0; j < this.locationCoordinates.length; j++) {
         if (this.locationCoordinates[j].place == this.deaths[i].place) {
-          x = this.locationCoordinates[j].x * this.zoom - 40;
-          y = this.locationCoordinates[j].y * this.zoom - 50;
+          x = this.locationCoordinates[j].x * this.zoom - 30;
+          y = this.locationCoordinates[j].y * this.zoom - 37.5;
         }
       }
       this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
-      this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX;
+      this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
     }
   };
 

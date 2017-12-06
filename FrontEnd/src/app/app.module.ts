@@ -15,6 +15,7 @@ import { TimelineComponent } from './map/timeline/timeline.component';
 import {DeathsService} from './services/deaths.service';
 import {EpisodesService} from './services/episodes.service';
 import { EpisodePopupComponent } from './map/episode-popup/episode-popup.component';
+import { DeadPopupComponent } from './map/dead-popup/dead-popup.component';
 
 const appRoutes :Routes = [
   {
@@ -55,6 +56,7 @@ const appRoutes :Routes = [
     ContactComponent,
     TimelineComponent,
     EpisodePopupComponent,
+    DeadPopupComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule
