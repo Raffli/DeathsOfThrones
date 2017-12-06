@@ -1,5 +1,8 @@
 package deathOfThrones.data.entities;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -39,6 +42,16 @@ public class EpisodeEntity {
     @Column (name = "imdbRating")
     private double imdbRating;
     
+    public String getOriginalAirDate() {
+    	java.sql.Date dat = java.sql.Date.valueOf(originalAirDate);
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(dat);
+    	String date = "";
+    	date += cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+    	date += " " + cal.get(Calendar.DAY_OF_MONTH) + ", ";
+    	date += cal.get(Calendar.YEAR); 
+    	return date;
+    }
 }
 
 
