@@ -1,4 +1,17 @@
 .listOverview {
-  columns: 200px 4;
-  list-style: none;
+  column-width: 150px;
+  column-count: 4;
+  column-fill: auto;
+  height: 100%;
 }
+
+#alphabet {
+  font-size: x-large;
+}
+
+#listEntry {
+  list-style: none;
+  font-size: large;
+}
+
+

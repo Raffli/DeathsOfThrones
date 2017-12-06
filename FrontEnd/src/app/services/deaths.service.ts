@@ -23,4 +23,8 @@ export class DeathsService {
       .map((response: Response) => response.json());
   }
 
+  public getAllDeathsOnlyName (): Observable <any[]> {
+    return this.http.get('http://localhost:8080/dot/death/allNames').map((response: Response) => response.json());
+  }
+
 }

@@ -1,12 +1,23 @@
-<div *ngIf="hasName; else episode_content">
-  <ul class="listOverview">
-    <li *ngFor="let entry of data">{{entry.name}}</li>
-  </ul>
-</div>
+<p-tabView styleClass="wiki-header">
+  <p-tabPanel header="DEATHS" [selected]="true">
+    <div *ngIf="dataLoaded">
+      <ul class="listOverview">
+        <li *ngFor="let entry of deathsByAlphabet; let i = index" id="alphabet" >
+          <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+          <ul>
+            <li *ngFor="let value of entry" id="listEntry">{{value}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="MURDERER">
+  </p-tabPanel>
+  <p-tabPanel header="LOCATIONS">
+  </p-tabPanel>
+  <p-tabPanel header="EPISODES">
+  </p-tabPanel>
+</p-tabView>
 
-<ng-template #episode_content>
-  <ul class="listOverview">
-    <li *ngFor="let entry of data">{{entry.title}}</li>
-  </ul>
-</ng-template>
+
 
