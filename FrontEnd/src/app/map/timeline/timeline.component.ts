@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {EpisodesService} from '../../services/episodes.service';
 import {DataService} from '../../services/data-service.service';
 
 @Component({
@@ -14,8 +13,6 @@ export class TimelineComponent implements OnInit {
 
   @Output()
   public episodeSelected = new EventEmitter<number>();
-  @Output()
-  public showEpisodePopup = new EventEmitter<number>();
 
   constructor(private dataService: DataService) { }
 
@@ -30,7 +27,6 @@ export class TimelineComponent implements OnInit {
   selectEpisode (episode) {
     this.currentid = episode;
     this.episodeSelected.emit(this.currentid);
-    this.showEpisodePopup.emit(this.currentid);
   }
 
 }

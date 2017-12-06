@@ -77,7 +77,7 @@ export class MapComponent implements OnInit {
     this.imageSource = '/assets/map/gotMap100.jpg';
     this.calculateZoomOffset();
     this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight  - 100;
+    this.screenHeight = window.innerHeight  - 130;
     this.deadImagesOffsetY = this.deadImagesOffsetX = 0;
   }
 
@@ -116,8 +116,11 @@ export class MapComponent implements OnInit {
     });
   };
 
+  popupClosed = function () {
+    this.showEpisode = false;
+  };
+
   updateDeadImagesXPosition = function (offset){
-    console.log( this.deadImagesOffsetX, offset);
     this.deadImagesOffsetX += offset;
     for (let i=0; i<this.deaths.length; i++) {
       this.imagesOfTheDead[i].left -= offset;
@@ -147,6 +150,8 @@ export class MapComponent implements OnInit {
 
   onMouseMove = function (event) {
     if (this.mouseIsDown) {
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight  - 130;
       this.currentX += event.clientX - this.startX;
       if (this.currentX < 0 && this.currentX > -1 * (this.imageWidth * this.zoom - this.screenWidth)) {
         this.positionX = this.offsetX + this.currentX;
@@ -186,8 +191,20 @@ export class MapComponent implements OnInit {
 
   calculateZoomOffset = function () {
     this.scaling = 'scale(' + this.zoom + ')';
-    this.offsetX = -(this.imageWidth - this.imageWidth * this.zoom) * 0.5;
-    this.offsetY = -(this.imageHeight - this.imageHeight * this.zoom) * 0.5;
+    let actualImageWidth = this.imageWidth * this.zoom;
+    let actualImageHeight = this.imageHeight * this.zoom;
+    this.offsetX = -(this.imageWidth - actualImageWidth) * 0.5;
+    this.offsetY = -(this.imageHeight - actualImageHeight) * 0.5;
+    let scrollWidth = this.screenWidth - actualImageWidth;
+    let scrollHeight = this.screenHeight - actualImageHeight;
+    if (this.currentX < scrollWidth) {
+      this.currentX += this.imageWidth * 0.05;
+      this.deadImagesOffsetX -= this.imageWidth * 0.05;
+    }
+    if (this.currentY < scrollHeight) {
+      this.currentY += this.imageHeight * 0.05;
+      this.deadImagesOffsetY -= this.imageHeight * 0.05;
+    }
     this.positionX = this.offsetX + this.currentX;
     this.positionY = this.offsetY + this.currentY;
     this.updateDeadImagesZoom();
@@ -217,6 +234,8 @@ export class MapComponent implements OnInit {
   };
 
   mouseWheelFunc = function (event) {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight  - 130;
     if (event.deltaY < 0) {
       if (this.zoom < 1.50) {
         this.zoom += 0.05;
