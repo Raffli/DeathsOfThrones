@@ -7,21 +7,47 @@ body {
 }
 
 .wiki-header {
-
+  opacity: 0.6;
+  background-color: #15191a!important;
 }
 
-.wiki-header .ui-tabview {
+.wiki-header .ui-corner-all {
+  border: none!important;
+  border-radius: 0;
   background-color: #969070!important;
 }
 
-.wiki-panel {
-  background-color: #15191a!important;
+.ui-tabview {
+  padding: 0!important;
+}
+
+.ui-tabview-title {
+  color: #15191a;
+}
+
+.ui-state-active .ui-tabview-title {
   color: #969070!important;
 }
 
-.ui-state-default .ui-corner-top .wiki-panel .ui-tabview-selected .ui-state-active {
+.wiki-panel {
   background-color: #969070!important;
+  border: none;
+  border-radius: 0;
 }
+
+.ui-tabview.ui-tabview-top>.ui-tabview-nav li {
+  border: none;
+}
+
+.wiki-panel.ui-tabview-selected {
+  background-color: #15191a!important;
+}
+
+.wiki-panel .ui-tabview-nav {
+  color: #969070!important;
+}
+
+
 
 
 
