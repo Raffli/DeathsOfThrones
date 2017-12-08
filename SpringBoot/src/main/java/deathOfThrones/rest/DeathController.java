@@ -55,4 +55,9 @@ public class DeathController {
 	public int[] getDeathCountBySeason() {
 		return deathRepository.getSeasonCount();
 	}
+	
+	@GetMapping(path="/killsByMurder")
+	public int getKillsByMurderName(@RequestParam String name) {
+		return deathRepository.getKillCount(name);
+	}
 }

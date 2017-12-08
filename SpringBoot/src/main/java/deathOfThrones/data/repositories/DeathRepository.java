@@ -24,5 +24,9 @@ public interface DeathRepository extends CrudRepository<DeathEntity, String> {
 	
 	@Query("select count(episode.season) from DeathEntity group by episode.season")
 	int[] getSeasonCount();
+	
+	@Query("select count(*) from DeathEntity where Murder like ?1")
+	int getKillCount(String name);
 
+	
 }
