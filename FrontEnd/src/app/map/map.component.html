@@ -1,10 +1,10 @@
 <div id="mapContainer" tabindex="1" (keydown)="myKeyEvent($event)" (mousemove)="onMouseMove($event)" appMousewheel="">
-  <img id="map" [src]="imageSource" [style.transform]="scaling" [style.transform.scaleY]="zoom" [style.left.px]="positionX" [style.top.px]="positionY"
-        (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
-  <div *ngFor="let deadImage of imagesOfTheDead">
-    <img id="deadsImage" [name]="deadImage.name" [src]="deadImage.image" [style.top.px]="deadImage.top" [style.left.px]="deadImage.left" (click)="openDeadPopup($event)">
+  <div >
+    <img [style.transform]="scaling" id="map" [src]="imageSource" [style.left.px]="positionX" [style.top.px]="positionY"
+         (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"/>
+    <img *ngFor="let deadImage of imagesOfTheDead" id="deadsImage" [name]="deadImage.name" [src]="deadImage.image" [style.top.px]="deadImage.top" [style.left.px]="deadImage.left" (click)="openDeadPopup($event)">
   </div>
-  <div id="timeline">
+   <div id="timeline">
     <app-timeline (episodeSelected)="episodeSelected($event)"></app-timeline>
   </div>
   <div *ngIf="showDeadPopup" id="deadPopup">

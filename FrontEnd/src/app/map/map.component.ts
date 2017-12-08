@@ -74,7 +74,7 @@ export class MapComponent implements OnInit {
     this.imageWidth = 5652;
     this.currentX = this.startX = 0;
     this.currentY = this.startY = 0;
-    this.zoom = 0.35;
+    this.zoom = 1;
     this.scaling = 'scale(' + this.zoom + ')';
     this.imageSource = '/assets/map/gotMap100.jpg';
     this.calculateZoomOffset();

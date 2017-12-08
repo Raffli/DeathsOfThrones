@@ -22,11 +22,14 @@ export class WikiComponent implements OnInit {
   private murderersLoaded: boolean;
   private locationsLoaded: boolean;
   private episodesLoaded: boolean;
+  private showEntry: boolean;
+  private deadData: any[];
 
   constructor(private deathsService: DeathsService, private murderersService: MurderersService,
               private locationsService: LocationsService, private episodesService: EpisodesService) { }
 
   ngOnInit() {
+    this.showEntry = false;
     this.deathsService.getAllDeathsOnlyName()
       .subscribe(
         (data: any) => {
@@ -105,4 +108,20 @@ export class WikiComponent implements OnInit {
       );
   }
 
+  displayEntry = function (event) {
+    this.deathsService.getDeathByName(event.target.textContent).subscribe( (data: any) => {
+      this.deadData = data;
+      // find image by name
+      let splitName = event.target.textContent.split(" ");
+      let imageNameRequest = "";
+      for (let j=0; j<splitName.length; j++) {
+        imageNameRequest += splitName[j];
+        if (j < splitName.length -1) {
+          imageNameRequest += "%20";
+        }
+      }
+      this.deadData.image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
+      this.showEntry = true;
+    });
+  };
 }

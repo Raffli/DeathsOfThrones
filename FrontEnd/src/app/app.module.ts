@@ -19,6 +19,7 @@ import { DeadPopupComponent } from './map/dead-popup/dead-popup.component';
 import {TabViewModule} from 'primeng/primeng';
 import {MurderersService} from "./services/murderers.service";
 import {LocationsService} from "./services/locations.service";
+import { DisplayDeathComponent } from './wiki/display-death/display-death.component';
 
 const appRoutes :Routes = [
   {
@@ -60,6 +61,7 @@ const appRoutes :Routes = [
     TimelineComponent,
     EpisodePopupComponent,
     DeadPopupComponent,
+    DisplayDeathComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule
