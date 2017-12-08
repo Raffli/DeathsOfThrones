@@ -27,14 +27,16 @@ export class MapComponent implements OnInit {
   private imageHeight: number;
 
   private showEpisode : boolean;
+  private showDeadPopup: boolean;
   private episodeData : any[];
+  private deadData: any[];
 
   private locationCoordinates = [
     { place: "Astapor", x: 3991, y: 2954},
     { place: "Beyond the Wall", x: 1492, y: 202},
     { place: "Blackwater Bay", x: 1675, y: 2041},
     { place: "Braavos", x: 2200, y: 1400},
-    { place: "Castle Black", x: 1227, y: 1169},
+    { place: "Castle Black", x: 1227, y: 169},
     { place: "Cave of the Three-Eyed Raven", x: 1434, y: 264},
     { place: "Craster's Keep", x: 1365, y: 186},
     { place: "Hardhome", x: 1616, y: 74},
@@ -72,21 +74,57 @@ export class MapComponent implements OnInit {
     this.imageWidth = 5652;
     this.currentX = this.startX = 0;
     this.currentY = this.startY = 0;
-    this.zoom = 0.35;
+    this.zoom = 1;
     this.scaling = 'scale(' + this.zoom + ')';
     this.imageSource = '/assets/map/gotMap100.jpg';
     this.calculateZoomOffset();
     this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight  - 100;
+    this.screenHeight = window.innerHeight  - 130;
     this.deadImagesOffsetY = this.deadImagesOffsetX = 0;
   }
 
   episodeSelected = function (event) {
+    this.showDeadPopup = false;
     this.imagesOfTheDead = [];
     this.deathsService.getDeathsByEpisode(event).subscribe(
       (data: any) => {
         this.deaths = data;
+        // check location duplicates
+        let places = [];
+        let differentPlaces = 0;
         for (let i=0; i<this.deaths.length; i++) {
+          if (differentPlaces > 0) {
+            let newPlace = false;
+            let placeFound = false;
+            for (let j=0; j<places.length; j++) {
+              if (this.deaths[i].place == places[j].place) {
+                places[j].count++;
+                placeFound = true;
+              }
+              if (j == places.length-1 && !placeFound) {
+                newPlace = true;
+              }
+            }
+            if (newPlace) {
+              places[differentPlaces] = [];
+              places[differentPlaces] = {
+                place: this.deaths[i].place, count: 1
+              };
+              differentPlaces++;
+              newPlace = false;
+            }
+          } else {
+            places[differentPlaces] = [];
+            places[differentPlaces] = {
+              place: this.deaths[i].place, count: 1
+            };
+            differentPlaces++;
+          }
+        }
+
+        // show image of the dead
+        for (let i=0; i<this.deaths.length; i++) {
+          // find image by name
           let splitName = this.deaths[i].name.split(" ");
           let imageNameRequest = "";
           for (let j=0; j<splitName.length; j++) {
@@ -95,17 +133,30 @@ export class MapComponent implements OnInit {
               imageNameRequest += "%20";
             }
           }
-          let x, y : number;
+          // set image coordinates
+          let x, y, offsetX, offsetY : number;
           for (let j = 0; j < this.locationCoordinates.length; j++) {
             if (this.locationCoordinates[j].place == this.deaths[i].place) {
-              x = this.locationCoordinates[j].x * this.zoom - 40;
-              y = this.locationCoordinates[j].y * this.zoom - 50;
+              for (let k = 0; k < places.length; k++) {
+                if (this.deaths[i].place == places[k].place) {
+                  if (places[k].count > 1) {
+                    places[k].count--;
+                    offsetX = places[k].count * 80;
+                  } else {
+                    offsetX = 0;
+                  }
+                }
+              }
+              x = this.locationCoordinates[j].x * this.zoom - 30;
+              y = this.locationCoordinates[j].y * this.zoom - 37.5;
             }
           }
           this.imagesOfTheDead[i] = [];
+          this.imagesOfTheDead[i].name = this.deaths[i].name;
           this.imagesOfTheDead[i].image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
+          this.imagesOfTheDead[i].offsetX = offsetX;
           this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
-          this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX;
+          this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
         }
       }
     );
@@ -116,8 +167,22 @@ export class MapComponent implements OnInit {
     });
   };
 
+  openDeadPopup = function (event) {
+    this.deathsService.getDeathByName(event.target.name).subscribe((data: any) => {
+      this.deadData = data;
+      this.showDeadPopup = true;
+    });
+  };
+
+  deadPopupClosed = function () {
+    this.showDeadPopup = false;
+  };
+
+  popupClosed = function () {
+    this.showEpisode = false;
+  };
+
   updateDeadImagesXPosition = function (offset){
-    console.log( this.deadImagesOffsetX, offset);
     this.deadImagesOffsetX += offset;
     for (let i=0; i<this.deaths.length; i++) {
       this.imagesOfTheDead[i].left -= offset;
@@ -136,17 +201,19 @@ export class MapComponent implements OnInit {
       let x, y : number;
       for (let j = 0; j < this.locationCoordinates.length; j++) {
         if (this.locationCoordinates[j].place == this.deaths[i].place) {
-          x = this.locationCoordinates[j].x * this.zoom - 40;
-          y = this.locationCoordinates[j].y * this.zoom - 50;
+          x = this.locationCoordinates[j].x * this.zoom - 30;
+          y = this.locationCoordinates[j].y * this.zoom - 37.5;
         }
       }
       this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
-      this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX;
+      this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
     }
   };
 
   onMouseMove = function (event) {
     if (this.mouseIsDown) {
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight  - 130;
       this.currentX += event.clientX - this.startX;
       if (this.currentX < 0 && this.currentX > -1 * (this.imageWidth * this.zoom - this.screenWidth)) {
         this.positionX = this.offsetX + this.currentX;
@@ -186,8 +253,20 @@ export class MapComponent implements OnInit {
 
   calculateZoomOffset = function () {
     this.scaling = 'scale(' + this.zoom + ')';
-    this.offsetX = -(this.imageWidth - this.imageWidth * this.zoom) * 0.5;
-    this.offsetY = -(this.imageHeight - this.imageHeight * this.zoom) * 0.5;
+    let actualImageWidth = this.imageWidth * this.zoom;
+    let actualImageHeight = this.imageHeight * this.zoom;
+    this.offsetX = -(this.imageWidth - actualImageWidth) * 0.5;
+    this.offsetY = -(this.imageHeight - actualImageHeight) * 0.5;
+    let scrollWidth = this.screenWidth - actualImageWidth;
+    let scrollHeight = this.screenHeight - actualImageHeight;
+    if (this.currentX < scrollWidth) {
+      this.currentX += this.imageWidth * 0.05;
+      this.deadImagesOffsetX -= this.imageWidth * 0.05;
+    }
+    if (this.currentY < scrollHeight) {
+      this.currentY += this.imageHeight * 0.05;
+      this.deadImagesOffsetY -= this.imageHeight * 0.05;
+    }
     this.positionX = this.offsetX + this.currentX;
     this.positionY = this.offsetY + this.currentY;
     this.updateDeadImagesZoom();
@@ -217,6 +296,8 @@ export class MapComponent implements OnInit {
   };
 
   mouseWheelFunc = function (event) {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight  - 130;
     if (event.deltaY < 0) {
       if (this.zoom < 1.50) {
         this.zoom += 0.05;

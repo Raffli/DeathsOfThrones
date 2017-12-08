@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-episode-popup',
@@ -9,9 +9,16 @@ export class EpisodePopupComponent implements OnInit {
 
   @Input () public data: any[];
 
+  @Output()
+  public popupClosed = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  hidePopup = function (){
+    this.popupClosed.emit();
   }
 
 }
