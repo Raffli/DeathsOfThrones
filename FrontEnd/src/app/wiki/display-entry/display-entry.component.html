@@ -1,0 +1,106 @@
+<ul class="navigation">
+  <li class="navElement" id="leftElement">
+    <button pButton type="button" icon="fa-chevron-left" iconPos="left" label="Click left" class="navButtons" id="left"></button>
+  </li>
+  <li class="navElement" id="centerElement">
+    <button pButton type="button" label="ALL MURDERERS" class="navButtons" id="return" (click)="callReturnToList()"></button>
+  </li>
+  <li class="navElement" id="rightElement">
+    <button pButton type="button" icon="fa-chevron-right" iconPos="right" label="Click right" class="navButtons" id="right"></button>
+  </li>
+</ul>
+<div *ngIf="deadData">
+  <table class="entryTable">
+    <td class="imageCol">
+      <img class="deadsImage" [src]="deadData.image" >
+    </td>
+    <td class="tableCol">
+      <table class="deadTable">
+        <tr>
+          <td class="type">Name:</td>
+          <td class="data">{{deadData.name}}</td>
+        </tr>
+        <tr>
+          <td class="type">Role:</td>
+          <td class="data">{{deadData.role}}</td>
+        </tr>
+        <tr>
+          <td class="type">Killed in:</td>
+          <td class="data">Season {{deadData.season}}, Episode {{deadData.episode}}</td>
+        </tr>
+        <tr>
+          <td class="type">Murderer:</td>
+          <td class="data">{{deadData.murder}}</td>
+        </tr>
+        <tr>
+          <td class="type">Location:</td>
+          <td class="data">{{deadData.place}}</td>
+        </tr>
+        <tr>
+          <td class="type">Description:</td>
+          <td class="data">{{deadData.execution}}</td>
+        </tr>
+        <tr>
+          <td class="type">Return Chance:</td>
+          <td class="data">{{deadData.likelihoodofreturn}}</td>
+        </tr>
+      </table>
+    </td>
+  </table>
+</div>
+<div *ngIf="murdererData" class="entry">
+  <img class="deadsImage" [src]="murdererData.image" >
+  <table class="deadTable">
+    <tr>
+      <td class="type">Name:</td>
+      <td class="data">{{murdererData.name}}</td>
+    </tr>
+    <tr>
+      <td class="type">Origin:</td>
+      <td class="data">{{murdererData.origin}}</td>
+    </tr>
+    <tr>
+      <td class="type">Following:</td>
+      <td class="data">{{murdererData.following}}</td>
+    </tr>
+    <tr>
+      <td class="type">Religion:</td>
+      <td class="data">{{murdererData.religion}}</td>
+    </tr>
+    <tr>
+      <td class="type">Kills:</td>
+      <td class="data">{{murdererData.kills}}</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="locationData" class="entry">
+  <img class="deadsImage" [src]="locationData.image" >
+  <table class="deadTable">
+    <tr>
+      <td class="type">Name:</td>
+      <td class="data">{{locationData.name}}</td>
+    </tr>
+    <tr>
+      <td class="type">Continent:</td>
+      <td class="data">{{locationData.continent}}</td>
+    </tr>
+    <tr>
+      <td class="type">Region:</td>
+      <td class="data">{{locationData.region}}</td>
+    </tr>
+    <tr>
+      <td class="type">Population:</td>
+      <td class="data">{{locationData.population}}</td>
+    </tr>
+    <tr>
+      <td class="type">Inhabitants:</td>
+      <td class="data">{{locationData.inhabitant}}</td>
+    </tr>
+    <tr>
+      <td class="type">Religion:</td>
+      <td class="data">{{locationData.religion}}</td>
+    </tr>
+  </table>
+</div>
+
+

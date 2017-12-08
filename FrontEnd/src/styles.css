@@ -17,6 +17,10 @@ body {
   background-color: #969070!important;
 }
 
+.ui-button .ui-corner-all {
+  background-color: transparent!important;
+}
+
 .ui-tabview {
   padding: 0!important;
 }

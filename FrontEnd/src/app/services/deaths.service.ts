@@ -16,16 +16,16 @@ export class DeathsService {
   }
 
   public getAllDeaths (): Observable <any[]> {
-    return this.http.get('http://localhost:8080/dot/death/all').map((response: Response) => response.json());
+    return this.http.get(environment.baseUrl + 'death/all').map((response: Response) => response.json());
   }
 
   public getDeathByName (name: string): Observable<any[]> {
-    return this.http.get('http://localhost:8080/dot/death/name?name=' + name)
+    return this.http.get(environment.baseUrl + 'death/name?name=' + name)
       .map((response: Response) => response.json());
   }
 
   public getAllDeathsOnlyName (): Observable <any[]> {
-    return this.http.get('http://localhost:8080/dot/death/allNames').map((response: Response) => response.json());
+    return this.http.get(environment.baseUrl + 'death/allNames').map((response: Response) => response.json());
   }
 
 }

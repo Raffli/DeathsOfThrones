@@ -1,6 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {DeathsService} from '../services/deaths.service';
-import {DataService} from '../services/data-service.service';
+import {EpisodesService} from '../services/episodes.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-map',
@@ -66,7 +67,7 @@ export class MapComponent implements OnInit {
   private deadImagesOffsetX : number;
   private deadImagesOffsetY : number;
 
-  constructor(private deathsService: DeathsService, private dataService: DataService) {}
+  constructor(private deathsService: DeathsService, private episodesService: EpisodesService) {}
 
   ngOnInit() {
     this.mouseIsDown = false;
@@ -125,12 +126,12 @@ export class MapComponent implements OnInit {
         // show image of the dead
         for (let i=0; i<this.deaths.length; i++) {
           // find image by name
-          let splitName = this.deaths[i].name.split(" ");
-          let imageNameRequest = "";
+          let splitName = this.deaths[i].name.split(' ');
+          let imageNameRequest = '';
           for (let j=0; j<splitName.length; j++) {
             imageNameRequest += splitName[j];
             if (j < splitName.length -1) {
-              imageNameRequest += "%20";
+              imageNameRequest += '%20';
             }
           }
           // set image coordinates
@@ -153,7 +154,7 @@ export class MapComponent implements OnInit {
           }
           this.imagesOfTheDead[i] = [];
           this.imagesOfTheDead[i].name = this.deaths[i].name;
-          this.imagesOfTheDead[i].image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
+          this.imagesOfTheDead[i].image = environment.baseUrl + 'image/imageByName?name=' + imageNameRequest;
           this.imagesOfTheDead[i].offsetX = offsetX;
           this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
           this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
@@ -161,7 +162,7 @@ export class MapComponent implements OnInit {
       }
     );
 
-    this.dataService.getEpisodeById(event).subscribe( (data: any) => {
+    this.episodesService.getEpisodeById(event).subscribe( (data: any) => {
       this.episodeData = data;
       this.showEpisode = true;
     });

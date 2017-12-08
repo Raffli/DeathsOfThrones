@@ -1,0 +1,86 @@
+body {
+  color: #969070;
+  font-size: larger;
+}
+
+.navigation {
+  height: 30px;
+  width: 100%;
+  list-style-type: none;
+  color: #969070;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 42px;
+  padding: 0;
+}
+
+.navElement {
+  display: inline-table;
+}
+
+#leftElement {
+  float: left;
+  width: 39%;
+}
+
+#rightElement {
+  float: right;
+}
+
+#centerElement {
+  width: 20%;
+}
+
+.navButtons {
+  background-color: transparent!important;
+  color: #969070;
+  font-size: larger;
+}
+
+.navButtons #return {
+  width: 100%;
+  text-align: center;
+}
+
+.entryTable {
+  margin: auto;
+  width: 75%;
+  table-layout: fixed;
+}
+
+.imageCol {
+  vertical-align: top;
+  padding: 15px;
+  width: 35%;
+}
+
+.tableCol {
+  vertical-align: top;
+  padding: 15px;
+  width: 65%;
+}
+
+.deadsImage {
+  max-width: 70%;
+  max-height: 70%;
+  overflow: hidden;
+  border: 5px solid #969070;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.deadTable {
+  min-height: 40%;
+  color: #969070;
+  font-size: larger;
+}
+
+.type {
+  min-width: 20%;
+  padding: 8px;
+}
+
+.data {
+  width: 80%;
+  padding: 8px;
+}

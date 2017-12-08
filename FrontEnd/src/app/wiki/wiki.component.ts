@@ -3,6 +3,7 @@ import {DeathsService} from '../services/deaths.service';
 import {MurderersService} from "../services/murderers.service";
 import {LocationsService} from "../services/locations.service";
 import {EpisodesService} from "../services/episodes.service";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-wiki',
@@ -24,6 +25,10 @@ export class WikiComponent implements OnInit {
   private episodesLoaded: boolean;
   private showEntry: boolean;
   private deadData: any[];
+  private murdererData: any[];
+  private locationData: any[];
+  private episodeData: any[];
+  private selectedIndex: number = 0;
 
   constructor(private deathsService: DeathsService, private murderersService: MurderersService,
               private locationsService: LocationsService, private episodesService: EpisodesService) { }
@@ -108,20 +113,41 @@ export class WikiComponent implements OnInit {
       );
   }
 
+  onChange($event) {
+    this.selectedIndex = $event.index;
+  }
+
+  handleReturnFromEntry () {
+    this.showEntry = false;
+  }
+
   displayEntry = function (event) {
-    this.deathsService.getDeathByName(event.target.textContent).subscribe( (data: any) => {
-      this.deadData = data;
-      // find image by name
-      let splitName = event.target.textContent.split(" ");
-      let imageNameRequest = "";
-      for (let j=0; j<splitName.length; j++) {
-        imageNameRequest += splitName[j];
-        if (j < splitName.length -1) {
-          imageNameRequest += "%20";
-        }
-      }
-      this.deadData.image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
-      this.showEntry = true;
-    });
+    console.log(event.target.textContent);
+    if (this.selectedIndex == 0) {
+      this.deathsService.getDeathByName(event.target.textContent).subscribe( (data: any) => {
+        this.deadData = data;
+        this.deadData.image = environment.baseUrl + 'image/imageByName?name=' + event.target.textContent;
+        this.showEntry = true;
+      });
+    } else if (this.selectedIndex == 1) {
+      this.murderersService.getMurdererByName(event.target.textContent).subscribe( (data: any) => {
+        console.log(data);
+        this.murdererData = data;
+        this.murderersService.getMurdererKills(event.target.textContent).subscribe((killData: any) => {
+          console.log(killData);
+          this.murdererData.kills = killData;
+          this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + event.target.textContent;
+          this.showEntry = true;
+        });
+      });
+    } else if (this.selectedIndex == 2) {
+      this.locationsService.getLocationByName(event.target.textContent).subscribe( (data: any) => {
+        console.log(data);
+        this.locationData = data;
+        this.locationData.image = environment.baseUrl + 'image/imageByName?name=' + event.target.textContent;
+        this.showEntry = true;
+      });
+    }
+
   };
 }
