@@ -37,8 +37,8 @@ public class DeathController {
 	}
 	
 	@GetMapping(path="/murder")
-	public Iterable<DeathEntity> getDeathByMurder(@RequestParam String name) {
-		return deathRepository.findByMurderLike(name);
+	public Iterable<String> getDeathByMurder(@RequestParam String name) {
+		return deathRepository.getByMurder(name);
 	}
 	
 	@GetMapping(path="/place")

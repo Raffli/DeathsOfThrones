@@ -18,7 +18,8 @@ public interface DeathRepository extends CrudRepository<DeathEntity, String> {
 
 	Iterable<DeathEntity>  findAllByOrderByEpisodeId();
 	
-	Iterable<DeathEntity> findByMurderLike(String name);
+	@Query("select name from DeathEntity where Murder like ?1")
+	Iterable<String> getByMurder(String name);
 	
 	Iterable<DeathEntity> findByPlaceLike(String name);
 	
