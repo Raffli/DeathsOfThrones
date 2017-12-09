@@ -1,4 +1,4 @@
-<p-tabView styleClass="wiki-header">
+<p-tabView styleClass="wiki-header" (onChange)="onChange($event)" [activeIndex]="selectedIndex">
   <p-tabPanel header="DEATHS" [selected]="true" headerStyleClass="wiki-panel">
     <div *ngIf="deathsLoaded && !showEntry">
       <ul class="listOverview">
@@ -11,7 +11,9 @@
       </ul>
     </div>
     <div *ngIf="showEntry">
-      <app-display-death [data]="deadData"></app-display-death>
+      <app-display-entry [deadData]="deadData" [currentEntity]="selectedEntity" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
+                         [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                         (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
     </div>
   </p-tabPanel>
   <p-tabPanel header="MURDERERS" headerStyleClass="wiki-panel">
@@ -20,15 +22,15 @@
         <li *ngFor="let entry of murderersByAlphabet; let i = index" class="alphabet" >
           <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
           <ul>
-            <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">
-              {{value}}
-            </li>
+            <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">{{value}}</li>
           </ul>
         </li>
       </ul>
     </div>
     <div *ngIf="showEntry">
-      <app-display-death [data]=""></app-display-death>
+     <app-display-entry [murdererData]="murdererData" [currentEntity]="selectedEntity" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
+                         [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                         (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
     </div>
   </p-tabPanel>
   <p-tabPanel header="LOCATIONS" headerStyleClass="wiki-panel">
@@ -43,7 +45,9 @@
       </ul>
     </div>
     <div *ngIf="showEntry">
-
+      <app-display-entry [locationData]="locationData" [currentEntity]="selectedEntity" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
+                         [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                         (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
     </div>
   </p-tabPanel>
   <p-tabPanel header="EPISODES" headerStyleClass="wiki-panel">
@@ -58,7 +62,9 @@
       </ul>
     </div>
     <div *ngIf="showEntry">
-
+     <app-display-entry [episodeData]="episodeData" [currentEntity]="selectedEntity" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
+                         [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                         (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
     </div>
   </p-tabPanel>
 </p-tabView>

@@ -9,7 +9,6 @@ import { MapComponent } from './map/map.component';
 import { WikiComponent } from './wiki/wiki.component';
 import { StatsComponent } from './stats/stats.component';
 import { ContactComponent } from './contact/contact.component';
-import {DataService} from './services/data-service.service';
 import {HttpModule} from '@angular/http';
 import { TimelineComponent } from './map/timeline/timeline.component';
 import {DeathsService} from './services/deaths.service';
@@ -19,7 +18,8 @@ import { DeadPopupComponent } from './map/dead-popup/dead-popup.component';
 import {TabViewModule} from 'primeng/primeng';
 import {MurderersService} from "./services/murderers.service";
 import {LocationsService} from "./services/locations.service";
-import { DisplayDeathComponent } from './wiki/display-death/display-death.component';
+import { DisplayEntryComponent } from './wiki/display-entry/display-entry.component';
+import {ButtonModule} from 'primeng/primeng';
 
 const appRoutes :Routes = [
   {
@@ -61,12 +61,12 @@ const appRoutes :Routes = [
     TimelineComponent,
     EpisodePopupComponent,
     DeadPopupComponent,
-    DisplayDeathComponent,
+    DisplayEntryComponent,
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule
+    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule
   ],
-  providers: [DataService, DeathsService, EpisodesService, MurderersService, LocationsService],
+  providers: [DeathsService, EpisodesService, MurderersService, LocationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

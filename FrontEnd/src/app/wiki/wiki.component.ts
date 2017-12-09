@@ -3,6 +3,7 @@ import {DeathsService} from '../services/deaths.service';
 import {MurderersService} from "../services/murderers.service";
 import {LocationsService} from "../services/locations.service";
 import {EpisodesService} from "../services/episodes.service";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-wiki',
@@ -11,19 +12,31 @@ import {EpisodesService} from "../services/episodes.service";
 })
 export class WikiComponent implements OnInit {
 
-  private data: any;
   private alphabet = ["A", "B", "C", "D", "E", "F", "G", "H",
   "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   private deathsByAlphabet = new Array(this.alphabet.length);
+  private allDeaths: any [];
   private murderersByAlphabet = new Array(this.alphabet.length);
+  private allMurderers: any[];
   private locationsByAlphabet = new Array(this.alphabet.length);
+  private allLocations: any[];
   private episodesByAlphabet = new Array(this.alphabet.length);
+  private allEpisodes: any[];
   private deathsLoaded : boolean;
   private murderersLoaded: boolean;
   private locationsLoaded: boolean;
   private episodesLoaded: boolean;
   private showEntry: boolean;
   private deadData: any[];
+  private murdererData: any[];
+  private locationData: any[];
+  private episodeData: any[];
+  private selectedIndex: number = 0;
+  private selectedEntity : string;
+  private nextEntry : string;
+  private hasNextEntry : boolean;
+  private previousEntry : string;
+  private hasPreviousEntry : boolean;
 
   constructor(private deathsService: DeathsService, private murderersService: MurderersService,
               private locationsService: LocationsService, private episodesService: EpisodesService) { }
@@ -33,7 +46,7 @@ export class WikiComponent implements OnInit {
     this.deathsService.getAllDeathsOnlyName()
       .subscribe(
         (data: any) => {
-          this.data = data;
+          this.allDeaths = data;
           for (let i = 0; i < this.alphabet.length; i++) {
             this.deathsByAlphabet[i] = [];
           }
@@ -53,6 +66,7 @@ export class WikiComponent implements OnInit {
     this.murderersService.getAllMurderersOnlyName()
       .subscribe(
         (data: any) => {
+          this.allMurderers = data;
           for (let i = 0; i < this.alphabet.length; i++) {
             this.murderersByAlphabet[i] = [];
           }
@@ -72,6 +86,7 @@ export class WikiComponent implements OnInit {
     this.locationsService.getAllLocationOnlyName()
       .subscribe(
         (data: any) => {
+          this.allLocations = data;
           for (let i = 0; i < this.alphabet.length; i++) {
             this.locationsByAlphabet[i] = [];
           }
@@ -91,6 +106,7 @@ export class WikiComponent implements OnInit {
     this.episodesService.getAllEpisodesOnlyTitles()
       .subscribe(
         (data: any) => {
+          this.allEpisodes = data;
           for (let i = 0; i < this.alphabet.length; i++) {
             this.episodesByAlphabet[i] = [];
           }
@@ -108,20 +124,91 @@ export class WikiComponent implements OnInit {
       );
   }
 
-  displayEntry = function (event) {
-    this.deathsService.getDeathByName(event.target.textContent).subscribe( (data: any) => {
-      this.deadData = data;
-      // find image by name
-      let splitName = event.target.textContent.split(" ");
-      let imageNameRequest = "";
-      for (let j=0; j<splitName.length; j++) {
-        imageNameRequest += splitName[j];
-        if (j < splitName.length -1) {
-          imageNameRequest += "%20";
-        }
+  onChange($event) {
+    if (this.showEntry) {
+      this.showEntry = false;
+    }
+    this.selectedIndex = $event.index;
+  }
+
+  handleReturnFromEntry () {
+    this.showEntry = false;
+  }
+
+  findNextAndPreviousEntry = function (entries, name) {
+    let entryIndex;
+    for (let i = 0; i < entries.length; i++) {
+      if (entries[i] == name) {
+        entryIndex = i;
+        break;
       }
-      this.deadData.image = "http://localhost:8080/dot/image/imageByName?name=" + imageNameRequest;
-      this.showEntry = true;
-    });
+    }
+    if (entries[entryIndex - 1]) {
+      this.hasPreviousEntry = true;
+      this.previousEntry = entries[entryIndex-1];
+    } else {
+      console.log("no prev entry");
+      this.hasPreviousEntry = false;
+      this.previousEntry = null;
+    }
+    console.log(this.previousEntry);
+    if (entries[entryIndex + 1]) {
+      this.hasNextEntry = true;
+      this.nextEntry = entries[entryIndex+1];
+    } else {
+      this.hasNextEntry = false;
+    }
+    this.showEntry = true;
+  };
+
+  showPreviousEntry = function () {
+    this.displayEntry(null, this.previousEntry);
+  };
+
+  showNextEntry = function () {
+    this.displayEntry(null, this.nextEntry);
+  };
+
+  displayEntry = function (event, name) {
+    let selectedName;
+    if (name) {
+      selectedName = name;
+    } else {
+      selectedName = event.target.textContent;
+    }
+    if (this.selectedIndex == 0) {
+      this.selectedEntity = "Deaths";
+      this.deathsService.getDeathByName(selectedName).subscribe( (data: any) => {
+        this.deadData = data;
+        this.deadData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+        this.findNextAndPreviousEntry(this.allDeaths, selectedName);
+      });
+    } else if (this.selectedIndex == 1) {
+      this.selectedEntity = "Murderers";
+      this.murderersService.getMurdererByName(selectedName).subscribe( (data: any) => {
+        this.murdererData = data;
+        this.murderersService.getMurdererKills(selectedName).subscribe((killData: any) => {
+          this.murdererData.kills = killData;
+          this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+          this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+        });
+      });
+    } else if (this.selectedIndex == 2) {
+      this.selectedEntity = "Locations";
+      this.locationsService.getLocationByName(selectedName).subscribe( (data: any) => {
+        this.locationData = data;
+        this.locationData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+        this.findNextAndPreviousEntry(this.allLocations, selectedName);
+      });
+    } else if (this.selectedIndex == 3) {
+      this.selectedEntity = "Episodes";
+      this.episodesService.getEpisodeByTitle(selectedName).subscribe( (data: any) => {
+        this.episodeData = data;
+        console.log(selectedName);
+        this.episodeData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+        this.findNextAndPreviousEntry(this.allEpisodes, selectedName);
+      });
+    }
+
   };
 }
