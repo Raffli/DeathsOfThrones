@@ -17,8 +17,18 @@ export class DisplayEntryComponent implements OnInit {
   @Input () public showLocation: boolean;
   @Input () public showEpisode: boolean;
 
+  @Input () public currentEntity : string;
+  @Input () public hasNextEntry : boolean;
+  @Input () public hasPreviousEntry : boolean;
+  @Input () public nextEntry : string;
+  @Input () public previousEntry : string;
+
   @Output()
   public returnToList = new EventEmitter<number>();
+  @Output()
+  public showPreviousEntry = new EventEmitter<String>();
+  @Output()
+  public showNextEntry = new EventEmitter<String>();
 
   constructor() { }
 
@@ -27,6 +37,14 @@ export class DisplayEntryComponent implements OnInit {
 
   callReturnToList = function () {
     this.returnToList.emit();
-  }
+  };
+
+  callPreviousEntry = function () {
+    this.showPreviousEntry.emit();
+  };
+
+  callNextEntry = function () {
+    this.showNextEntry.emit();
+  };
 
 }
