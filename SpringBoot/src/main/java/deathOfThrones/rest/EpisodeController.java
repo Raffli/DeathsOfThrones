@@ -21,7 +21,7 @@ public class EpisodeController {
 		return episodeRepository.findAll();
 	}
 	
-	@GetMapping(path="/allTitlesBy")
+	@GetMapping(path="/allTitles")
 	public Iterable<String> getAllEpisodeTitles() {
 		return episodeRepository.getAllTitles();
 	}
