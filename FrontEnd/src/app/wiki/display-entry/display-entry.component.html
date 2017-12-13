@@ -28,15 +28,15 @@
         </tr>
         <tr>
           <td class="type">Killed in:</td>
-          <td class="data">Season {{deadData.season}}, Episode {{deadData.episode}}</td>
+          <td class="data" class="clickable" (click)="callEpisodeEntry(deadData.episodeId)">Season {{deadData.season}}, Episode {{deadData.episode}}</td>
         </tr>
         <tr>
           <td class="type">Murderer:</td>
-          <td class="data">{{deadData.murder}}</td>
+          <td class="data" class="clickable" (click)="callMurdererEntry(deadData.murder)">{{deadData.murder}}</td>
         </tr>
         <tr>
           <td class="type">Location:</td>
-          <td class="data">{{deadData.place}}</td>
+          <td class="data" class="clickable" (click)="callLocationEntry(deadData.place)">{{deadData.place}}</td>
         </tr>
         <tr>
           <td class="type">Description:</td>

@@ -29,6 +29,12 @@ export class DisplayEntryComponent implements OnInit {
   public showPreviousEntry = new EventEmitter<String>();
   @Output()
   public showNextEntry = new EventEmitter<String>();
+  @Output()
+  public showMurdererEntry = new EventEmitter<String>();
+  @Output()
+  public showEpisodeEntry = new EventEmitter<number>();
+  @Output()
+  public showLocationEntry = new EventEmitter<String>();
 
   constructor() { }
 
@@ -45,6 +51,18 @@ export class DisplayEntryComponent implements OnInit {
 
   callNextEntry = function () {
     this.showNextEntry.emit();
+  };
+
+  callMurdererEntry = function (event) {
+    this.showMurdererEntry.emit(event);
+  };
+
+  callEpisodeEntry = function (event) {
+    this.showEpisodeEntry.emit(event);
+  };
+
+  callLocationEntry = function (event) {
+    this.showLocationEntry.emit(event);
   };
 
 }

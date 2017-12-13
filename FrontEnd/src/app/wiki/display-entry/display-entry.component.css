@@ -16,11 +16,13 @@ body {
 
 .navElement {
   display: inline-table;
+  align-content: center;
+  align-text: center;
 }
 
 #leftElement {
   float: left;
-  width: 39%;
+  width: 42%;
 }
 
 #rightElement {
@@ -29,6 +31,16 @@ body {
 
 #centerElement {
   width: 20%;
+}
+
+.clickable {
+  cursor: pointer;
+  width: 80%;
+  padding: 8px;
+}
+
+.clickable:hover {
+  color: #96641a;
 }
 
 .navButtons {
