@@ -64,7 +64,7 @@ const appRoutes :Routes = [
     DisplayEntryComponent,
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule
+    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,
   ],
   providers: [DeathsService, EpisodesService, MurderersService, LocationsService],
   bootstrap: [AppComponent]
