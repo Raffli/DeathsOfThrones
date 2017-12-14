@@ -96,3 +96,17 @@ body {
   width: 80%;
   padding: 8px;
 }
+
+.centerChildren {
+  display: table;
+  margin: 0 0;
+}
+
+.victimImage {
+  width: 100px;
+  height: 125px;
+  overflow: hidden;
+  border: 2px solid #969070;
+  margin: 3px;
+  cursor: pointer;
+}

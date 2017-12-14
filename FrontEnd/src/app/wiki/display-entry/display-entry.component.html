@@ -123,7 +123,14 @@
           <td class="type">Kills:</td>
           <td class="data">{{murdererData.kills}}</td>
         </tr>
+        <tr>
+          <td class="type">Victims:</td>
+        </tr>
       </table>
+      <div class="centerChildren">
+        <img *ngFor="let victim of murdererData.victims" [src]="environmentPath + 'image/imageByName?name=' + victim" [title]="victim" class="victimImage"
+          (click)="callDeathEntry(victim)">
+      </div>
     </td>
   </table>
 </div>

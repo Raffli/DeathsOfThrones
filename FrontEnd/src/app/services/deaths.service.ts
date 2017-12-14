@@ -4,6 +4,7 @@ import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {environment} from "../../environments/environment";
+import {ObjectUnsubscribedError} from 'rxjs/Rx';
 
 @Injectable()
 export class DeathsService {
@@ -26,6 +27,11 @@ export class DeathsService {
 
   public getAllDeathsOnlyName (): Observable <any[]> {
     return this.http.get(environment.baseUrl + 'death/allNames').map((response: Response) => response.json());
+  }
+
+  public getAllDeathsByMurderer (name: string): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'death/murder?name=' + name)
+      .map((response: Response) => response.json());
   }
 
 }

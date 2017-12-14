@@ -150,6 +150,11 @@ export class WikiComponent implements OnInit {
     this.displayEntry(null, this.allEpisodes[event]);
   };
 
+  showDeathEntry = function (event) {
+    this.selectedIndex = 0;
+    this.displayEntry(null, event);
+  };
+
   findNextAndPreviousEntry = function (entries, name) {
     let entryIndex;
     for (let i = 0; i < entries.length; i++) {
@@ -202,8 +207,11 @@ export class WikiComponent implements OnInit {
         this.murdererData = data;
         this.murderersService.getMurdererKills(selectedName).subscribe((killData: any) => {
           this.murdererData.kills = killData;
-          this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
-          this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+          this.deathsService.getAllDeathsByMurderer(selectedName).subscribe( (victims: any) => {
+            this.murdererData.victims = victims;
+            this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+            this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+          });
         });
       });
     } else if (this.selectedIndex == 2) {
