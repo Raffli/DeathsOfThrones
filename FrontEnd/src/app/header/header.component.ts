@@ -20,6 +20,8 @@ export class HeaderComponent implements OnInit {
       {label: 'STATS', icon: 'fa-bar-chart', routerLink: '/stats'},
       {label: 'SEARCH', icon: 'fa-search'},
       {label: 'ABOUT', icon: 'fa-info-circle', routerLink: '/about'},
+      {label: 'Youtube', icon: '', routerLink: '/youtube'},
+
     ];
   }
 
