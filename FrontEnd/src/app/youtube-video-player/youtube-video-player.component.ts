@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import PlayerOptions = YT.PlayerOptions;
 @Component({
   selector: 'app-youtube-video-player',
   templateUrl: './youtube-video-player.component.html',
@@ -17,8 +16,8 @@ export class YoutubeVideoPlayerComponent implements OnInit {
 
   onStateChangeBinded = this.onStateChange.bind(this);
 
-  player: YT.Player;
-  playerConfig: PlayerOptions;
+  player: any;
+  playerConfig: any;
 
   constructor() { }
 
@@ -53,7 +52,13 @@ export class YoutubeVideoPlayerComponent implements OnInit {
   }
 
   initPlayer() {
-    this.player = new YT.Player('myvideo', this.playerConfig);
+    console.debug(YT.Player)
+    if(YT.Player){
+      this.player = new YT.Player('myvideo', this.playerConfig);
+    } else {
+      setTimeout(() =>this.initPlayer());
+    }
+
   }
 
 
@@ -68,3 +73,4 @@ export class YoutubeVideoPlayerComponent implements OnInit {
 
 }
 
+declare var YT: any;

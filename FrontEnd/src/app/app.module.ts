@@ -30,10 +30,6 @@ const appRoutes :Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'youtube',
-    component: YoutubeTestComponent
-  },
-  {
     path: 'map',
     component: MapComponent
   },
