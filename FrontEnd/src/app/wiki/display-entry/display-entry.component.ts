@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-display-entry',
@@ -29,10 +30,21 @@ export class DisplayEntryComponent implements OnInit {
   public showPreviousEntry = new EventEmitter<String>();
   @Output()
   public showNextEntry = new EventEmitter<String>();
+  @Output()
+  public showMurdererEntry = new EventEmitter<String>();
+  @Output()
+  public showEpisodeEntry = new EventEmitter<number>();
+  @Output()
+  public showLocationEntry = new EventEmitter<String>();
+  @Output()
+  public showDeathEntry = new EventEmitter<String>();
 
-  constructor() { }
+  private environmentPath: string;
+
+  constructor() {}
 
   ngOnInit() {
+    this.environmentPath = environment.baseUrl;
   }
 
   callReturnToList = function () {
@@ -45,6 +57,22 @@ export class DisplayEntryComponent implements OnInit {
 
   callNextEntry = function () {
     this.showNextEntry.emit();
+  };
+
+  callMurdererEntry = function (event) {
+    this.showMurdererEntry.emit(event);
+  };
+
+  callEpisodeEntry = function (event) {
+    this.showEpisodeEntry.emit(event);
+  };
+
+  callLocationEntry = function (event) {
+    this.showLocationEntry.emit(event);
+  };
+
+  callDeathEntry = function (event) {
+    this.showDeathEntry.emit(event);
   };
 
 }

@@ -131,9 +131,29 @@ export class WikiComponent implements OnInit {
     this.selectedIndex = $event.index;
   }
 
-  handleReturnFromEntry () {
+  handleReturnFromEntry = function () {
     this.showEntry = false;
-  }
+  };
+
+  showMurdererEntry = function (event) {
+    this.selectedIndex = 1;
+    this.displayEntry(null, event);
+  };
+
+  showLocationEntry = function (event) {
+    this.selectedIndex = 2;
+    this.displayEntry(null, event);
+  };
+
+  showEpisodeEntry = function (event) {
+    this.selectedIndex = 3;
+    this.displayEntry(null, this.allEpisodes[event]);
+  };
+
+  showDeathEntry = function (event) {
+    this.selectedIndex = 0;
+    this.displayEntry(null, event);
+  };
 
   findNextAndPreviousEntry = function (entries, name) {
     let entryIndex;
@@ -147,11 +167,9 @@ export class WikiComponent implements OnInit {
       this.hasPreviousEntry = true;
       this.previousEntry = entries[entryIndex-1];
     } else {
-      console.log("no prev entry");
       this.hasPreviousEntry = false;
       this.previousEntry = null;
     }
-    console.log(this.previousEntry);
     if (entries[entryIndex + 1]) {
       this.hasNextEntry = true;
       this.nextEntry = entries[entryIndex+1];
@@ -189,8 +207,11 @@ export class WikiComponent implements OnInit {
         this.murdererData = data;
         this.murderersService.getMurdererKills(selectedName).subscribe((killData: any) => {
           this.murdererData.kills = killData;
-          this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
-          this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+          this.deathsService.getAllDeathsByMurderer(selectedName).subscribe( (victims: any) => {
+            this.murdererData.victims = victims;
+            this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+            this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+          });
         });
       });
     } else if (this.selectedIndex == 2) {
@@ -204,7 +225,6 @@ export class WikiComponent implements OnInit {
       this.selectedEntity = "Episodes";
       this.episodesService.getEpisodeByTitle(selectedName).subscribe( (data: any) => {
         this.episodeData = data;
-        console.log(selectedName);
         this.episodeData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
         this.findNextAndPreviousEntry(this.allEpisodes, selectedName);
       });

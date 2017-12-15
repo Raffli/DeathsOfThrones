@@ -28,15 +28,15 @@
         </tr>
         <tr>
           <td class="type">Killed in:</td>
-          <td class="data">Season {{deadData.season}}, Episode {{deadData.episode}}</td>
+          <td class="data" class="clickable" (click)="callEpisodeEntry(deadData.episodeId)">Season {{deadData.season}}, Episode {{deadData.episode}}</td>
         </tr>
         <tr>
           <td class="type">Murderer:</td>
-          <td class="data">{{deadData.murder}}</td>
+          <td class="data" class="clickable" (click)="callMurdererEntry(deadData.murder)">{{deadData.murder}}</td>
         </tr>
         <tr>
           <td class="type">Location:</td>
-          <td class="data">{{deadData.place}}</td>
+          <td class="data" class="clickable" (click)="callLocationEntry(deadData.place)">{{deadData.place}}</td>
         </tr>
         <tr>
           <td class="type">Description:</td>
@@ -46,9 +46,16 @@
           <td class="type">Return Chance:</td>
           <td class="data">{{deadData.likelihoodofreturn}}</td>
         </tr>
+        <tr *ngIf="deadData.videoStart != 0">
+          <td colspan="2">
+            <app-youtube-video-player videoId="oGwjm6Ax24E" [startSeconds]="deadData.videoStart" [endSeconds]="deadData.videoEnd" height="270" width="480"></app-youtube-video-player>
+          </td>
+        </tr>
       </table>
     </td>
   </table>
+
+
 </div>
 <div *ngIf="murdererData" class="entry">
   <table class="entryTable">
@@ -77,7 +84,14 @@
           <td class="type">Kills:</td>
           <td class="data">{{murdererData.kills}}</td>
         </tr>
+        <tr>
+          <td class="type">Victims:</td>
+        </tr>
       </table>
+      <div class="centerChildren">
+        <img *ngFor="let victim of murdererData.victims" [src]="environmentPath + 'image/imageByName?name=' + victim" [title]="victim" class="victimImage"
+          (click)="callDeathEntry(victim)">
+      </div>
     </td>
   </table>
 </div>

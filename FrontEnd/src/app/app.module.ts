@@ -20,6 +20,7 @@ import {MurderersService} from "./services/murderers.service";
 import {LocationsService} from "./services/locations.service";
 import { DisplayEntryComponent } from './wiki/display-entry/display-entry.component';
 import {ButtonModule} from 'primeng/primeng';
+import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
 
 const appRoutes :Routes = [
   {
@@ -62,9 +63,10 @@ const appRoutes :Routes = [
     EpisodePopupComponent,
     DeadPopupComponent,
     DisplayEntryComponent,
+    YoutubeVideoPlayerComponent,
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule
+    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,
   ],
   providers: [DeathsService, EpisodesService, MurderersService, LocationsService],
   bootstrap: [AppComponent]

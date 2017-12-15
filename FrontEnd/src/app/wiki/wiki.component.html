@@ -13,6 +13,7 @@
     <div *ngIf="showEntry">
       <app-display-entry [deadData]="deadData" [currentEntity]="selectedEntity" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
                          [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                         (showMurdererEntry)="showMurdererEntry($event)" (showEpisodeEntry)="showEpisodeEntry($event)" (showLocationEntry)="showLocationEntry($event)"
                          (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
     </div>
   </p-tabPanel>
@@ -29,7 +30,7 @@
     </div>
     <div *ngIf="showEntry">
      <app-display-entry [murdererData]="murdererData" [currentEntity]="selectedEntity" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
-                         [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                         [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry" (showDeathEntry)="showDeathEntry($event)"
                          (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
     </div>
   </p-tabPanel>

@@ -63,9 +63,11 @@ export class MapComponent implements OnInit {
   ];
 
   public deaths = [];
-  public imagesOfTheDead = [];
-  private deadImagesOffsetX : number;
-  private deadImagesOffsetY : number;
+  public imagesOfTheDead = []
+  public deadImageWidth: number;
+  public deadImageHeight: number;
+  public currentDeadImageWidth: number;
+  public currentDeadImageHeight: number;
 
   constructor(private deathsService: DeathsService, private episodesService: EpisodesService) {}
 
@@ -78,10 +80,11 @@ export class MapComponent implements OnInit {
     this.zoom = 1;
     this.scaling = 'scale(' + this.zoom + ')';
     this.imageSource = '/assets/map/gotMap100.jpg';
-    this.calculateZoomOffset();
+    this.calculateZoomOffset(0);
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight  - 130;
-    this.deadImagesOffsetY = this.deadImagesOffsetX = 0;
+    this.deadImageWidth = this.currentDeadImageWidth = 60;
+    this.deadImageHeight = this.currentDeadImageHeight = 75;
   }
 
   episodeSelected = function (event) {
@@ -135,29 +138,32 @@ export class MapComponent implements OnInit {
             }
           }
           // set image coordinates
-          let x, y, offsetX, offsetY : number;
+          let x, y, index, offsetX : number;
           for (let j = 0; j < this.locationCoordinates.length; j++) {
             if (this.locationCoordinates[j].place == this.deaths[i].place) {
               for (let k = 0; k < places.length; k++) {
                 if (this.deaths[i].place == places[k].place) {
                   if (places[k].count > 1) {
                     places[k].count--;
-                    offsetX = places[k].count * 80;
+                    offsetX = places[k].count * 80 + 80 * (1- this.zoom) * places[k].count;
+                    index = places[k].count;
                   } else {
                     offsetX = 0;
+                    index = 0;
                   }
                 }
               }
-              x = this.locationCoordinates[j].x * this.zoom - 30;
-              y = this.locationCoordinates[j].y * this.zoom - 37.5;
+              x = this.locationCoordinates[j].x;
+              y = this.locationCoordinates[j].y;
             }
           }
           this.imagesOfTheDead[i] = [];
           this.imagesOfTheDead[i].name = this.deaths[i].name;
           this.imagesOfTheDead[i].image = environment.baseUrl + 'image/imageByName?name=' + imageNameRequest;
           this.imagesOfTheDead[i].offsetX = offsetX;
-          this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
-          this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
+          this.imagesOfTheDead[i].index = index;
+          this.imagesOfTheDead[i].top = y;
+          this.imagesOfTheDead[i].left = x + this.imagesOfTheDead[i].offsetX;
         }
       }
     );
@@ -183,31 +189,25 @@ export class MapComponent implements OnInit {
     this.showEpisode = false;
   };
 
-  updateDeadImagesXPosition = function (offset){
-    this.deadImagesOffsetX += offset;
-    for (let i=0; i<this.deaths.length; i++) {
-      this.imagesOfTheDead[i].left -= offset;
+  updateDeadImagesZoom = function (zoomChange){
+    let factor;
+    if (this.zoom < 1) {
+      factor = 1.5;
+    } else if (this.zoom > 1) {
+      factor = 0.5;
+    } else {
+      factor = 1;
     }
-  };
-
-  updateDeadImagesYPosition = function (offset){
-    this.deadImagesOffsetY += offset;
-    for (let i=0; i<this.deaths.length; i++) {
-      this.imagesOfTheDead[i].top -= offset;
-    }
-  };
-
-  updateDeadImagesZoom = function (){
-    for (let i=0; i<this.deaths.length; i++) {
-      let x, y : number;
+    this.currentDeadImageWidth = this.deadImageWidth + (1 - this.zoom) * this.deadImageWidth * factor;
+    this.currentDeadImageHeight = this.deadImageHeight + (1 - this.zoom) * this.deadImageHeight * factor;
+    for (let i = 0; i < this.imagesOfTheDead.length; i++) {
+      this.imagesOfTheDead[i].offsetX += this.imagesOfTheDead[i].index * -1 * zoomChange * 80;
+      console.log(this.imagesOfTheDead[i].index, this.imagesOfTheDead[i].offsetX);
       for (let j = 0; j < this.locationCoordinates.length; j++) {
         if (this.locationCoordinates[j].place == this.deaths[i].place) {
-          x = this.locationCoordinates[j].x * this.zoom - 30;
-          y = this.locationCoordinates[j].y * this.zoom - 37.5;
+          this.imagesOfTheDead[i].left = this.locationCoordinates[j].x + this.imagesOfTheDead[i].offsetX;
         }
       }
-      this.imagesOfTheDead[i].top = y - this.deadImagesOffsetY;
-      this.imagesOfTheDead[i].left = x - this.deadImagesOffsetX + this.imagesOfTheDead[i].offsetX;
     }
   };
 
@@ -218,7 +218,6 @@ export class MapComponent implements OnInit {
       this.currentX += event.clientX - this.startX;
       if (this.currentX < 0 && this.currentX > -1 * (this.imageWidth * this.zoom - this.screenWidth)) {
         this.positionX = this.offsetX + this.currentX;
-        this.updateDeadImagesXPosition(this.startX - event.clientX);
       } else {
         if (this.currentX >= 0) {
           this.currentX = 0;
@@ -230,7 +229,6 @@ export class MapComponent implements OnInit {
       this.currentY += event.clientY - this.startY;
       if (this.currentY < 0 && this.currentY > -1 * (this.imageHeight * this.zoom - this.screenHeight)) {
         this.positionY = this.offsetY + this.currentY;
-        this.updateDeadImagesYPosition(this.startY - event.clientY);
       } else {
         if (this.currentY >= 0) {
           this.currentY = 0;
@@ -252,7 +250,7 @@ export class MapComponent implements OnInit {
     this.startY = event.clientY;
   };
 
-  calculateZoomOffset = function () {
+  calculateZoomOffset = function (zoomChange) {
     this.scaling = 'scale(' + this.zoom + ')';
     let actualImageWidth = this.imageWidth * this.zoom;
     let actualImageHeight = this.imageHeight * this.zoom;
@@ -262,15 +260,13 @@ export class MapComponent implements OnInit {
     let scrollHeight = this.screenHeight - actualImageHeight;
     if (this.currentX < scrollWidth) {
       this.currentX += this.imageWidth * 0.05;
-      this.deadImagesOffsetX -= this.imageWidth * 0.05;
     }
     if (this.currentY < scrollHeight) {
       this.currentY += this.imageHeight * 0.05;
-      this.deadImagesOffsetY -= this.imageHeight * 0.05;
     }
     this.positionX = this.offsetX + this.currentX;
     this.positionY = this.offsetY + this.currentY;
-    this.updateDeadImagesZoom();
+    this.updateDeadImagesZoom(zoomChange);
   };
 
   @HostListener('window:keydown', ['$event'])
@@ -280,14 +276,14 @@ export class MapComponent implements OnInit {
     if (event.keyCode === 109) {
       if (this.zoom > 0.35) {
         this.zoom -= 0.05;
-        this.calculateZoomOffset();
+        this.calculateZoomOffset(-0.05);
       } else {
         return;
       }
     } else if (event.keyCode === 107) {
       if (this.zoom < 1.50) {
         this.zoom += 0.05;
-        this.calculateZoomOffset();
+        this.calculateZoomOffset(0.05);
       } else {
         return;
       }
@@ -302,12 +298,12 @@ export class MapComponent implements OnInit {
     if (event.deltaY < 0) {
       if (this.zoom < 1.50) {
         this.zoom += 0.05;
-        this.calculateZoomOffset();
+        this.calculateZoomOffset(0.05);
       }
     } else if (event.deltaY > 0) {
       if (this.zoom > 0.35) {
         this.zoom -= 0.05;
-        this.calculateZoomOffset();
+        this.calculateZoomOffset(-0.05);
       }
     }
   };
