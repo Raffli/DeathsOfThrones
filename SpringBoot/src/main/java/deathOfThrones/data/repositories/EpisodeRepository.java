@@ -19,7 +19,7 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	@Query("select title from EpisodeEntity order by title")
 	Iterable<String> getAllTitlesByAbc();
 	
-	@Query("select new deathOfThrones.rest.episodes.TitleSeason(e.title, e.season) from EpisodeEntity e order by e.season")
+	@Query("select new deathOfThrones.rest.episodes.TitleSeason(e.title, e.season) from EpisodeEntity e order by e.episodeId")
 	Iterable<TitleSeason> getAllTitles();
 
 	@Query("select new deathOfThrones.rest.episodes.TitleRating(e.title, e.imdbRating) from EpisodeEntity e order by e.imdbRating")
