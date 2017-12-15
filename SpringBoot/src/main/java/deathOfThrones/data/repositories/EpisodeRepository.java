@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import deathOfThrones.data.entities.EpisodeEntity;
 import deathOfThrones.rest.episodes.TitleRating;
+import deathOfThrones.rest.episodes.TitleSeason;
 import deathOfThrones.rest.episodes.TitleViewer;
 
 
@@ -18,8 +19,8 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	@Query("select title from EpisodeEntity order by title")
 	Iterable<String> getAllTitlesByAbc();
 	
-	@Query("select title from EpisodeEntity")
-	Iterable<String> getAllTitles();
+	@Query("select new deathOfThrones.rest.episodes.TitleSeason(e.title, e.season) from EpisodeEntity e order by e.season")
+	Iterable<TitleSeason> getAllTitles();
 
 	@Query("select new deathOfThrones.rest.episodes.TitleRating(e.title, e.imdbRating) from EpisodeEntity e order by e.imdbRating")
 	Iterable<TitleRating> getAllByOrderByImdbRating();

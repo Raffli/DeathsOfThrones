@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import deathOfThrones.data.entities.EpisodeEntity;
 import deathOfThrones.data.repositories.EpisodeRepository;
 import deathOfThrones.rest.episodes.TitleRating;
+import deathOfThrones.rest.episodes.TitleSeason;
 import deathOfThrones.rest.episodes.TitleViewer;
 
 @RequestMapping(path="/dot/episode")
@@ -24,7 +25,7 @@ public class EpisodeController {
 	}
 	
 	@GetMapping(path="/allTitles")
-	public Iterable<String> getAllEpisodeTitles() {
+	public Iterable<TitleSeason> getAllEpisodeTitles() {
 		return episodeRepository.getAllTitles();
 	}
 	
