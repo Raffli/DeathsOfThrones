@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import deathOfThrones.data.entities.MurderEntity;
 import deathOfThrones.data.repositories.MurderRepository;
+import deathOfThrones.rest.murderer.MurderKills;
+import deathOfThrones.rest.murderer.MurderOrigin;
 
 @RequestMapping(path="/dot/murder")
 @RestController
@@ -24,6 +26,17 @@ public class MurderController {
 	public Iterable<String> getAllMurderNames() {
 		return murderRepository.getAllNames();
 	}
+	
+	@GetMapping(path="/allNamesByKills")
+	public Iterable<MurderKills> getAllMurderNamesByKills() {
+		return murderRepository.getAllNamesByKills();
+	}
+	
+	@GetMapping(path="/allNamesByOrigins")
+	public Iterable<MurderOrigin> getAllMurderNamesByOrigins() {
+		return murderRepository.getAllNamesByOrigins();
+	}
+	
 	
 	@GetMapping(path="/name")
 	public MurderEntity getMurderByName(@RequestParam String name) {

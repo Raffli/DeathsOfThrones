@@ -29,7 +29,7 @@ public class PlaceEntity {
     private String inhabitant;
     
     @Column (name = "population")
-    private String population;
+    private int population;
     
     @Column (name = "religion")
     private String religion;

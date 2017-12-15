@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import deathOfThrones.data.entities.PlaceEntity;
 import deathOfThrones.data.repositories.PlaceRepository;
+import deathOfThrones.rest.places.PlacePopulation;
+import deathOfThrones.rest.places.PlaceRegion;
 
 @RequestMapping(path="/dot/place")
 @RestController
@@ -19,6 +21,16 @@ public class PlaceController {
 	@GetMapping(path="/all")
 	public Iterable<PlaceEntity> getAllPlaces() {
 		return placeRepository.findAll();
+	}
+	
+	@GetMapping(path="/allByRegion")
+	public Iterable<PlaceRegion> getAllPlacesByRegion() {
+		return placeRepository.getAllPlacesOrderByRegion();
+	}
+	
+	@GetMapping(path="/allByPopulation")
+	public Iterable<PlacePopulation> getAllPlacesByPopulation() {
+		return placeRepository.getAllPlacesOrderByPopulation();
 	}
 	
 	@GetMapping(path="/name")
