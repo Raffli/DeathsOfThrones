@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import deathOfThrones.data.entities.EpisodeEntity;
+import deathOfThrones.rest.episodes.TitleRating;
+import deathOfThrones.rest.episodes.TitleViewer;
 
 
 public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
@@ -19,14 +21,24 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	@Query("select title from EpisodeEntity")
 	Iterable<String> getAllTitles();
 
-	Iterable<EpisodeEntity> findAllByOrderByImdbRating();
+	@Query("select new deathOfThrones.rest.episodes.TitleRating(e.title, e.imdbRating) from EpisodeEntity e order by e.imdbRating")
+	Iterable<TitleRating> getAllByOrderByImdbRating();
 	
-	Iterable<EpisodeEntity> findAllByOrderByImdbRatingDesc();
+	@Query("select new deathOfThrones.rest.episodes.TitleRating(e.title, e.imdbRating) from EpisodeEntity e order by e.imdbRating desc")
+	Iterable<TitleRating> getAllByOrderByImdbRatingDesc();
+	
+	@Query("select new deathOfThrones.rest.episodes.TitleViewer(e.title, e.viewers) from EpisodeEntity e order by e.viewers")
+	Iterable<TitleViewer> getAllByOrderByViewers();	
+	
+	@Query("select new deathOfThrones.rest.episodes.TitleViewer(e.title, e.viewers) from EpisodeEntity e order by e.viewers desc")
+	Iterable<TitleViewer> getAllByOrderByViewersDesc();	
 	
 	@Query("select distinct season from EpisodeEntity")
 	public int[] getAllSeasons();
 	
 	@Query("select viewers from EpisodeEntity e where e.season = ?1")
 	public int[] getAllViewersOfSeason(int season);
+	
+
 
 }

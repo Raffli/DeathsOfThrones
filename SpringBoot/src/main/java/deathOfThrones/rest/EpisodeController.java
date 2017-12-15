@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import deathOfThrones.data.entities.EpisodeEntity;
 import deathOfThrones.data.repositories.EpisodeRepository;
+import deathOfThrones.rest.episodes.TitleRating;
+import deathOfThrones.rest.episodes.TitleViewer;
 
 @RequestMapping(path="/dot/episode")
 @RestController
@@ -32,13 +34,23 @@ public class EpisodeController {
 	}
 	
 	@GetMapping(path="/byImdb")
-	public Iterable<EpisodeEntity> getAllEbisodesByImdbRating() {
-		return episodeRepository.findAllByOrderByImdbRating();
+	public Iterable<TitleRating> getAllEbisodesByImdbRating() {
+		return episodeRepository.getAllByOrderByImdbRating();
 	}
 	
 	@GetMapping(path="/byImdbDesc")
-	public Iterable<EpisodeEntity> getAllEbisodesByImdbRatingDesc() {
-		return episodeRepository.findAllByOrderByImdbRatingDesc();
+	public Iterable<TitleRating> getAllEbisodesByImdbRatingDesc() {
+		return episodeRepository.getAllByOrderByImdbRatingDesc();
+	}
+	
+	@GetMapping(path="/byViewer")
+	public Iterable<TitleViewer> getAllEbisodesByViewer() {
+		return episodeRepository.getAllByOrderByViewers();
+	}
+	
+	@GetMapping(path="/byViewerDesc")
+	public Iterable<TitleViewer> getAllEbisodesByViewerDesc() {
+		return episodeRepository.getAllByOrderByViewersDesc();
 	}
 	
 	@GetMapping(path="/id")
