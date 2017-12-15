@@ -34,4 +34,8 @@ export class DeathsService {
       .map((response: Response) => response.json());
   }
 
+  public getAllDeathsSortedByEpisode (): Observable<any[]> {
+    return this.http.get(environment.baseUrl + 'death/allByEpisodeId').map((response: Response) => response.json());
+  }
+
 }

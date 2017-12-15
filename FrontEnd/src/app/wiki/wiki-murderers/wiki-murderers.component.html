@@ -1,0 +1,31 @@
+<div *ngIf="murderersLoaded && !showEntry">
+  <ul class="listOverview">
+    <li *ngFor="let entry of murderersByAlphabet; let i = index" class="alphabet" >
+      <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+      <ul>
+        <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">{{value}}</li>
+      </ul>
+    </li>
+  </ul>
+  <table class="sortByTable">
+    <tr>
+      <th>
+        Sort by
+      </th>
+    </tr>
+    <tr>
+      <td (click)="sortMurdererByName()">Name</td>
+    </tr>
+    <tr>
+      <td (click)="sortMurdererByKills()">Kills</td>
+    </tr>
+    <tr>
+      <td (click)="sortMurdererByOrigin()">Origin</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="showEntry">
+  <app-display-entry [murdererData]="murdererData" [currentEntity]="'Murderers'" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
+                     [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry" (showDeathEntry)="callDeathEntry($event)"
+                     (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
+</div>

@@ -21,6 +21,10 @@ import {LocationsService} from "./services/locations.service";
 import { DisplayEntryComponent } from './wiki/display-entry/display-entry.component';
 import {ButtonModule} from 'primeng/primeng';
 import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
+import { WikiDeathsComponent } from './wiki/wiki-deaths/wiki-deaths.component';
+import { WikiMurderersComponent } from './wiki/wiki-murderers/wiki-murderers.component';
+import { WikiLocationsComponent } from './wiki/wiki-locations/wiki-locations.component';
+import { WikiEpisodesComponent } from './wiki/wiki-episodes/wiki-episodes.component';
 
 const appRoutes :Routes = [
   {
@@ -64,6 +68,10 @@ const appRoutes :Routes = [
     DeadPopupComponent,
     DisplayEntryComponent,
     YoutubeVideoPlayerComponent,
+    WikiDeathsComponent,
+    WikiMurderersComponent,
+    WikiLocationsComponent,
+    WikiEpisodesComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,
