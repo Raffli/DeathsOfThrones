@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-youtube-video-player',
   templateUrl: './youtube-video-player.component.html',
   styleUrls: ['./youtube-video-player.component.css']
 })
-export class YoutubeVideoPlayerComponent implements OnInit {
+export class YoutubeVideoPlayerComponent implements OnInit, OnChanges {
+
 
 
   @Input() public videoId: string;
@@ -46,18 +47,50 @@ export class YoutubeVideoPlayerComponent implements OnInit {
         }
       }
     };
-
-    this.initPlayer();
+    this.setupPlayer();
 
   }
 
-  initPlayer() {
-    console.debug(YT.Player)
-    if(YT.Player){
-      this.player = new YT.Player('myvideo', this.playerConfig);
-    } else {
-      setTimeout(() =>this.initPlayer());
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!this.playerConfig) {
+      return;
     }
+
+    if ('startSeconds' in changes) {
+      this.playerConfig.startSeconds = this.startSeconds;
+      console.debug(this.startSeconds)
+    }
+    if ('endSeconds' in changes) {
+      this.playerConfig.endSeconds = this.endSeconds;
+      console.debug(this.endSeconds)
+    }
+    this.setupPlayer();
+
+  }
+
+  setupPlayer() {
+
+    if(this.player) {
+      this.player.loadVideoById({
+        videoId: this.videoId,
+        startSeconds: this.startSeconds,
+        endSeconds: this.endSeconds
+      });
+    } else {
+      if(YT.Player){
+
+        this.player = new YT.Player('myvideo', this.playerConfig);
+      } else {
+        setTimeout(() =>this.setupPlayer());
+      }
+    }
+
+
+
+
+
 
   }
 
@@ -65,12 +98,14 @@ export class YoutubeVideoPlayerComponent implements OnInit {
 
   onStateChange(state) {
     if (state.data === YT.PlayerState.ENDED) {
-      this.player.seekTo(this.startSeconds, true)
+      console.debug('end')
+      this.player.loadVideoById({
+        videoId: this.videoId,
+        startSeconds: this.startSeconds,
+        endSeconds: this.endSeconds
+      });
     }
   }
-
-
-
 }
 
 declare var YT: any;
