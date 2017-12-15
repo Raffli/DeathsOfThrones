@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import deathOfThrones.data.entities.DeathEntity;
 import deathOfThrones.data.repositories.DeathRepository;
+import deathOfThrones.rest.deaths.DeathEpisodeSeason;
+import deathOfThrones.rest.deaths.DeathPlace;
 
 @RequestMapping(path="/dot/death")
 @RestController
@@ -27,8 +29,13 @@ public class DeathController {
 	}
 	
 	@GetMapping(path="/allByEpisodeId")
-	public Iterable<DeathEntity> getAllByEpisodeId() {
-		return deathRepository.findAllByOrderByEpisodeId();
+	public Iterable<DeathEpisodeSeason> getAllByEpisodeIdAndSeason() {
+		return deathRepository.getAllNamesOrderByEpisodeId();
+	}
+	
+	@GetMapping(path="/allByPlace")
+	public Iterable<DeathPlace> getAllByPlace() {
+		return deathRepository.getAllNamesOrderByPlace();
 	}
 	
 	@GetMapping(path="/name")
