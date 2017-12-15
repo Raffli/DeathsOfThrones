@@ -1,0 +1,15 @@
+<div *ngIf="episodesLoaded && !showEntry">
+  <ul class="listOverview">
+    <li *ngFor="let entry of episodesByAlphabet; let i = index" class="alphabet" >
+      <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+      <ul>
+        <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">{{value}}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div *ngIf="showEntry">
+  <app-display-entry [episodeData]="episodeData" [currentEntity]="'Episodes'" [nextEntry]="nextEntry" [previousEntry]="previousEntry"
+                     [hasNextEntry]="hasNextEntry" [hasPreviousEntry]="hasPreviousEntry"
+                     (showPreviousEntry)="showPreviousEntry()" (showNextEntry)="showNextEntry()" (returnToList)="handleReturnFromEntry()"></app-display-entry>
+</div>

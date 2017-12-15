@@ -51,6 +51,54 @@ body {
   color: #969070!important;
 }
 
+.listOverview {
+  width: 80%;
+  column-width: 150px;
+  column-count: 4;
+  column-fill: auto;
+  height: 100%;
+  list-style: none;
+  color: #969070!important;
+}
+
+.alphabet {
+  font-size: x-large;
+}
+
+.listEntry {
+  list-style: none;
+  font-size: large;
+  cursor: pointer;
+}
+
+.listEntry:hover {
+  color: #96641a;
+}
+
+.sortByTable {
+  position: absolute;
+  top: 120px;
+  left: 85%;
+  color: #969070;
+  font-size: x-large;
+  border: 3px solid #969070;
+}
+
+.sortByTable td {
+  text-align: center;
+  background-color: #969070;
+  color: #15191a;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.sortByTable td:hover {
+  color: beige;
+}
+
+
+
+
 
 
 
