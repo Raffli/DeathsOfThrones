@@ -1,7 +1,9 @@
 <div *ngIf="murderersLoaded && !showEntry">
   <ul class="listOverview">
-    <li *ngFor="let entry of murderersByAlphabet; let i = index" class="alphabet" >
-      <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+    <li *ngFor="let entry of murderersSorted; let i = index" class="alphabet" >
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'alphabet'">{{alphabet[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'kills'">Has killed {{kills[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'origin'">{{origins[i]}}</b>
       <ul>
         <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">{{value}}</li>
       </ul>
@@ -14,13 +16,13 @@
       </th>
     </tr>
     <tr>
-      <td (click)="sortMurdererByName()">Name</td>
+      <td (click)="sortMurdererByName()" [style.backgroundColor]="bgColorName">Name</td>
     </tr>
     <tr>
-      <td (click)="sortMurdererByKills()">Kills</td>
+      <td (click)="sortMurdererByKills()" [style.backgroundColor]="bgColorKills">Kills</td>
     </tr>
     <tr>
-      <td (click)="sortMurdererByOrigin()">Origin</td>
+      <td (click)="sortMurdererByOrigin()" [style.backgroundColor]="bgColorOrigin">Origin</td>
     </tr>
   </table>
 </div>

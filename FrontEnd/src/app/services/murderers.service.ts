@@ -28,4 +28,12 @@ export class MurderersService {
       .map((response: Response) => response.json());
   }
 
+  public getAllMurderersByKills (): Observable<any> {
+    return this.http.get(environment.baseUrl + 'murder/allNamesByKills').map((response: Response) => response.json());
+  }
+
+  public getAllMurderersByOrigin (): Observable<any> {
+    return this.http.get(environment.baseUrl + 'murder/allNamesByOrigins').map((response: Response) => response.json());
+  }
+
 }

@@ -38,4 +38,8 @@ export class DeathsService {
     return this.http.get(environment.baseUrl + 'death/allByEpisodeId').map((response: Response) => response.json());
   }
 
+  public getAllDeathsSortedByLocation (): Observable<any[]> {
+    return this.http.get(environment.baseUrl + 'death/allByPlace').map((response: Response) => response.json());
+  }
+
 }

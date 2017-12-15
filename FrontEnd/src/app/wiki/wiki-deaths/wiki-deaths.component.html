@@ -1,8 +1,9 @@
 <div *ngIf="deathsLoaded && !showEntry">
   <ul class="listOverview">
     <li *ngFor="let entry of deathsSorted; let i = index" class="alphabet" >
-      <b *ngIf="entry.length > 0 && sortedByAlphabet">{{alphabet[i]}}</b>
-      <b *ngIf="entry.length > 0 && !sortedByAlphabet" [title]="'Season ' + seasons[i]">S{{seasons[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'alphabet'">{{alphabet[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'episode'">Season {{seasons[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'location'">{{allLocations[i]}}</b>
       <ul class="autoColumn">
         <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">{{value}}</li>
       </ul>
@@ -15,13 +16,13 @@
       </th>
     </tr>
     <tr>
-      <td (click)="sortByName()">Name</td>
+      <td (click)="sortByName()" [style.backgroundColor]="bgColorName">Name</td>
     </tr>
     <tr>
-      <td (click)="sortByEpisode()">Episode</td>
+      <td (click)="sortByEpisode()" [style.backgroundColor]="bgColorEpisode">Episode</td>
     </tr>
     <tr>
-      <td (click)="sortByLocation()">Location</td>
+      <td (click)="sortByLocation()" [style.backgroundColor]="bgColorLocation">Location</td>
     </tr>
   </table>
 </div>

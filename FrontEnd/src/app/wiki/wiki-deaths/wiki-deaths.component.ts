@@ -15,17 +15,27 @@ export class WikiDeathsComponent implements OnInit {
   private deathsSorted;
   private deathsByAlphabet = new Array(this.alphabet.length);
   private deathsBySeasons = new Array(this.seasons.length);
+  private deathsByLocation;
   private allDeaths: any [];
   private allDeathsByName: any[];
   private allDeathsByEpisode: any[];
+  private allDeathsByLocation: any[];
   private deathsLoaded : boolean;
-  private sortedByAlphabet: boolean;
+  private sortedBy: string;
   private byEpisodeHasBeenLoaded : boolean;
+  private byLocationHasBeenLoaded : boolean;
+  private allLocations: any[];
   private showEntry: boolean;
   private nextEntry : string;
   private hasNextEntry : boolean;
   private previousEntry : string;
   private hasPreviousEntry : boolean;
+  private defaultBgColor: string;
+  private selectedBgColor: string;
+  private bgColorName : string;
+  private bgColorEpisode : string;
+  private bgColorLocation: string;
+  private deadData: any[];
 
   @Output()
   public showMurdererEntry = new EventEmitter<String>();
@@ -56,8 +66,13 @@ export class WikiDeathsComponent implements OnInit {
 
           this.deathsSorted = this.deathsByAlphabet;
           this.allDeaths = this.allDeathsByName;
-          this.sortedByAlphabet = true;
+          this.sortedBy = 'alphabet';
           this.deathsLoaded = true;
+
+          this.defaultBgColor = '#969070';
+          this.selectedBgColor = '#96641a';
+          this.bgColorName = this.selectedBgColor;
+          this.bgColorEpisode = this.bgColorLocation = this.defaultBgColor;
         }
       );
   }
@@ -65,14 +80,18 @@ export class WikiDeathsComponent implements OnInit {
   sortByName = function () {
     this.deathsSorted = this.deathsByAlphabet;
     this.allDeaths = this.allDeathsByName;
-    this.sortedByAlphabet = true;
+    this.sortedBy = 'alphabet';
+    this.bgColorName = this.selectedBgColor;
+    this.bgColorEpisode = this.bgColorLocation = this.defaultBgColor;
   };
 
   sortByEpisode = function () {
+    this.bgColorEpisode = this.selectedBgColor;
+    this.bgColorName = this.bgColorLocation = this.defaultBgColor;
     if (this.byEpisodeHasBeenLoaded) {
       this.allDeaths = this.allDeathsByEpisode;
       this.deathsSorted = this.deathsBySeasons;
-      this.sortedByAlphabet = false;
+      this.sortedBy = 'episode';
     } else {
       this.deathsService.getAllDeathsSortedByEpisode()
         .subscribe(
@@ -92,14 +111,58 @@ export class WikiDeathsComponent implements OnInit {
             this.byEpisodeHasBeenLoaded = true;
             this.deathsSorted = this.deathsBySeasons;
             this.allDeaths = this.allDeathsByEpisode;
-            this.sortedByAlphabet = false;
+            this.sortedBy = 'episode';
           }
         );
     }
   };
 
   sortByLocation = function () {
-
+    this.bgColorLocation = this.selectedBgColor;
+    this.bgColorEpisode = this.bgColorName = this.defaultBgColor;
+    if (this.byLocationHasBeenLoaded) {
+      this.allDeaths = this.allDeathsByLocation;
+      this.deathsSorted = this.deathsByLocation;
+      this.sortedBy = 'location';
+    } else {
+      this.deathsService.getAllDeathsSortedByLocation()
+        .subscribe( (data: any) => {
+          this.allDeathsByLocation = [];
+          this.allLocations = [];
+          for (let i = 0; i < data.length; i++) {
+            if (this.allLocations.length < 1) {
+              this.allLocations.push(data[i].place);
+            } else {
+              for (let j = 0; j < this.allLocations.length; j++) {
+                if (this.allLocations[j] == data[i].place) {
+                  break;
+                } else {
+                  if (j == this.allLocations.length - 1) {
+                    this.allLocations.push(data[i].place);
+                  }
+                }
+              }
+            }
+          }
+          this.deathsByLocation = new Array(this.allLocations.length);
+          for (let i = 0; i < this.allLocations.length; i++) {
+            this.deathsByLocation[i] = [];
+          }
+          for (let i = 0; i < data.length; i++) {
+            this.allDeathsByLocation.push(data[i].name);
+            for (let j = 0; j < this.allLocations.length; j++) {
+              if (data[i].place == this.allLocations[j]) {
+                this.deathsByLocation[j].push(data[i].name);
+              }
+            }
+          }
+          console.log(this.deathsByLocation);
+          this.byLocationHasBeenLoaded = true;
+          this.deathsSorted = this.deathsByLocation;
+          this.allDeaths = this.allDeathsByLocation;
+          this.sortedBy = 'location';
+        });
+    }
   };
 
   handleReturnFromEntry = function () {

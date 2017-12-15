@@ -23,9 +23,16 @@ export class LocationsService {
     return this.http.get(environment.baseUrl + 'place/allNames').map((response: Response) => response.json());
   }
 
+  public getAllLocationsByRegion (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'place/allByRegion').map((response: Response) => response.json());
+  }
 
+  public getALlLocationsByPopulation (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'place/allByPopulation').map((response: Response) => response.json());
+  }
 
-
-
+  public getAllRegionsOnlyName (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'region/allNames').map((response: Response) => response.json());
+  }
 
 }

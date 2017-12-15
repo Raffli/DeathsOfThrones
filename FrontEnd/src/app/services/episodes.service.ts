@@ -27,4 +27,16 @@ export class EpisodesService {
     return this.http.get(environment.baseUrl + 'episode/id?id=' + id).map((response: Response) => response.json());
   }
 
+  public getAllEpisodesBySeason (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'episode/allTitles').map((response: Response) => response.json());
+  }
+
+  public getAllEpisodesByRating (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'episode/byImdb').map((response: Response) => response.json());
+  }
+
+  public getAllEpisodesByViewer (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'episode/byViewer').map((response: Response) => response.json());
+  }
+
 }
