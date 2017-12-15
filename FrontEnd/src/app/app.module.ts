@@ -21,7 +21,6 @@ import {LocationsService} from "./services/locations.service";
 import { DisplayEntryComponent } from './wiki/display-entry/display-entry.component';
 import {ButtonModule} from 'primeng/primeng';
 import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
-import { YoutubeTestComponent } from './youtube-test/youtube-test.component';
 
 const appRoutes :Routes = [
   {
@@ -65,7 +64,6 @@ const appRoutes :Routes = [
     DeadPopupComponent,
     DisplayEntryComponent,
     YoutubeVideoPlayerComponent,
-    YoutubeTestComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,

@@ -7,8 +7,6 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 })
 export class YoutubeVideoPlayerComponent implements OnInit, OnChanges {
 
-
-
   @Input() public videoId: string;
   @Input() public startSeconds: number;
   @Input() public endSeconds: number;
@@ -51,8 +49,6 @@ export class YoutubeVideoPlayerComponent implements OnInit, OnChanges {
 
   }
 
-
-
   ngOnChanges(changes: SimpleChanges): void {
     if(!this.playerConfig) {
       return;
@@ -86,15 +82,7 @@ export class YoutubeVideoPlayerComponent implements OnInit, OnChanges {
         setTimeout(() =>this.setupPlayer());
       }
     }
-
-
-
-
-
-
   }
-
-
 
   onStateChange(state) {
     if (state.data === YT.PlayerState.ENDED) {

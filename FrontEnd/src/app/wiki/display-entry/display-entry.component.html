@@ -46,17 +46,15 @@
           <td class="type">Return Chance:</td>
           <td class="data">{{deadData.likelihoodofreturn}}</td>
         </tr>
+        <tr>
+          <td colspan="2">
+            <app-youtube-video-player videoId="oGwjm6Ax24E" [startSeconds]="deadData.videoStart" [endSeconds]="deadData.videoEnd" height="270" width="480"></app-youtube-video-player>
+          </td>
+        </tr>
       </table>
     </td>
   </table>
-  <app-youtube-video-player
-    videoId="oGwjm6Ax24E"
-    [startSeconds]="deadData.videoStart"
-    [endSeconds]="deadData.videoEnd"
-    height="225"
-    width="400"
 
-  ></app-youtube-video-player>
 
 </div>
 <div *ngIf="murdererData" class="entry">
