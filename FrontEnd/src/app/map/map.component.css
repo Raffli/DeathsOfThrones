@@ -7,16 +7,19 @@
   border: 1px solid black;
 }
 
-#map {
+#imageContainer {
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+#map {
   -webkit-user-drag: none;
 }
 
 #deathlist {
   pointer-events: none;
-  color: red;
+  color: #760302;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -62,12 +65,10 @@
 }
 
 #deadsImage {
-  width: 60px;
-  height: 75px;
   border-radius: 25px;
   position: absolute;
   top: 150px;
   left: 150px;
   overflow: hidden;
-  border: 5px solid #760302;
+  border: 3px solid #760302;
 }
