@@ -28,6 +28,7 @@ import { WikiEpisodesComponent } from './wiki/wiki-episodes/wiki-episodes.compon
 import {DropdownModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ImpressumComponent } from './impressum/impressum.component';
 
 const appRoutes :Routes = [
   {
@@ -50,6 +51,10 @@ const appRoutes :Routes = [
   {
     path: 'about',
     component: ContactComponent
+  },
+  {
+    path: 'impressum',
+    component: ImpressumComponent
   },
   {
     path: '**',
@@ -75,6 +80,7 @@ const appRoutes :Routes = [
     WikiMurderersComponent,
     WikiLocationsComponent,
     WikiEpisodesComponent,
+    ImpressumComponent,
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule, DropdownModule, FormsModule, BrowserAnimationsModule, ChartModule

@@ -309,6 +309,7 @@ export class MapComponent implements OnInit {
   };
 
   @HostListener('mousewheel', ['$event']) onMouseWheelChrome(event: any) {
+    event.preventDefault();
     this.mouseWheelFunc(event);
   }
 
