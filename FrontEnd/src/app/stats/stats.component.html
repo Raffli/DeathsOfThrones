@@ -1,3 +1,19 @@
-<p>
-  stats works!
-</p>
+<div class="clearfix">
+  <div class="column charts">
+    <h1>{{selectedDataset}}</h1>
+    <p-chart *ngIf="datasetSelected && barChartSelected" type="bar" [data]="barData" [options]="options"></p-chart>
+    <p-chart *ngIf="datasetSelected && pieChartSelected" type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
+    <p-chart *ngIf="datasetSelected && lineChartSelected" type="line" [data]="lineData" [options]="options"></p-chart>
+  </div>
+  <div class="column selection">
+    <h2>Visualization</h2>
+    <ul class="horizontalList">
+      <li class="listItem" [style.backgroundColor]="bgColorBar" [style.color]="fontColorBar" (click)="selectBar()">Bar</li>
+      <li class="listItem" [style.backgroundColor]="bgColorPie" [style.color]="fontColorPie" (click)="selectPie()">Pie</li>
+      <li class="listItem" [style.backgroundColor]="bgColorLine" [style.color]="fontColorLine" (click)="selectLine()">Line</li>
+    </ul>
+    <br/>
+    <h2>Data</h2>
+    <p-dropdown [options]="datasets" (onChange)="onDatasetSelect($event)" [(ngModel)]="selectedDataset" placeholder="Select a dataset"></p-dropdown>
+  </div>
+</div>

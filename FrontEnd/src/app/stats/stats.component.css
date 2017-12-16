@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  padding: 15px;
+}
+
+.charts {
+  width: 70%;
+  height: 100%;
+}
+
+.selection {
+  width: 25%;
+  min-height: 100%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+h1, h2 {
+  text-align: center;
+  opacity: 0.6;
+}
+
+.horizontalList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 3px solid #969070;
+  opacity: 0.6;
+}
+
+.listItem {
+  float: left;
+  display: block;
+  background-color: #15191a;
+  color: #969070;
+  padding: 3px;
+  width: 33.333%;
+  font-size: x-large;
+  text-align: center;
+  border-right: 3px solid #969070;
+  cursor: pointer;
+}
+
+.listItem:last-child {
+  border-right: none;
+}

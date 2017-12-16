@@ -39,4 +39,8 @@ export class EpisodesService {
     return this.http.get(environment.baseUrl + 'episode/byViewer').map((response: Response) => response.json());
   }
 
+  public getAvgViewerPerSeason (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'episode/avgViewerSeason').map((response: Response) => response.json());
+  }
+
 }

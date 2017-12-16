@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {TabMenuModule} from 'primeng/primeng';
+import {ChartModule, TabMenuModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import {RouterModule, Routes} from '@angular/router';
 import { HeaderComponent } from './header/header.component';
@@ -25,6 +25,9 @@ import { WikiDeathsComponent } from './wiki/wiki-deaths/wiki-deaths.component';
 import { WikiMurderersComponent } from './wiki/wiki-murderers/wiki-murderers.component';
 import { WikiLocationsComponent } from './wiki/wiki-locations/wiki-locations.component';
 import { WikiEpisodesComponent } from './wiki/wiki-episodes/wiki-episodes.component';
+import {DropdownModule} from 'primeng/primeng';
+import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const appRoutes :Routes = [
   {
@@ -74,7 +77,7 @@ const appRoutes :Routes = [
     WikiEpisodesComponent,
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,
+    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule, DropdownModule, FormsModule, BrowserAnimationsModule, ChartModule
   ],
   providers: [DeathsService, EpisodesService, MurderersService, LocationsService],
   bootstrap: [AppComponent]
