@@ -1,6 +1,8 @@
 package deathOfThrones.data.repositories;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,6 +10,7 @@ import deathOfThrones.data.entities.EpisodeEntity;
 import deathOfThrones.rest.episodes.TitleRating;
 import deathOfThrones.rest.episodes.TitleSeason;
 import deathOfThrones.rest.episodes.TitleViewer;
+import deathOfThrones.rest.search.NameCategory;
 
 
 public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
@@ -18,6 +21,9 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	
 	@Query("select title from EpisodeEntity order by title")
 	Iterable<String> getAllTitlesByAbc();
+
+	@Query("select new deathOfThrones.rest.search.NameCategory(e.title, 'episode') from EpisodeEntity e where e.title like %?1%")
+	List<NameCategory> getWithSimilarTitle(String title);
 	
 	@Query("select new deathOfThrones.rest.episodes.TitleSeason(e.title, e.season) from EpisodeEntity e order by e.episodeId")
 	Iterable<TitleSeason> getAllTitles();

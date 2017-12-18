@@ -1,6 +1,8 @@
 package deathOfThrones.data.repositories;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,6 +13,7 @@ import deathOfThrones.rest.deaths.DirectorDeaths;
 import deathOfThrones.rest.deaths.EpisodeDeaths;
 import deathOfThrones.rest.deaths.PlaceDeaths;
 import deathOfThrones.rest.deaths.WriterDeaths;
+import deathOfThrones.rest.search.NameCategory;
 
 
 public interface DeathRepository extends CrudRepository<DeathEntity, String> {
@@ -24,6 +27,9 @@ public interface DeathRepository extends CrudRepository<DeathEntity, String> {
 
     Iterable<DeathEntity>  findAllByOrderByEpisodeId();
 
+	@Query("select new deathOfThrones.rest.search.NameCategory(d.name, 'death') from DeathEntity d where d.name like %?1%")
+	List<NameCategory> getWithSimilarName(String name);
+    
 	@Query("select name from DeathEntity where Murder like ?1")
 	Iterable<String> getByMurder(String name);
 	

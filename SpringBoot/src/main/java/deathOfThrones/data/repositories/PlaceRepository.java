@@ -1,12 +1,15 @@
 package deathOfThrones.data.repositories;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import deathOfThrones.data.entities.PlaceEntity;
 import deathOfThrones.rest.places.PlacePopulation;
 import deathOfThrones.rest.places.PlaceRegion;
+import deathOfThrones.rest.search.NameCategory;
 
 
 public interface PlaceRepository extends CrudRepository<PlaceEntity, String> {
@@ -15,6 +18,9 @@ public interface PlaceRepository extends CrudRepository<PlaceEntity, String> {
 	
 	@Query("select name from PlaceEntity")
 	Iterable<String> getAllNames();
+	
+	@Query("select new deathOfThrones.rest.search.NameCategory(p.name, 'place') from PlaceEntity p where p.name like %?1%")
+	List<NameCategory> getWithSimilarName(String name);
 	
 	@Query("select new deathOfThrones.rest.places.PlaceRegion(p.name, p.region) from PlaceEntity p order by p.region")
 	Iterable<PlaceRegion> getAllPlacesOrderByRegion();
