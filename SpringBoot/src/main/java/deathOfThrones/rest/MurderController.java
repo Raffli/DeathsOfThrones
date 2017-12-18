@@ -32,6 +32,22 @@ public class MurderController {
 		return murderRepository.getAllNamesByKills();
 	}
 	
+	@GetMapping(path="/TopFiveMurders")
+	public MurderKills[] getTopFiveMurders() {
+		MurderKills[] murders = new MurderKills[5];
+		Iterable <MurderKills> murdersIterable = murderRepository.getAllNamesByKillsDesc();
+		
+		int i = 0;
+	    for(MurderKills e: murdersIterable) {
+	         murders[i] = e;
+	         i++;
+	         if (i >= murders.length) {
+	        	 break;
+	         }
+	    }
+		return murders;
+	}
+	
 	@GetMapping(path="/allNamesByOrigins")
 	public Iterable<MurderOrigin> getAllMurderNamesByOrigins() {
 		return murderRepository.getAllNamesByOrigins();

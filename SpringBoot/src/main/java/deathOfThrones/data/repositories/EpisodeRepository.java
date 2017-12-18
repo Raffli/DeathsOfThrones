@@ -36,9 +36,9 @@ public interface EpisodeRepository extends CrudRepository<EpisodeEntity, Long> {
 	
 	@Query("select distinct season from EpisodeEntity")
 	public int[] getAllSeasons();
-	
-	@Query("select viewers from EpisodeEntity e where e.season = ?1")
-	public int[] getAllViewersOfSeason(int season);
+		
+	@Query("select AVG(viewers) from EpisodeEntity e group by e.season")
+	public int[] getAVGViewersOfSeasons();
 	
 
 
