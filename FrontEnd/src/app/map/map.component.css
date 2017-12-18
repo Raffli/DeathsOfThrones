@@ -1,7 +1,7 @@
 #mapContainer{
   box-sizing: border-box;
   width:99.9%;
-  height: 100vh;
+  height: 92vh;
   overflow:hidden;
   position: relative;
   border: 1px solid black;

@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
       {label: 'MAP', icon: 'fa-globe', routerLink: '/map'},
       {label: 'WIKI', icon: 'fa-book', routerLink: '/wiki'},
       {label: 'STATS', icon: 'fa-bar-chart', routerLink: '/stats'},
-      {label: 'SEARCH', icon: 'fa-search'},
       {label: 'ABOUT', icon: 'fa-info-circle', routerLink: '/about'},
       {label: 'IMPRESSUM', icon: 'fa-envelope', routerLink: '/impressum'}
     ];

@@ -37,6 +37,7 @@ export class WikiEpisodesComponent implements OnInit {
   private bgColorRating: string;
   private bgColorViewer: string;
   private episodeData: any[];
+  private dataFromSearch: string;
 
   constructor(private episodesService: EpisodesService) { }
 
@@ -66,6 +67,10 @@ export class WikiEpisodesComponent implements OnInit {
           this.selectedBgColor = '#96641a';
           this.bgColorName = this.selectedBgColor;
           this.bgColorSeason = this.bgColorRating = this.bgColorViewer = this.defaultBgColor;
+
+          if (this.dataFromSearch) {
+            this.displayEntry(null, this.dataFromSearch);
+          };
         }
       );
   }
@@ -205,7 +210,6 @@ export class WikiEpisodesComponent implements OnInit {
   };
 
   showPreviousEntry = function () {
-    console.log(this.previousEntry);
     this.displayEntry(null, this.previousEntry);
   };
 
@@ -214,22 +218,26 @@ export class WikiEpisodesComponent implements OnInit {
   };
 
   displayEntry = function (event, id) {
-    let selectedTitle;
-    if (id) {
-      if (typeof id == "string") {
-        selectedTitle = id;
-      } else {
-        selectedTitle = this.allEpisodes[id];
-      }
-    } else {
-      selectedTitle = event.target.textContent;
+    if (this.allEpisodes == undefined) {
+      this.dataFromSearch = id;
     }
-    this.episodesService.getEpisodeByTitle(selectedTitle).subscribe( (data: any) => {
-      this.episodeData = data;
-      this.episodeData.image = environment.baseUrl + 'image/imageByName?name=' + selectedTitle;
-      this.findNextAndPreviousEntry(this.allEpisodes, selectedTitle);
-    });
-
+    else {
+      let selectedTitle;
+      if (id) {
+        if (typeof id == "string") {
+          selectedTitle = id;
+        } else {
+          selectedTitle = this.allEpisodes[id];
+        }
+      } else {
+        selectedTitle = event.target.textContent;
+      }
+      this.episodesService.getEpisodeByTitle(selectedTitle).subscribe( (data: any) => {
+        this.episodeData = data;
+        this.episodeData.image = environment.baseUrl + 'image/imageByName?name=' + selectedTitle;
+        this.findNextAndPreviousEntry(this.allEpisodes, selectedTitle);
+      });
+    }
   };
 
 }

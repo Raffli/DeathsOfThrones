@@ -37,6 +37,7 @@ export class WikiMurderersComponent implements OnInit {
   private bgColorKills : string;
   private bgColorOrigin: string;
   private murdererData: any[];
+  private dataFromSearch: string;
 
   @Output()
   public showDeathEntry = new EventEmitter<String>();
@@ -68,6 +69,10 @@ export class WikiMurderersComponent implements OnInit {
           this.selectedBgColor = '#96641a';
           this.bgColorName = this.selectedBgColor;
           this.bgColorKills = this.bgColorOrigin = this.defaultBgColor;
+
+          if (this.dataFromSearch) {
+            this.displayEntry(null, this.dataFromSearch);
+          };
         }
       );
   }
@@ -200,23 +205,28 @@ export class WikiMurderersComponent implements OnInit {
   };
 
   displayEntry = function (event, name) {
-    let selectedName;
-    if (name) {
-      selectedName = name;
-    } else {
-      selectedName = event.target.textContent;
+    if (this.allMurderers == undefined) {
+      this.dataFromSearch = name;
     }
-    this.murderersService.getMurdererByName(selectedName).subscribe( (data: any) => {
-      this.murdererData = data;
-      this.murderersService.getMurdererKills(selectedName).subscribe((killData: any) => {
-        this.murdererData.kills = killData;
-        this.deathsService.getAllDeathsByMurderer(selectedName).subscribe( (victims: any) => {
-          this.murdererData.victims = victims;
-          this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
-          this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+    else {
+      let selectedName;
+      if (name) {
+        selectedName = name;
+      } else {
+        selectedName = event.target.textContent;
+      }
+      this.murderersService.getMurdererByName(selectedName).subscribe((data: any) => {
+        this.murdererData = data;
+        this.murderersService.getMurdererKills(selectedName).subscribe((killData: any) => {
+          this.murdererData.kills = killData;
+          this.deathsService.getAllDeathsByMurderer(selectedName).subscribe((victims: any) => {
+            this.murdererData.victims = victims;
+            this.murdererData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+            this.findNextAndPreviousEntry(this.allMurderers, selectedName);
+          });
         });
       });
-    });
+    }
   };
 
 }
