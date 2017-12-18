@@ -1,12 +1,30 @@
 <div *ngIf="locationsLoaded && !showEntry">
   <ul class="listOverview">
-    <li *ngFor="let entry of locationsByAlphabet; let i = index" class="alphabet" >
-      <b *ngIf="entry.length > 0">{{alphabet[i]}}</b>
+    <li *ngFor="let entry of locationsSorted; let i = index" class="alphabet" >
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'alphabet'">{{alphabet[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'region'">{{regions[i]}}</b>
+      <b class="listHeader" *ngIf="entry.length > 0 && sortedBy == 'population'">Less than {{populations[i]}}</b>
       <ul>
         <li *ngFor="let value of entry" class="listEntry" (click)="displayEntry($event)">{{value}}</li>
       </ul>
     </li>
   </ul>
+  <table class="sortByTable">
+    <tr>
+      <th>
+        Sort by
+      </th>
+    </tr>
+    <tr>
+      <td (click)="sortByName()" [style.backgroundColor]="bgColorName">Name</td>
+    </tr>
+    <tr>
+      <td (click)="sortByRegion()" [style.backgroundColor]="bgColorRegion">Region</td>
+    </tr>
+    <tr>
+      <td (click)="sortByPopulation()" [style.backgroundColor]="bgColorPopulation">Population</td>
+    </tr>
+  </table>
 </div>
 <div *ngIf="showEntry">
   <app-display-entry [locationData]="locationData" [currentEntity]="'Locations'" [nextEntry]="nextEntry" [previousEntry]="previousEntry"

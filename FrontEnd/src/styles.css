@@ -96,7 +96,51 @@ body {
   color: beige;
 }
 
+.listHeader {
+  color: #96641a;
+  margin: 5px;
+  font-size: large;
+}
 
+body .ui-dropdown {
+  border: 3px solid #969070;
+  opacity: 0.6;
+  width: 100%!important;
+}
+
+body .ui-dropdown .ui-dropdown-trigger {
+  background-color: #15191a;
+  color: #969070;
+  border-left: 3px solid #969070;
+
+}
+
+body .ui-dropdown .ui-dropdown-label{
+  background-color: #15191a;
+  color: #969070;
+  border-radius: 0;
+}
+
+body .ui-dropdown .ui-dropdown-panel {
+  background-color: #15191a;
+  color: #969070;
+  border: 3px solid #969070;
+}
+
+body .ui-dropdown .ui-dropdown-items {
+  background-color: #15191a;
+  color: #969070;
+  border-radius: 0;
+}
+
+body .ui-state-highlight {
+  background: #969070;
+  color: #15191a;
+}
+
+.chartjs-render-monitor {
+  opacity: 0.6;
+}
 
 
 
