@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {environment} from '../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-wiki',
@@ -16,12 +16,27 @@ export class WikiComponent implements OnInit {
   private showEntry: boolean;
 
   private selectedIndex: number = 0;
-  private selectedEntity : string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.showEntry = false;
+    this.route.queryParams.subscribe( params => {
+      if (params.name && params.category) {
+        if (params.category == 'Death') {
+          this.selectedIndex = 0;
+          this.deathsChild.displayEntry(null, params.name);
+        } else if (params.category == 'Murderer') {
+          this.selectedIndex = 1;
+          this.deathsChild.displayEntry(null, params.name);
+        } else if (params.category == 'Place') {
+          this.selectedIndex = 2;
+          this.locationsChild.displayEntry(null, params.name);
+        } else if (params.category == 'Episode') {
+          this.selectedIndex = 3;
+          this.episodesChild.displayEntry(null, params.name);
+        }
+      }
+    });
   }
 
   onChange($event) {

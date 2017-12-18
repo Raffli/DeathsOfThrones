@@ -36,6 +36,7 @@ export class WikiDeathsComponent implements OnInit {
   private bgColorEpisode : string;
   private bgColorLocation: string;
   private deadData: any[];
+  private dataFromSearch: string;
 
   @Output()
   public showMurdererEntry = new EventEmitter<String>();
@@ -73,6 +74,10 @@ export class WikiDeathsComponent implements OnInit {
           this.selectedBgColor = '#96641a';
           this.bgColorName = this.selectedBgColor;
           this.bgColorEpisode = this.bgColorLocation = this.defaultBgColor;
+
+          if (this.dataFromSearch) {
+            this.displayEntry(null, this.dataFromSearch);
+          };
         }
       );
   }
@@ -215,17 +220,22 @@ export class WikiDeathsComponent implements OnInit {
   };
 
   displayEntry = function (event, name) {
-    let selectedName;
-    if (name) {
-      selectedName = name;
-    } else {
-      selectedName = event.target.textContent;
+    if (this.allDeaths == undefined) {
+      this.dataFromSearch = name;
     }
-    this.deathsService.getDeathByName(selectedName).subscribe((data: any) => {
-      this.deadData = data;
-      this.deadData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
-      this.findNextAndPreviousEntry(this.allDeaths, selectedName);
-    });
+    else {
+      let selectedName;
+      if (name) {
+        selectedName = name;
+      } else {
+        selectedName = event.target.textContent;
+      }
+      this.deathsService.getDeathByName(selectedName).subscribe((data: any) => {
+        this.deadData = data;
+        this.deadData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+        this.findNextAndPreviousEntry(this.allDeaths, selectedName);
+      });
+    }
   };
 
 }

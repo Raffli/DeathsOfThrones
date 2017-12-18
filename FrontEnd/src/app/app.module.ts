@@ -29,6 +29,7 @@ import {DropdownModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ImpressumComponent } from './impressum/impressum.component';
+import { SearchComponent } from './search/search.component';
 
 const appRoutes :Routes = [
   {
@@ -81,9 +82,11 @@ const appRoutes :Routes = [
     WikiLocationsComponent,
     WikiEpisodesComponent,
     ImpressumComponent,
+    SearchComponent,
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule, DropdownModule, FormsModule, BrowserAnimationsModule, ChartModule
+    BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,
+    DropdownModule, FormsModule, BrowserAnimationsModule, ChartModule
   ],
   providers: [DeathsService, EpisodesService, MurderersService, LocationsService],
   bootstrap: [AppComponent]

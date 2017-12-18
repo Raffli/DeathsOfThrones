@@ -1,3 +1,9 @@
+.floatRight {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+}
+
 .ui-tabmenu {
   opacity: 0.6;
 }

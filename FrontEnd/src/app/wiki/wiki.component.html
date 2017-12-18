@@ -1,15 +1,15 @@
 <p-tabView styleClass="wiki-header" (onChange)="onChange($event)" [activeIndex]="selectedIndex">
-  <p-tabPanel header="DEATHS" [selected]="true" headerStyleClass="wiki-panel">
+  <p-tabPanel header="DEATHS" [selected]="selectedIndex == 0" headerStyleClass="wiki-panel">
     <app-wiki-deaths #deathsChild (showMurdererEntry)="showMurdererEntry($event)" (showLocationEntry)="showLocationEntry($event)"
                      (showEpisodeEntry)="showEpisodeEntry($event)" ></app-wiki-deaths>
   </p-tabPanel>
-  <p-tabPanel header="MURDERERS" headerStyleClass="wiki-panel">
+  <p-tabPanel header="MURDERERS" [selected]="selectedIndex == 1" headerStyleClass="wiki-panel">
     <app-wiki-murderers #murderersChild (showDeathEntry)="showDeathEntry($event)"></app-wiki-murderers>
   </p-tabPanel>
-  <p-tabPanel header="LOCATIONS" headerStyleClass="wiki-panel">
+  <p-tabPanel header="LOCATIONS" [selected]="selectedIndex == 2" headerStyleClass="wiki-panel">
     <app-wiki-locations #locationsChild></app-wiki-locations>
   </p-tabPanel>
-  <p-tabPanel header="EPISODES" headerStyleClass="wiki-panel">
+  <p-tabPanel header="EPISODES" [selected]="selectedIndex == 3" headerStyleClass="wiki-panel">
     <app-wiki-episodes #episodesChild></app-wiki-episodes>
   </p-tabPanel>
 </p-tabView>

@@ -32,6 +32,7 @@ export class WikiLocationsComponent implements OnInit {
   private bgColorRegion : string;
   private bgColorPopulation: string;
   private locationData: any[];
+  private dataFromSearch: string;
 
   constructor(private locationsService: LocationsService) { }
 
@@ -60,6 +61,10 @@ export class WikiLocationsComponent implements OnInit {
           this.selectedBgColor = '#96641a';
           this.bgColorName = this.selectedBgColor;
           this.bgColorRegion = this.bgColorPopulation = this.defaultBgColor;
+
+          if (this.dataFromSearch) {
+            this.displayEntry(null, this.dataFromSearch);
+          };
         }
       );
   }
@@ -175,16 +180,21 @@ export class WikiLocationsComponent implements OnInit {
   };
 
   displayEntry = function (event, name) {
-    let selectedName;
-    if (name) {
-      selectedName = name;
-    } else {
-      selectedName = event.target.textContent;
+    if (this.allLocations == undefined) {
+      this.dataFromSearch = name;
     }
-    this.locationsService.getLocationByName(selectedName).subscribe( (data: any) => {
-      this.locationData = data;
-      this.locationData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
-      this.findNextAndPreviousEntry(this.allLocations, selectedName);
-    });
+    else {
+      let selectedName;
+      if (name) {
+        selectedName = name;
+      } else {
+        selectedName = event.target.textContent;
+      }
+      this.locationsService.getLocationByName(selectedName).subscribe((data: any) => {
+        this.locationData = data;
+        this.locationData.image = environment.baseUrl + 'image/imageByName?name=' + selectedName;
+        this.findNextAndPreviousEntry(this.allLocations, selectedName);
+      });
+    }
   };
 }
