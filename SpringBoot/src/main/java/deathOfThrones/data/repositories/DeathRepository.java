@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import deathOfThrones.data.entities.DeathEntity;
 import deathOfThrones.rest.deaths.DeathEpisodeSeason;
 import deathOfThrones.rest.deaths.DeathPlace;
+import deathOfThrones.rest.deaths.PlacesDeaths;
 
 
 public interface DeathRepository extends CrudRepository<DeathEntity, String> {
@@ -37,5 +38,7 @@ public interface DeathRepository extends CrudRepository<DeathEntity, String> {
 	@Query("select count(*) from DeathEntity where Murder like ?1")
 	int getKillCount(String name);
 
+	@Query("select new deathOfThrones.rest.deaths.PlacesDeaths(d.place, count(d.place) as deaths) from DeathEntity d group by d.place order by deaths Desc")
+	Iterable<PlacesDeaths> getDeadlyPlaces();
 	
 }

@@ -10,6 +10,8 @@ import deathOfThrones.data.entities.DeathEntity;
 import deathOfThrones.data.repositories.DeathRepository;
 import deathOfThrones.rest.deaths.DeathEpisodeSeason;
 import deathOfThrones.rest.deaths.DeathPlace;
+import deathOfThrones.rest.deaths.PlacesDeaths;
+
 
 @RequestMapping(path="/dot/death")
 @RestController
@@ -67,4 +69,21 @@ public class DeathController {
 	public int getKillsByMurderName(@RequestParam String name) {
 		return deathRepository.getKillCount(name);
 	}
+	
+	@GetMapping(path="/topFiveDeathPlaces")
+	public PlacesDeaths[] getTopFiveDeathPlaces() {
+		PlacesDeaths[] places = new PlacesDeaths[5];
+		Iterable <PlacesDeaths> placesIterable = deathRepository.getDeadlyPlaces();
+		
+		int i = 0;
+	    for(PlacesDeaths p: placesIterable) {
+	         places[i] = p;
+	         i++;
+	         if (i >= places.length) {
+	        	 break;
+	         }
+	    }
+		return places;
+	}
+	
 }
