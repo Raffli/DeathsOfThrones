@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PlacesDeaths {
-	private String name;
+public class DirectorDeaths {
+	private String director;
 	
 	private long deaths;
 }
