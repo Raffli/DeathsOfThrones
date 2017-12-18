@@ -10,6 +10,11 @@ import deathOfThrones.data.entities.DeathEntity;
 import deathOfThrones.data.repositories.DeathRepository;
 import deathOfThrones.rest.deaths.DeathEpisodeSeason;
 import deathOfThrones.rest.deaths.DeathPlace;
+import deathOfThrones.rest.deaths.DirectorDeaths;
+import deathOfThrones.rest.deaths.EpisodeDeaths;
+import deathOfThrones.rest.deaths.PlaceDeaths;
+import deathOfThrones.rest.deaths.WriterDeaths;
+
 
 @RequestMapping(path="/dot/death")
 @RestController
@@ -67,4 +72,69 @@ public class DeathController {
 	public int getKillsByMurderName(@RequestParam String name) {
 		return deathRepository.getKillCount(name);
 	}
+	
+	@GetMapping(path="/topFiveDeathPlaces")
+	public PlaceDeaths[] getTopFiveDeathPlaces() {
+		PlaceDeaths[] places = new PlaceDeaths[5];
+		Iterable <PlaceDeaths> placesIterable = deathRepository.getDeadlyPlaces();
+		
+		int i = 0;
+	    for(PlaceDeaths p: placesIterable) {
+	         places[i] = p;
+	         i++;
+	         if (i >= places.length) {
+	        	 break;
+	         }
+	    }
+		return places;
+	}
+	
+	@GetMapping(path="/topFiveDeathEpisodes")
+	public EpisodeDeaths[] getTopFiveDeathEpisodes() {
+		EpisodeDeaths[] episodes = new EpisodeDeaths[5];
+		Iterable <EpisodeDeaths> episodesIterable = deathRepository.getDeadlyEpisodes();
+		
+		int i = 0;
+	    for(EpisodeDeaths p: episodesIterable) {
+	    	episodes[i] = p;
+	         i++;
+	         if (i >= episodes.length) {
+	        	 break;
+	         }
+	    }
+		return episodes;
+	}
+	
+	@GetMapping(path="/topFiveDeathWriters")
+	public WriterDeaths[] getTopFiveDeathWriters() {
+		WriterDeaths[] writers = new WriterDeaths[5];
+		Iterable <WriterDeaths> writersIterable = deathRepository.getDeadlyWriter();
+		
+		int i = 0;
+	    for(WriterDeaths p: writersIterable) {
+	    	writers[i] = p;
+	         i++;
+	         if (i >= writers.length) {
+	        	 break;
+	         }
+	    }
+		return writers;
+	}
+	
+	@GetMapping(path="/topFiveDeathDirectors")
+	public DirectorDeaths[] getTopFiveDeathDirectors() {
+		DirectorDeaths[] directors = new DirectorDeaths[5];
+		Iterable <DirectorDeaths> directorsIterable = deathRepository.getDeadlyDirectors();
+		
+		int i = 0;
+	    for(DirectorDeaths p: directorsIterable) {
+	    	directors[i] = p;
+	         i++;
+	         if (i >= directors.length) {
+	        	 break;
+	         }
+	    }
+		return directors;
+	}
+	
 }
