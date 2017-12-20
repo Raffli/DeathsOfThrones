@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SelectItem} from 'primeng/primeng';
 import {DeathsService} from '../services/deaths.service';
 import {EpisodesService} from '../services/episodes.service';
+import {MurderersService} from '../services/murderers.service';
 
 @Component({
   selector: 'app-stats',
@@ -25,7 +26,14 @@ export class StatsComponent implements OnInit {
             ctx.fillText(data, bar._model.x, bar._model.y - 5);
           });
         });
-      }
+      },
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
     }
   };
   private pieOptions = {
@@ -83,12 +91,17 @@ export class StatsComponent implements OnInit {
   private fontColorPie: string;
   private fontColorLine: string;
 
-  constructor(private deathsService: DeathsService, private episodesService: EpisodesService) { }
+  constructor(private deathsService: DeathsService, private episodesService: EpisodesService, private murderersService: MurderersService) { }
 
   ngOnInit() {
     this.datasets = [
       {label: 'Deaths by Season', value: 'Deaths By Season'},
       {label: 'Average Viewer per Season', value: 'Average Viewer per Season'},
+      {label: 'Most kills', value: 'Most kills'},
+      {label: 'Deadliest Episodes', value: 'Deadliest Episodes'},
+      {label: 'Deadliest Locations', value: 'Deadliest Locations'},
+      {label: 'Deadliest Directors', value: 'Deadliest Directors'},
+      {label: 'Deadliest Writers', value: 'Deadliest Writers'},
     ];
     this.selectedDataset = 'Select a dataset';
     this.bgColorDefault = '#15191a';
@@ -168,8 +181,7 @@ export class StatsComponent implements OnInit {
   };
 
   onDatasetSelect = function (event) {
-    console.log(event);
-    if (event.value == 'Deaths By Season') {
+    if (event.value == this.datasets[0].value) {
       this.deathsService.getDeathsBySeason()
         .subscribe( (data: any) => {
           this.currentData = data;
@@ -178,7 +190,7 @@ export class StatsComponent implements OnInit {
           this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
           this.setData();
         });
-    } else if (event.value == 'Average Viewer per Season') {
+    } else if (event.value == this.datasets[1].value) {
       this.episodesService.getAvgViewerPerSeason()
         .subscribe((data: any) => {
           this.currentData = data;
@@ -187,6 +199,76 @@ export class StatsComponent implements OnInit {
           }
           this.currentLabels = ['Season 1', 'Season 2', 'Season 3', 'Season 4', 'Season 5', 'Season 6'];
           this.currentLabel = 'Viewers in Millions';
+          this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
+          this.setData();
+        });
+    } else if (event.value == this.datasets[2].value) {
+      this.murderersService.getMostKills()
+        .subscribe((data: any) => {
+          this.currentLabels = [];
+          this.currentData = [];
+          for (let i = 0; i < data.length; i++) {
+            this.currentLabels.push(data[i].name);
+            this.currentData.push(data[i].kills);
+          }
+          this.currentLabel = 'Murderers';
+          this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
+          this.setData();
+        });
+    } else if (event.value == this.datasets[3].value) {
+      this.deathsService.getDeadliestEpisodes()
+        .subscribe((data: any) => {
+          this.episodesService.getAllEpisodesOnlyTitles()
+            .subscribe( (episodes: any) => {
+              this.currentLabels = [];
+              this.currentData = [];
+              for (let i = 0; i < data.length; i++) {
+                this.currentLabels.push(episodes[data[i].episodeId-1]);
+                this.currentData.push(data[i].deaths);
+              }
+              this.currentLabel = 'Episodes';
+              this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
+              this.setData();
+
+            });
+
+        });
+    } else if (event.value == this.datasets[4].value) {
+      this.deathsService.getDeadliestPlaces()
+        .subscribe((data: any) => {
+          this.currentLabels = [];
+          this.currentData = [];
+          for (let i = 0; i < data.length; i++) {
+            this.currentLabels.push(data[i].name);
+            this.currentData.push(data[i].deaths);
+          }
+          this.currentLabel = 'Locations';
+          this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
+          this.setData();
+        });
+    } else if (event.value == this.datasets[5].value) {
+      this.deathsService.getDeadliestDirectors()
+        .subscribe((data: any) => {
+          this.currentLabels = [];
+          this.currentData = [];
+          for (let i = 0; i < data.length; i++) {
+            this.currentLabels.push(data[i].director);
+            this.currentData.push(data[i].deaths);
+          }
+          this.currentLabel = 'Directors';
+          this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
+          this.setData();
+        });
+    } else if (event.value == this.datasets[6].value) {
+      this.deathsService.getDeadliestWriters()
+        .subscribe((data: any) => {
+          this.currentLabels = [];
+          this.currentData = [];
+          for (let i = 0; i < data.length; i++) {
+            this.currentLabels.push(data[i].writer);
+            this.currentData.push(data[i].deaths);
+          }
+          this.currentLabel = 'Writers';
           this.currentBackgroundColors = ['#728591', '#40637C', '#007F46', '#6F9142', '#CC8E0A', '#7F0000'];
           this.setData();
         });

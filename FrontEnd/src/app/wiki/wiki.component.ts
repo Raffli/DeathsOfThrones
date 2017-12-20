@@ -27,8 +27,8 @@ export class WikiComponent implements OnInit {
           this.deathsChild.displayEntry(null, params.name);
         } else if (params.category == 'Murderer') {
           this.selectedIndex = 1;
-          this.deathsChild.displayEntry(null, params.name);
-        } else if (params.category == 'Place') {
+          this.murderersChild.displayEntry(null, params.name);
+        } else if (params.category == 'Location') {
           this.selectedIndex = 2;
           this.locationsChild.displayEntry(null, params.name);
         } else if (params.category == 'Episode') {
