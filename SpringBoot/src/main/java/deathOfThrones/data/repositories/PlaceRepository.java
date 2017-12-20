@@ -16,16 +16,16 @@ public interface PlaceRepository extends CrudRepository<PlaceEntity, String> {
 	
 	PlaceEntity findByName(String name);
 	
-	@Query("select name from PlaceEntity")
+	@Query("SELECT name FROM PlaceEntity")
 	Iterable<String> getAllNames();
 	
-	@Query("select new deathOfThrones.rest.search.NameCategory(p.name, 'place') from PlaceEntity p where p.name like %?1%")
+	@Query("SELECT NEW deathOfThrones.rest.search.NameCategory(p.name, 'place') FROM PlaceEntity p WHERE p.name LIKE %?1%")
 	List<NameCategory> getWithSimilarName(String name);
 	
-	@Query("select new deathOfThrones.rest.places.PlaceRegion(p.name, p.region) from PlaceEntity p order by p.region")
+	@Query("SELECT NEW deathOfThrones.rest.places.PlaceRegion(p.name, p.region) FROM PlaceEntity p ORDER BY p.region")
 	Iterable<PlaceRegion> getAllPlacesOrderByRegion();
 	
-	@Query("select new deathOfThrones.rest.places.PlacePopulation(p.name, p.population) from PlaceEntity p order by p.population")
+	@Query("SELECT NEW deathOfThrones.rest.places.PlacePopulation(p.name, p.population) FROM PlaceEntity p ORDER BY p.population")
 	Iterable<PlacePopulation> getAllPlacesOrderByPopulation();
 	
 }

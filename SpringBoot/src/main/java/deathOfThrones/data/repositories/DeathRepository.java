@@ -22,41 +22,41 @@ public interface DeathRepository extends CrudRepository<DeathEntity, String> {
 	
 	Iterable<DeathEntity> findByEpisodeId(int id);
 	
-	@Query("select name from DeathEntity")
+	@Query("SELECT name FROM DeathEntity")
 	Iterable<String> getAllNames();
 
     Iterable<DeathEntity>  findAllByOrderByEpisodeId();
 
-	@Query("select new deathOfThrones.rest.search.NameCategory(d.name, 'death') from DeathEntity d where d.name like %?1%")
+	@Query("SELECT NEW deathOfThrones.rest.search.NameCategory(d.name, 'death') FROM DeathEntity d WHERE d.name LIKE %?1%")
 	List<NameCategory> getWithSimilarName(String name);
     
-	@Query("select name from DeathEntity where Murder like ?1")
+	@Query("SELECT name FROM DeathEntity WHERE Murder LIKE ?1")
 	Iterable<String> getByMurder(String name);
 	
-	@Query("select new deathOfThrones.rest.deaths.DeathEpisodeSeason(d.name, d.episode.season, d.episodeId) from DeathEntity d order by d.episode")
+	@Query("SELECT NEW deathOfThrones.rest.deaths.DeathEpisodeSeason(d.name, d.episode.season, d.episodeId) FROM DeathEntity d ORDER BY d.episode")
 	Iterable<DeathEpisodeSeason> getAllNamesOrderByEpisodeId();
 	
-	@Query("select new deathOfThrones.rest.deaths.DeathPlace(d.name, d.place) from DeathEntity d order by d.place")
+	@Query("SELECT NEW deathOfThrones.rest.deaths.DeathPlace(d.name, d.place) FROM DeathEntity d ORDER BY d.place")
 	Iterable<DeathPlace> getAllNamesOrderByPlace();
 	
 	Iterable<DeathEntity> findByPlaceLike(String name);
 	
-	@Query("select count(episode.season) from DeathEntity group by episode.season")
+	@Query("SELECT COUNT(episode.season) FROM DeathEntity GROUP BY episode.season")
 	int[] getSeasonCount();
 	
-	@Query("select count(*) from DeathEntity where Murder like ?1")
+	@Query("SELECT COUNT(*) FROM DeathEntity WHERE Murder LIKE ?1")
 	int getKillCount(String name);
 
-	@Query("select new deathOfThrones.rest.deaths.PlaceDeaths(d.place, count(d.place) as deaths) from DeathEntity d group by d.place order by deaths Desc")
+	@Query("SELECT NEW deathOfThrones.rest.deaths.PlaceDeaths(d.place, COUNT(d.place) AS deaths) FROM DeathEntity d GROUP BY d.place ORDER BY deaths DESC")
 	Iterable<PlaceDeaths> getDeadlyPlaces();
 	
-	@Query("select new deathOfThrones.rest.deaths.EpisodeDeaths(d.episodeId, count(d.episodeId) as deaths) from DeathEntity d group by d.episodeId order by deaths Desc")
+	@Query("SELECT NEW deathOfThrones.rest.deaths.EpisodeDeaths(d.episodeId, COUNT(d.episodeId) AS deaths) FROM DeathEntity d GROUP BY d.episodeId ORDER BY deaths DESC")
 	Iterable<EpisodeDeaths> getDeadlyEpisodes();
 	
-	@Query("select new deathOfThrones.rest.deaths.WriterDeaths(e.writtenBy, count(e.writtenBy) as deaths) from DeathEntity d, EpisodeEntity e where e.episodeId = d.episodeId group by e.writtenBy order by deaths Desc")
+	@Query("SELECT NEW deathOfThrones.rest.deaths.WriterDeaths(e.writtenBy, COUNT(e.writtenBy) AS deaths) FROM DeathEntity d, EpisodeEntity e WHERE e.episodeId = d.episodeId GROUP BY e.writtenBy ORDER BY deaths DESC")
 	Iterable<WriterDeaths> getDeadlyWriter();
 	
-	@Query("select new deathOfThrones.rest.deaths.DirectorDeaths(e.directedBy, count(e.directedBy) as deaths) from DeathEntity d, EpisodeEntity e where e.episodeId = d.episodeId group by e.directedBy order by deaths Desc")
+	@Query("SELECT NEW deathOfThrones.rest.deaths.DirectorDeaths(e.directedBy, COUNT(e.directedBy) AS deaths) FROM DeathEntity d, EpisodeEntity e WHERE e.episodeId = d.episodeId GROUP BY e.directedBy ORDER BY deaths DESC")
 	Iterable<DirectorDeaths> getDeadlyDirectors();
 	
 }

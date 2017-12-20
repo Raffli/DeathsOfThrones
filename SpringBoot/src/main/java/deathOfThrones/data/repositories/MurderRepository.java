@@ -16,19 +16,19 @@ public interface MurderRepository extends CrudRepository<MurderEntity, String> {
 	
 	MurderEntity findByName(String name);
 	
-	@Query("select name from MurderEntity")
+	@Query("SELECT name FROM MurderEntity")
 	Iterable<String> getAllNames();
 	
-	@Query("select new deathOfThrones.rest.search.NameCategory(m.name, 'murder') from MurderEntity m where m.name like %?1%")
+	@Query("SELECT NEW deathOfThrones.rest.search.NameCategory(m.name, 'murder') FROM MurderEntity m WHERE m.name LIKE %?1%")
 	List<NameCategory> getWithSimilarName(String name);
 	
-	@Query("select new deathOfThrones.rest.murderer.MurderKills(m.name, count(d.name) as kills) from DeathEntity d, MurderEntity m where d.murder = m.name group by m.name order by kills")
+	@Query("SELECT NEW deathOfThrones.rest.murderer.MurderKills(m.name, COUNT(d.name) as kills) FROM DeathEntity d, MurderEntity m WHERE d.murder = m.name group by m.name ORDER BY kills")
 	Iterable<MurderKills> getAllNamesByKills();
 	
-	@Query("select new deathOfThrones.rest.murderer.MurderKills(m.name, count(d.name) as kills) from DeathEntity d, MurderEntity m where d.murder = m.name group by m.name order by kills Desc")
+	@Query("SELECT NEW deathOfThrones.rest.murderer.MurderKills(m.name, COUNT(d.name) as kills) FROM DeathEntity d, MurderEntity m WHERE d.murder = m.name group by m.name ORDER BY kills DESC")
 	Iterable<MurderKills> getAllNamesByKillsDesc();
 	
-	@Query("select new deathOfThrones.rest.murderer.MurderOrigin(m.name, m.origin) from MurderEntity m order by m.origin")
+	@Query("SELECT NEW deathOfThrones.rest.murderer.MurderOrigin(m.name, m.origin) FROM MurderEntity m ORDER BY m.origin")
 	Iterable<MurderOrigin> getAllNamesByOrigins();
 	
 	
