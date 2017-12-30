@@ -202,7 +202,6 @@ export class MapComponent implements OnInit {
     this.currentDeadImageHeight = this.deadImageHeight + (1 - this.zoom) * this.deadImageHeight * factor;
     for (let i = 0; i < this.imagesOfTheDead.length; i++) {
       this.imagesOfTheDead[i].offsetX += this.imagesOfTheDead[i].index * -1 * zoomChange * 80;
-      console.log(this.imagesOfTheDead[i].index, this.imagesOfTheDead[i].offsetX);
       for (let j = 0; j < this.locationCoordinates.length; j++) {
         if (this.locationCoordinates[j].place == this.deaths[i].place) {
           this.imagesOfTheDead[i].left = this.locationCoordinates[j].x + this.imagesOfTheDead[i].offsetX;

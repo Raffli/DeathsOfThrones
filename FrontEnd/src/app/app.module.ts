@@ -30,6 +30,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ImpressumComponent } from './impressum/impressum.component';
 import { SearchComponent } from './search/search.component';
+import {SearchService} from './services/search.service';
 
 const appRoutes :Routes = [
   {
@@ -88,7 +89,7 @@ const appRoutes :Routes = [
     BrowserModule, RouterModule.forRoot(appRoutes), TabMenuModule, HttpModule, TabViewModule, ButtonModule,
     DropdownModule, FormsModule, BrowserAnimationsModule, ChartModule
   ],
-  providers: [DeathsService, EpisodesService, MurderersService, LocationsService],
+  providers: [DeathsService, EpisodesService, MurderersService, LocationsService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -154,7 +154,6 @@ export class WikiMurderersComponent implements OnInit {
               }
             }
           }
-          console.log(this.murderersByOrigin);
           this.byOriginHasBeenLoaded = true;
           this.allMurderers = this.allMurderersByOrigin;
           this.murderersSorted = this.murderersByOrigin;

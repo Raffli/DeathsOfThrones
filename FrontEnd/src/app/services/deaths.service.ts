@@ -46,4 +46,20 @@ export class DeathsService {
     return this.http.get(environment.baseUrl + 'death/deathCountBySeason').map((response: Response) => response.json());
   }
 
+  public getDeadliestEpisodes (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'death/topFiveDeathEpisodes').map((response: Response) => response.json());
+  }
+
+  public getDeadliestPlaces (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'death/topFiveDeathPlaces').map((response: Response) => response.json());
+  }
+
+  public getDeadliestDirectors (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'death/topFiveDeathDirectors').map((response: Response) => response.json());
+  }
+
+  public getDeadliestWriters (): Observable <any[]> {
+    return this.http.get(environment.baseUrl + 'death/topFiveDeathWriters').map((response: Response) => response.json());
+  }
+
 }

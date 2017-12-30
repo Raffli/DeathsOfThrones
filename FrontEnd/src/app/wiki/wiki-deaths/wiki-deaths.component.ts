@@ -161,7 +161,6 @@ export class WikiDeathsComponent implements OnInit {
               }
             }
           }
-          console.log(this.deathsByLocation);
           this.byLocationHasBeenLoaded = true;
           this.deathsSorted = this.deathsByLocation;
           this.allDeaths = this.allDeathsByLocation;

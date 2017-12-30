@@ -1,5 +1,11 @@
-<div class="parent">
+<div class="parent" (mouseover)="onMouseOver($event)" (mouseleave)="onMouseLeave($event)">
   <i class="fa fa-search"></i>
-  <input type="text" autocomplete="on" placeholder="Search here..." (change)="onSubmit($event)" (input)="onInput($event)">
+  <input type="text" autocomplete="on" placeholder="Search here..." (input)="onInput($event)"
+         (focus)="onInputFocus($event)" (blur)="onInputBlur($event)" id="searchInput">
+  <div class="searchResultsContainer" *ngIf="searchResults && showResults">
+    <ul>
+      <li class="listEntry" *ngFor="let result of searchResults" (click)="goToEntry(result.name, result.category)">{{result.name}} ({{result.category}})</li>
+    </ul>
+  </div>
 </div>
 

@@ -36,4 +36,8 @@ export class MurderersService {
     return this.http.get(environment.baseUrl + 'murder/allNamesByOrigins').map((response: Response) => response.json());
   }
 
+  public getMostKills (): Observable<any> {
+    return this.http.get(environment.baseUrl + 'murder/TopFiveMurders').map((response: Response) => response.json());
+  }
+
 }
