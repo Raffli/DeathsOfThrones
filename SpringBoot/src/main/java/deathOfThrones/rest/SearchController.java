@@ -13,7 +13,6 @@ import deathOfThrones.data.repositories.DeathRepository;
 import deathOfThrones.data.repositories.EpisodeRepository;
 import deathOfThrones.data.repositories.MurderRepository;
 import deathOfThrones.data.repositories.PlaceRepository;
-import deathOfThrones.data.repositories.RegionRepository;
 import deathOfThrones.rest.search.NameCategory;
 
 
@@ -29,8 +28,6 @@ public class SearchController {
 	MurderRepository murderRepo;
 	@Autowired
 	PlaceRepository placeRepo;
-	@Autowired
-	RegionRepository regionRepo;
 	
 	@GetMapping(path="/all")
 	public Iterable<DeathEntity> getAllDeaths() {
@@ -43,7 +40,6 @@ public class SearchController {
 		List<NameCategory> episodes = episodeRepo.getWithSimilarTitle(name);
 		List<NameCategory> murderer = murderRepo.getWithSimilarName(name);
 		List<NameCategory> places = placeRepo.getWithSimilarName(name);
-		List<NameCategory> regions = regionRepo.getWithSimilarRegion(name);
 		
 		 
 		for (NameCategory e : episodes) {
@@ -55,10 +51,6 @@ public class SearchController {
 		for (NameCategory p : places) {
 			entities.add(p);
 		}
-		for (NameCategory r : regions) {
-			entities.add(r);
-		}
-
 		return entities;
 	}
 
