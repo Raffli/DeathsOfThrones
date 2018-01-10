@@ -1,0 +1,19 @@
+.opaque {
+  opacity: 0.6;
+  margin: 15px;
+}
+
+.centerText {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+a {
+  color: #969070;
+}
+
+li {
+  list-style-type: none;
+}
